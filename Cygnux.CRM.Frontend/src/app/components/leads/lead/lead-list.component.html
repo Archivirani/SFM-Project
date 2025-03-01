@@ -24,7 +24,7 @@
     </div> -->
     <div class="row mb-3 d-flex">
       <div class="col-1">
-          <label class="col-form-label">Date Range</label>
+          <label class="col-form-label">Date Range</label>   
       </div>
       <div class="col-5">
           <div class="form-group mb-3">
@@ -34,6 +34,7 @@
                      bsDaterangepicker  [(ngModel)]="dateRange" (bsValueChange)="getLeads($event)"
                      [bsConfig]="{ dateInputFormat: 'dd/MM/yyyy',ranges: commonService.ranges }">
             </div>
+            
       </div>
     </div>
     <div class="row">
