@@ -72,15 +72,15 @@ export class MeetingListComponent implements OnInit {
         (position) => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
-          
+
           const data = {
             meetingId: meeting.meetingId,
             userID: this.identityService.getLoggedUserId(),
             isAttendee: true,
             date: formattedDate,
             checkIn: formattedDateTime,
-            lat: userLat,  // User's current latitude
-            lng: userLng,  // User's current longitude
+            Lat: userLat, // User's current latitude
+            Lng: userLng, // User's current longitude
           };
           
           this.meetingService.addMeetingCheckInOut(data).subscribe(

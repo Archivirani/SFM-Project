@@ -19,6 +19,7 @@ import { CustomerService } from '../../../shared/services/customer.service';
 import { ExternalService } from '../../../shared/services/external.service';
 import { timeRangeValidator } from '../../../shared/validators/time-range.validatior';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-call',
@@ -36,12 +37,15 @@ export class AddCallComponent implements OnInit, OnChanges {
   @Input() isCallList: string | null = null;
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor( private callService: CallService,private externalService: ExternalService, public customerService: CustomerService, public commonService: CommonService, private toasterService: ToastrService,
+  constructor( private callService: CallService,private externalService: ExternalService, public customerService: CustomerService, public commonService: CommonService,public router: Router, private toasterService: ToastrService,
     public identifyService :IdentityService ) { this.callForm = new FormGroup({});}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['callResponse'] && this.callResponse) {
       this.callForm.patchValue(this.callResponse);
+      // if(this.callResponse.customerCode){
+      //   this.customerService.customerDropdown(this.callResponse.customerCode)
+      // }
       this.callForm.patchValue({companyName:this.callResponse.customerName || this.callResponse.companyName});
     } else {
       this.callForm.reset();
@@ -73,7 +77,7 @@ export class AddCallComponent implements OnInit, OnChanges {
       callStatusId: new FormControl(callStatusId),
       customerCode: new FormControl(''),
       remarks: new FormControl(null, [Validators.required]),
-      userid:new FormControl(this.identifyService.getLoggedUserId()),
+      userid:new FormControl(''),
       leadId:new FormControl(''),
       companyName:new FormControl(''),
       callId:new FormControl('')
@@ -107,6 +111,8 @@ export class AddCallComponent implements OnInit, OnChanges {
   onSubmitCall(form: FormGroup): void {
     if (form.valid) {
       let { companyName,callId, ...dataToSubmit } = form.value;
+      dataToSubmit.userid = this.identifyService.getLoggedUserId();
+      dataToSubmit.customerCode = dataToSubmit.customerCode ? dataToSubmit.customerCode : '';
       this.isCallList === 'Add' ? this.addCall(dataToSubmit) : this.updateCall(dataToSubmit);
     }else{
       this.callForm.markAllAsTouched()

@@ -68,13 +68,25 @@
       <div class="col-lg-6">
         <div>
           <label class="control-label">Company Name*</label>
-          <input style="text-transform: uppercase;"
+          <!-- <input style="text-transform: uppercase;"
             class="form-control"
             maxlength="255"
             formControlName="companyName"
             type="text"
             required
-            [ngClass]="{ 'border-danger': leadForm.controls['companyName'].invalid && leadForm.controls['companyName'].touched}"/>
+            [ngClass]="{ 'border-danger': leadForm.controls['companyName'].invalid && leadForm.controls['companyName'].touched}"/> -->
+
+            <ng-select
+            [items]="customerService.customersList"
+            bindLabel="customerName"
+            bindValue="customerName"
+            formControlName="companyName"
+            placeholder="Search Customer"
+            (input)="customerService.customerDropdown($event)"
+            [searchable]="true"
+            [ngClass]="{ 'border-danger': leadForm.controls['companyName'].invalid && leadForm.controls['companyName'].touched }"
+            [clearable]="true">
+          </ng-select>
           <div
             *ngIf="
               leadForm.controls['companyName'].invalid &&
