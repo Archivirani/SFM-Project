@@ -1,0 +1,80 @@
+<div class="row" *ngIf="getfilter">
+    <div class="col" *ngFor="let item of getfilter">
+        <div class="card" (click)="exportLeadCategory(item.id)">
+            <a class="card-body" [ngClass]="item.color" data-bs-toggle="collapse" href="#leadDiscovered" role="button" aria-expanded="false" aria-controls="leadDiscovered">
+                <h5 class="card-title text-uppercase fw-semibold mb-1 fs-15" title="{{item.name}}" [innerHTML]="item.name"></h5>
+                <p class="text-muted mb-0"><span class="fw-medium" [appCountUp]="item.count" ></span></p>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row" *ngIf="!getfilter">
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Total {{cardList}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value"
+                                data-target="234">0</span>k</h2>
+                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i class="ri-arrow-up-line align-middle"></i> 17.32 %</span> vs. previous month</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Pending {{cardList}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value"
+                                data-target="64.5">0</span>k</h2>
+                        <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0"> <i
+                                    class="ri-arrow-down-line align-middle"></i> 0.87 %</span> vs. previous month</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Completed {{cardList}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value"
+                                data-target="116.21">0</span>K</h2>
+                        <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0"> <i
+                                    class="ri-arrow-down-line align-middle"></i> 2.52 % </span> vs. previous month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Deleted {{cardList}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value"
+                                data-target="14.84">0</span>%</h2>
+                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i
+                                    class="ri-arrow-up-line align-middle"></i> 0.63 % </span> vs. previous month</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,295 @@
+<div class="page-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+          <h4 class="mb-sm-0">Meetings</h4>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="d-flex justify-content-end ">
+      <button type="button" class="btn btn-success add-btn mb-3" (click)="openChartModal()"> More Views
+      </button>
+    </div> -->
+    <!-- <app-card-list [cardList]="cardList"></app-card-list> -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row g-4 align-items-center">
+              <div class="col-sm-auto ms-auto">
+                <div class="hstack gap-2">
+                  <button type="button" class="btn btn-success add-btn" (click)="openChartModal()"> Dashboard
+                  </button>
+                  <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()">
+                    <i class="ri-delete-bin-2-line"></i>
+                  </button>
+
+                  <!-- <button type="button" class="btn btn-success add-btn" (click)="openModal()">
+                    <i class="ri-add-line align-bottom me-1"></i> Add Meeting
+                  </button> -->
+                  <span class="dropdown">
+                    <button class="btn btn-soft-info btn-icon fs-14" type="button" id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="ri-settings-4-line"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li>
+                        <a class="dropdown-item" href="#" (click)="exportMeetings($event)">Export To Excel</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#" (click)="exportCSVMeetings($event)">Export to CSV</a>
+                      </li>
+                    </ul>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="table-responsive table-card">
+                <table class="table align-middle" id="customerTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="text-center">Customer Name</th>
+                      <th class="text-center">Meeting Date</th>
+                      <th class="text-center">Start Time</th>
+                      <th class="text-center">End Time</th>
+                      <th class="text-center">Check In <br>Time in Hrs</th>
+                      <th class="text-center">Check Out <br> Time in Hrs</th>
+                      <th class="text-center">Meeting TAT<br> in Hrs</th>
+                      <th class="text-center">Check In-Check Out</th>
+                      <th class="text-center">Meeting Status</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                    <tr>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="getMeetings()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <div class="input-group">
+                          <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
+                            [(ngModel)]="filters['MeetingDate']" ngbDatepicker (ngModelChange)="getMeetings()"
+                            #d2="ngbDatepicker" readonly/>
+                            <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['MeetingDate']">
+                              <span aria-hidden="true" class="ng-clear clear">×</span>
+                            </span>
+                          <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()"
+                            type="button"></button>
+                        </div>
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['StartTime']" (input)="getMeetings()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['EndTime']" (input)="getMeetings()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <input
+                          type="text"  [(ngModel)]="filters['CheckIn']" (input)="getMeetings()"
+                          (input)="getMeetings()"
+                          class="form-control"
+                        />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="getMeetings()" class="form-control"/>
+                      </th>
+                      <th> <input
+                        type="text" [(ngModel)]="filters['meetingTimeInMins']"
+                        (input)="getMeetings()"
+                        class="form-control"
+                      /> </th>
+                      <th></th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings()"
+                          class="form-control" />
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list form-check-all">
+                    <tr *ngFor="let meeting of meetings; let i = index">
+                      <td class="text-center">
+                        <a *ngIf="!meeting.meetingMOM" href="#" (click)="expenseModal($event, meeting.meetingId)">
+                          {{ meeting.customerName ? meeting.customerName:'--'}}</a>
+                        <p *ngIf="
+                            meeting.meetingMOM  ||
+                            meeting.meetingMOM == null
+                          ">
+                          {{ meeting.customerName ? meeting.customerName:'--'}}
+                        </p>
+                      </td>
+                      <td class="text-center">{{ meeting.meetingDate ? meeting.meetingDate:'--'}}</td>
+                      <td class="text-center">{{ meeting.startTime ? meeting.startTime:'--'}}</td>
+                      <td class="text-center">{{ meeting.endTime ? meeting.endTime:'--'}}</td>
+                      <td class="text-center">{{ meeting.checkIn? meeting.checkIn:'--'}}</td>
+                      <td class="text-center">{{ meeting.checkOut ? meeting.checkOut:'--'}}</td>
+                      <td class="text-center">{{meeting.meetingTimeInMins ? meeting.meetingTimeInMins:'--'}} </td>
+                      <td class="d-flex text-center">
+                        <button class="btn btn-danger p-1 me-1 fontsize" (click)="onCheckIn(meeting,i)" [disabled]="!meeting.isCheckInEnabled">Check In</button>
+                        <button class="btn btn-secondary p-1 fontsize" (click)="onCheckOut(meeting,i)" [disabled]="!meeting.isCheckOutEnabled">Check Out</button>
+                      </td> 
+                      <!-- <td>{{ meeting.taTinHrs }}</td> -->
+                      <td class="text-center">{{ meeting.meetingStatus ? meeting.meetingStatus:'--'}}</td>
+
+                      <td class="text-center">
+                        <ul class="list-inline hstack gap-2 mb-0">
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="Edit">
+                            <a class="edit-item-btn" href="#" (click)="editModal($event, meeting.meetingId,meeting.checkOut)"><i
+                                class="ri-pencil-fill align-bottom text-muted"></i></a>
+                          </li>
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="View">
+                            <a href="#" (click)="viewModal($event, meeting.meetingId)"><i
+                                class="ri-eye-fill align-bottom text-muted"></i></a>
+                          </li>
+                          <!-- <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="CheckIn">
+                            <a href="#" (click)="
+                                onCheckInChange(
+                                  $event,
+                                  meeting.meetingId,
+                                  meeting.isCheckedIn
+                                )
+                              " class="text-muted d-inline-block">
+                              <i class="ri-map-pin-user-fill fs-16"></i>
+                            </a>
+                          </li> -->
+                          <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" [attr.title]="'CheckIn: ' + meeting.checkIn + ' & Checkout: ' + meeting.checkOut">
+                            <a  
+                               class="text-muted d-inline-block">
+                              <i class="ri-map-pin-user-fill fs-16"></i>
+                            </a>
+                          </li>
+                          <!-- <li
+                            class="list-inline-item edit"
+                            data-bs-toggle="tooltip"
+                            data-bs-trigger="hover"
+                            data-bs-placement="top"
+                            title="Call"
+                          >
+                            <a
+                              href="#"
+                              (click)="callModal($event, meeting.meetingId)"
+                              class="text-muted d-inline-block"
+                            >
+                              <i class="ri-phone-line fs-16"></i>
+                            </a>
+                          </li> -->
+
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" [title]="meeting.meetingLocation">
+                            <a class="edit-item-btn" href="#" (click)="preventClick($event)"><i
+                                class="ri-map-pin-2-fill align-bottom text-muted"></i></a>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="noresult" *ngIf="meetings.length == 0">
+                  <div class="text-center">
+                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                      colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px"></lord-icon>
+                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3" *ngIf="meetings.length != 0">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [maxSize]="3"
+                  (pageChange)="onPageChange($event)">
+                </ngb-pagination>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                     Update Meeting
+                    </h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button> -->
+                  </div>
+                  <app-add-meeting (dataEmitter)="closeEditModal()"
+                    [meetingResponse]="selectedMeeting" [isMeetingList]="'Update'" [checkOutValue]="checkOutValue"></app-add-meeting>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModalCall" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Call</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button>
+                  </div>
+                  <app-add-call (dataEmitter)="closeCallModal()" [addCallResponse]="selectedCall"></app-add-call>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModalDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Meeting Detail
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button>
+                  </div>
+                  <app-meeting-detail [meetingResponse]="selectedMeeting"></app-meeting-detail>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModalExpense" tabindex="-1" aria-labelledby="expenseModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="expenseModalLabel">
+                      Add Expense
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button>
+                  </div>
+                  <app-add-expense (dataEmitter)="closeExpenseModal()"
+                    [addMeetingResponse]="selectedMeetingId"></app-add-expense>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="modal fade" id="showChartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Meeting By Status 
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button>
+                  </div>
+                  <app-user-chart [chartList]="'meeting'"></app-user-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

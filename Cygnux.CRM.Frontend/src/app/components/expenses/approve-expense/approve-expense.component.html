@@ -1,0 +1,117 @@
+<form [formGroup]="approveForm" class="horizontal-form" autocomplete="off">
+    <div class="modal-body">
+      <input type="hidden" id="id-field" />
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Expense Code</label>
+            <input class="form-control" type="text" formControlName="expenseCode" readonly>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Distance in KM</label>
+            <input class="form-control" type="text" formControlName="distanceInKm" readonly/>
+          </div>
+        </div>
+  
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Customer Name</label>
+            <input class="form-control" type="text" formControlName="companyName" readonly/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+              <label class="control-label">Req. ID /Date & Time</label>
+              <input class="form-control" type="text" formControlName="requestDate" readonly/>
+            </div>
+          </div>
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Exp. Rate</label>
+            <input class="form-control" type="text" formControlName="expenseRate"  readonly />
+          </div>
+        </div>
+  
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Meeting Date</label>
+            <input class="form-control" type="text" formControlName="expenseDate"  readonly/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Amount</label>
+            <input class="form-control" type="text" formControlName="amount" readonly/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+              <label class="control-label">Transport Mode*</label>
+              <ng-select [items]="transportModes" bindLabel="codeDesc" bindValue="codeId" formControlName="transportModeId"
+            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true">
+          </ng-select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+              <label class="control-label">Supporting Document:</label>
+              <input class="form-control" type="file" formControlName="document" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+              <label class="control-label">Expense Date</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="dd/mm/yyyy" formControlName="expenseDate" ngbDatepicker
+                  #d2="ngbDatepicker"/>
+                <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()"
+                  type="button"></button>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+              <label class="control-label">Remarks:</label>
+              <input class="form-control" type="text" formControlName="remarks"/>
+            </div>
+        </div>
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">CheckedIn Location</label>
+            <input class="form-control" type="text" formControlName="checkedInLocation" readonly/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Auditor Remarks</label>
+            <input class="form-control" type="text" formControlName="auditorRemark"/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+              <label class="control-label">Checked Out Location</label>
+              <input class="form-control" type="text" formControlName="checkOutLocation"  readonly/>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <div class="hstack gap-2 justify-content-end">
+            <button
+            type="submit"
+            class="btn btn-success"
+            id="add-btn"
+           (click)="onApprove()" >
+            Approve
+        </button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onReject()" >
+            Reject
+        </button>
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onCloseEvent()">
+          Close
+        </button>
+        </div>
+      </div>
+</form>

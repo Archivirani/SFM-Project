@@ -1,0 +1,175 @@
+<div class="page-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+          <h4 class="mb-sm-0">Calls</h4>
+        </div>
+      </div>
+    </div>
+    <app-card-list [getfilter]="getfilter"></app-card-list>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row g-4 align-items-center">
+              <div class="col-sm-auto ms-auto">
+                <div class="hstack gap-2">
+                  <button class="btn btn-info material-shadow-none" (click)="downloadSampleImport($event)">
+                    Import Sample
+                  </button>
+                  <!-- <button type="button" class="btn btn-success add-btn" (click)="openModal()" id="create-btn">
+                    <i class="ri-add-line align-bottom me-1"></i> Add Call
+                  </button> -->
+                  <button class="btn btn-info material-shadow-none" (click)="importService.triggerFileInput($event)">
+                    Import
+                  </button>
+                  <div class="file-upload">
+                    <input type="file" id="fileInput" (change)="importService.onFileChange($event,'call')"
+                      class="file" />
+                  </div>
+
+                  <span class="dropdown">
+                    <button class="btn btn-soft-info btn-icon fs-14" type="button" id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="ri-settings-4-line"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li>
+                        <a class="dropdown-item" href="#" (click)="exportCalls($event)">Export To Excel</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#" (click)="exportCSVCalls($event)">Export to CSV</a>
+                      </li>
+                    </ul>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="table-responsive table-card">
+                <table class="table align-middle" id="customerTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="sort" class="text-center" data-sort="callCategory">Call Category</th>
+                      <th class="sort" class="text-center" data-sort="callDate">Call Date</th>
+                      <th class="sort" class="text-center" data-sort="customerName">Customer Name</th>
+                      <th class="sort" class="text-center" data-sort="startTime">Start Time</th>
+                      <th class="sort" class="text-center" data-sort="endTime">End Time</th>
+                      <th class="sort" class="text-center" data-sort="callStatus">Call Status</th>
+                      <th class="sort" class="text-center" data-sort="action">Action</th>
+                    </tr>
+                    <tr>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['CallCategory']" (input)="getCalls()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <div class="input-group">
+                          <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
+                            [(ngModel)]="filters['CallDate']" ngbDatepicker (ngModelChange)="getCalls()"
+                            #d3="ngbDatepicker" readonly />
+                          <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['CallDate']"> <span aria-hidden="true" class="ng-clear clear">×</span>
+                          </span>
+                          <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d3.toggle()" type="button"></button>
+                        </div>
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="getCalls()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['startTime']" (input)="getCalls()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['endTime']" (input)="getCalls()" class="form-control" />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['CallStatus']" (input)="getCalls()"
+                          class="form-control" />
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list form-check-all">
+                    <tr *ngFor="let call of calls; let i = index">
+                      <td class="text-center">{{ call.callCategoryName ? call.callCategoryName:'--' }}</td>
+                      <td class="text-center">{{ call.callDate ? call.callDate:'--' }}</td>
+                      <td class="text-center">{{ call.customerName ? call.customerName:'--' }}</td>
+                      <td class="text-center">{{ call.startTime ? call.startTime:'--' }}</td>
+                      <td class="text-center">{{ call.endTime ? call.endTime:'--' }}</td>
+                      <td class="text-center">{{ call.callStatus ? call.callStatus:'--' }}</td>
+                      <td class="text-center">
+                        <ul class="list-inline hstack gap-2 mb-0">
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="Edit" [style.pointer-events]="call.callStatus === 'closed' ? 'none' : 'auto'">
+                            <a class="edit-item-btn" href="#" (click)="editModal($event, call.callId)"><i
+                                class="ri-pencil-fill align-bottom text-muted"></i></a>
+                          </li>
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="View">
+                            <a href="#" (click)="viewModal($event, call.callId)"><i
+                                class="ri-eye-fill align-bottom text-muted"></i></a>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="noresult" *ngIf="calls.length == 0">
+                  <div class="text-center">
+                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                      colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px"></lord-icon>
+                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-end mt-3"
+                *ngIf="calls.length != 0"
+              >
+                <ngb-pagination
+                  [collectionSize]="totalItems"
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                  [maxSize]="3"
+                  (pageChange)="onPageChange($event)"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel"> Update Call </h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button> -->
+                  </div>
+                  <app-add-call (dataEmitter)="closeEditModal()" [callResponse]="selectedCall" [isCallList]="'Update'"></app-add-call>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModalDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel"> Call Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                  </div>
+                  <app-call-detail [callResponse]="selectedCall"></app-call-detail>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

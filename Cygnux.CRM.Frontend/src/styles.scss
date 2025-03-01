@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "ngx-toastr/toastr";
+
+.ng-select {
+  display: block; // Ensure it takes up its own line
+  width: 100%; // Full width of the container
+
+  &.ng-select-multiple {
+    .ng-value {
+      display: inline-flex; // Inline layout for text and icon
+      align-items: center; // Align items vertically
+      background-color: #f8f9fa; // Light gray background
+      border: 1px solid #007bff; // Blue border
+      border-radius: 4px; // Rounded corners
+      padding: 5px 8px; // Padding for each ng-value
+      margin-right: 8px; // Margin between selected items
+      margin-bottom: 8px; // Add margin to prevent overlapping rows
+
+      // Ensure the remove icon is after the text
+      .ng-value-icon {
+        color: #007bff;
+        cursor: pointer;
+
+        &:hover {
+          color: #dc3545; // Red color on hover
+        }
+      }
+    }
+  }
+  .ng-select-container {
+    padding: 0.375rem 0.75rem; // Bootstrap default padding
+    border-radius: 0.25rem; // Rounded borders
+    border: 1px solid #ced4da; // Consistent border with Bootstrap styles
+    position: relative; // Ensure dropdown is positioned relative to this
+  }
+
+  .ng-dropdown-panel {
+    position: absolute; // Position dropdown absolutely within the container
+    top: 100%; // Ensure it appears right below the select input
+    left: 0; // Align with the left side of the container
+    z-index: 1050; // High z-index to ensure it is above other elements
+    background-color: #fff; // Background for dropdown
+    width: 100%; // Ensure dropdown is as wide as the container
+    border: 1px solid #ced4da; // Add border to dropdown
+    border-radius: 0.25rem; // Consistent border radius with Bootstrap
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Add shadow for visual clarity
+  }
+
+  .ng-option {
+    padding: 0.5rem; // Ensure spacing within each option
+    white-space: nowrap; // Prevent text wrapping
+    overflow: hidden; // Hide any overflowing content
+    text-overflow: ellipsis; // Show ellipsis for long text
+  }
+
+  .ng-select-searchable input {
+    padding: 0.375rem 0.75rem; // Consistent padding for the search input
+    font-size: 1rem; // Consistent font size with Bootstrap
+  }
+
+  .ng-has-value .ng-placeholder {
+    display: none;
+  }
+}
+
+label {
+  margin-bottom: 0.5rem; // Add space between label and select
+  display: block; // Ensure label takes up its own line
+}
+
+.bt-color {
+  border-top: 1px solid #b4cef8;
+}
+
+a {
+  cursor: pointer;
+}
+
+.meeting-event {
+  background-color: #3498db;
+  border-color: #2980b9;
+}
+
+.call-event {
+  background-color: #2ecc71;
+  border-color: 27ae60;
+}
+
+.w-10{
+  width: 10%;
+}
+.w-8{
+  width: 8%;
+}
+.w-15{
+  width: 15%;
+}
+
+.truncate-text {
+  // width:110px ;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  color: rgb(48, 48, 48) !important;
+}
+
+.border-danger{
+  border: 1px solid #f06548;
+  border-radius: 5px;
+}

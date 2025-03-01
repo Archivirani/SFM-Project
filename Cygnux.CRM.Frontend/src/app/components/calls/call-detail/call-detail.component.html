@@ -1,0 +1,49 @@
+<div class="modal-body">
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <td><strong>Call Category:</strong> {{ callResponse?.callCategoryName }}</td>
+          <td><strong>Call Date:</strong> {{ callResponse?.callDate }}</td>
+        </tr>
+        <tr>
+          <td><strong>Call Purpose:</strong> {{ callResponse?.purpose }}</td>
+          <td>
+            <strong>Start Time:</strong> {{ callResponse?.startTime }}
+            &nbsp; <strong>End Time:</strong> {{ callResponse?.endTime }}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Customer Name:</strong> {{ callResponse?.customerName }}</td>
+          <td><strong>Call Status:</strong> {{ callResponse?.callStatus }}</td>
+        </tr>
+        <tr>
+          <td><strong>Call Created By:</strong> {{ callResponse?.createdBy }}</td>
+          <td>
+            <strong>Call Created Date & Time:</strong>
+            {{ callResponse?.createdDate | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Call Edited By:</strong> {{ callResponse?.modifiedBy }}</td>
+          <td>
+            <strong>Call Edited Date:</strong>
+            {{ callResponse?.modifiedDate | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Remarks:</strong> {{ callResponse?.remarks }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="hstack gap-2 justify-content-end">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+      Close
+    </button>
+  </div>
+</div>

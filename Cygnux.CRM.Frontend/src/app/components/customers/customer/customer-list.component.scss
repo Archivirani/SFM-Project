@@ -1,0 +1,8 @@
+.form-group{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+::ng-deep.bs-datepicker-predefined-btns button:hover{
+    color: white !important;
+} 

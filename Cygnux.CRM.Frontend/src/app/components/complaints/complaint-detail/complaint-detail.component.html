@@ -1,0 +1,203 @@
+<div class="modal-body">
+  <div class="table-container">
+    <!-- <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <th scope="row">
+            Complaint ID: {{ complaintResponse?.complaintCode }}
+          </th>
+          <td>
+            Complaint Date:
+            {{ complaintResponse?.complaintDate }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Docket No.:
+            {{ complaintResponse?.docketNo }}
+          </th>
+          <td>
+            Billing Party Name:
+            {{ complaintResponse?.billingPartyName }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Origin:
+            {{ complaintResponse?.origin }}
+          </th>
+          <td>
+            Destination:
+            {{ complaintResponse?.destination }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Docket Status:
+            {{ complaintResponse?.docketStatus }}
+          </th>
+          <td>Defaulter Branch: {{ complaintResponse?.defaulterBranch }}</td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Complaint Type:
+            {{ complaintResponse?.complaintType }}
+          </th>
+          <td>
+            Complaint Sub Type:
+            {{ complaintResponse?.complaintSubType }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Complaint Priority:
+            {{ complaintResponse?.complaintPriorityId }}
+          </th>
+          <td>
+            Assigned To:
+            {{ complaintResponse?.assignedTo }}
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row">
+            Complaint Status:
+            {{ complaintResponse?.complaintStatus }}
+          </th>
+          <td>
+            Complaint Description:
+            {{ complaintResponse?.complaintDescription }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Complaint Raised By:
+            {{ complaintResponse?.createdBy }}
+          </th>
+          <td>
+            Complaint Raised Date:
+            {{ complaintResponse?.createdDate }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Complaint Updated By:
+            {{ complaintResponse?.createdBy }}
+          </th>
+          <td>
+            Complaint Updated Date:
+            {{ complaintResponse?.createdDate }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Resolution Date:
+            {{ complaintResponse?.resolutionDate }}
+          </th>
+          <td>
+            Remarks:
+            {{ complaintResponse?.remarks }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Supporting Document:
+            {{ complaintResponse?.supportingDocument }}
+          </th>
+          <td></td>
+        </tr>
+      </tbody>
+    </table> -->
+
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <td scope="row">
+            <strong> Complaint ID:</strong> {{ complaintResponse?.complaintID }}
+          </td>
+          <td>
+            <strong> Complaint Date:</strong>
+            {{ complaintResponse?.compalaintDate }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong> Ticket Addressed To:</strong>
+            {{ complaintResponse?.ticketAddressTo }}
+          </td>
+          <td>
+            <strong> Ticket Source:</strong>
+            {{ complaintResponse?.ticketSource }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong> Ticket Type:</strong>
+            {{ complaintResponse?.ticketType }}
+          </td>
+          <td>
+            <strong> Ticket Sub Type:</strong>
+            {{ complaintResponse?.ticketSubType }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong> Ticket Priority:</strong>
+            {{ complaintResponse?.ticketPriority }}
+          </td>
+          <td><strong>Ticket Description: </strong>
+            {{ complaintResponse?.description }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+          <strong>  Escalation ID:</strong>
+            {{ complaintResponse?.escalationId }}
+          </td>
+          <td>
+           <strong> Escalated To/ Date:</strong>
+            {{ complaintResponse?.escalationTo }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Assign To :</strong>
+            {{ complaintResponse?.assignedTo }}
+          </td>
+          <td>
+            <strong> Escalation History:</strong>
+            {{ complaintResponse?.escalationHistory }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong> Last Update By/Date:</strong>
+            {{ complaintResponse?.updateDate }}
+          </td>
+          <td>
+            <strong> Last Update Remarks:</strong>
+            {{ complaintResponse?.updateRemark }}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            <strong>Update History:</strong>
+            {{ complaintResponse?.updateHistory }}
+          </th>
+          <td>
+          <strong>  Closure By/Date:</strong>
+            {{ complaintResponse?.closeBy }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="hstack gap-2 justify-content-end">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+      Close
+    </button>
+  </div>
+</div>

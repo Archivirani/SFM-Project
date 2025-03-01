@@ -1,0 +1,38 @@
+.disabled {
+    pointer-events: none; 
+  }
+  .disabled {
+    pointer-events: none; 
+    opacity: 0.9; 
+  }
+
+  .email-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .email-tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .email-tag {
+    background: #e0e0e0;
+    padding: 5px 8px;
+    border-radius: 3px;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .email-tag button {
+    margin-left: 5px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: red;
+  }
+  

@@ -1,0 +1,400 @@
+<div class="page-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent"
+        >
+          <h4 class="mb-sm-0">Leads</h4>
+
+          <!-- <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+              <li class="breadcrumb-item">
+                <a href="javascript: void(0);">CRM</a>
+              </li>
+              <li class="breadcrumb-item active">Leads</li>
+            </ol>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- <div class="d-flex justify-content-end ">
+      <button type="button" class="btn btn-success add-btn mb-3" (click)="openChartModal()"> More Views
+      </button>
+    </div> -->
+    <div class="row mb-3 d-flex">
+      <div class="col-1">
+          <label class="col-form-label">Date Range</label>
+      </div>
+      <div class="col-5">
+          <div class="form-group mb-3">
+               <input type="text"
+                     placeholder="Daterangepicker"
+                     class="form-control"
+                     bsDaterangepicker  [(ngModel)]="dateRange" (bsValueChange)="getLeads($event)"
+                     [bsConfig]="{ ranges: commonService.ranges }">
+            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row g-4 align-items-center">
+              <div class="col-sm-auto ms-auto">
+                <div class="hstack gap-2">
+                  <button type="button" class="btn btn-success add-btn" (click)="openChartModal()"> Dashboard
+                  </button>
+                  <button
+                    class="btn btn-info material-shadow-none"
+                    (click)="downloadSampleImport($event)"
+                  >
+                    Download Import Template
+                  </button>
+
+                  <button
+                  class="btn btn-info material-shadow-none"
+                  (click)="this.importService.triggerFileInput($event)"
+                  >
+                  Import
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success add-btn"
+                  (click)="openModal()"
+                >
+                  <i class="ri-add-line align-bottom me-1"></i> Add Lead
+                </button>
+                
+                  <div class="file-upload">
+                    <input
+                      type="file"
+                      id="fileInput"
+                      (change)="importService.onFileChange($event,'lead')"
+                      class="file"
+                    />
+                  </div>
+
+                  <span class="dropdown">
+                    <button
+                      class="btn btn-soft-info btn-icon fs-14"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="ri-settings-4-line"></i>
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          (click)="exportLeads($event)"
+                          >Export To Excel</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          (click)="exportCSVLeads($event)"
+                          >Export to CSV</a
+                        >
+                      </li>
+                    </ul>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="table-responsive table-card">
+                <table class="table align-middle" id="customerTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="text-center">Lead Category</th>
+                      <th class="text-center">Customer</th>
+                      <th class="text-center">Lead Date</th>
+                      <th class="text-center">Assigned To</th>
+                      <th class="text-center">Active</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                    <tr>
+                      <th>
+                        <input
+                          type="text"
+                          [(ngModel)]="filters['LeadCategory']"
+                          (input)="getLeads()"
+                          class="form-control"
+                        />
+                      </th>
+                      <th>
+                        <input
+                          type="text"
+                          [(ngModel)]="filters['CustomerName']"
+                          (input)="getLeads()"
+                          class="form-control"
+                        />
+                      </th>
+                      <th>
+                        <div class="input-group">
+                          <input
+                            width="100%"
+                            class="form-control"
+                            placeholder="dd/mm/yyyy"
+                            name="d2"
+                            #c2="ngModel"
+                            [(ngModel)]="filters['LeadDate']"
+                            ngbDatepicker
+                            (ngModelChange)="getLeads()"
+                            #d2="ngbDatepicker"
+                            readonly/>
+                            <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['LeadDate']">
+                              <span aria-hidden="true" class="ng-clear clear">×</span>
+                            </span>                          
+                          <button 
+                            class="btn btn-sm btn-outline-secondary ri-calendar-line"
+                            (click)="d2.toggle()"
+                            type="button"
+                          ></button>
+                           <i  *ngIf="filters['LeadDate']" class="fa-sharp-duotone fa-solid fa-xmark"></i>
+                        </div>
+                      </th>
+                      <th>
+                        <input
+                          type="text"
+                          [(ngModel)]="filters['AssignedTo']"
+                          (input)="getLeads()"
+                          class="form-control"
+                        />
+                      </th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list form-check-all">
+                    <tr *ngFor="let lead of leads; let i = index">
+                      <td class="text-center">{{ lead.leadCategory ? lead.leadCategory:'--' }}</td>
+                      <td class="text-center">{{ lead.companyName ? lead.companyName:'--'}}</td>
+                      <td class="text-center">{{ lead.leadDate ? lead.leadDate:'--'}}</td>
+                      <td class="text-center">{{ lead.assignedTo ? lead.assignedTo:'--'}}</td>
+                      <td class="text-center">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          disabled="true"
+                          [checked]="lead.isActive"
+                        />
+                      </td>
+                      <td>
+                        <ul class="list-inline justify-content-center hstack gap-2 mb-0">
+                          <li
+                            class="list-inline-item"
+                            data-bs-toggle="tooltip"
+                            data-bs-trigger="hover"
+                            data-bs-placement="top"
+                            title="Edit"
+                          >
+                            <a
+                              class="edit-item-btn"
+                              href="#"
+                              (click)="editModal($event, lead.leadId)"
+                              ><i
+                                class="ri-pencil-fill align-bottom text-muted"
+                              ></i
+                            ></a>
+                          </li>
+
+                          <li
+                            class="list-inline-item"
+                            data-bs-toggle="tooltip"
+                            data-bs-trigger="hover"
+                            data-bs-placement="top"
+                            title="View"
+                          >
+                            <a href="#" (click)="viewModal($event, lead.leadId)"
+                              ><i
+                                class="ri-eye-fill align-bottom text-muted"
+                              ></i
+                            ></a>
+                          </li>
+                          <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="Call">
+                            <a href="#" (click)="callModal($event,lead)" class="text-muted d-inline-block">
+                              <i class="ri-phone-line fs-16"></i>
+                            </a>
+                          </li>
+                          <li
+                            class="list-inline-item edit"
+                            data-bs-toggle="tooltip"
+                            data-bs-trigger="hover"
+                            data-bs-placement="top"
+                            title="Meeeting"
+                          >
+                            <a
+                              href="#"
+                              (click)="meetingModal($event, lead)"
+                              class="text-muted d-inline-block"
+                            >
+                              <i class="ri-calendar-line fs-16"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="noresult" *ngIf="leads.length == 0">
+                  <div class="text-center">
+                    <lord-icon
+                      src="https://cdn.lordicon.com/msoeawqm.json"
+                      trigger="loop"
+                      colors="primary:#121331,secondary:#08a88a"
+                      style="width: 75px; height: 75px"
+                    ></lord-icon>
+                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-end mt-3"
+                *ngIf="leads.length != 0"
+              >
+                <ngb-pagination
+                  [collectionSize]="totalItems"
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                  [maxSize]="3"
+                  (pageChange)="onPageChange($event)"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
+
+            <div
+              class="modal fade"
+              id="showModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      {{ leadId == "" ? "Add Lead" : "Update Lead" }}
+                    </h5>
+                    <!-- <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      id="close-modal"
+                    ></button> -->
+                  </div>
+                  <app-add-lead
+                    (dataEmitter)="closeEditModal()"
+                    [leadResponse]="selectedLead"
+                  ></app-add-lead>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="modal fade"
+              id="showModalMeeting"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Add Meeting
+                    </h5>
+                    <!-- <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      id="close-modal"
+                    ></button> -->
+                  </div>
+                  <app-add-meeting  [checkOutValue]="checkOutValue"
+                    (dataEmitter)="closeMeetingModal()"
+                    [addmeetingResponse]="selectedMeeting" [isMeetingList]="'Add'"
+                  ></app-add-meeting>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="modal fade"
+              id="showModalDetail"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Lead Detail
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      id="close-modal"
+                    ></button>
+                  </div>
+                  <app-lead-detail
+                    [leadResponse]="selectedLead"
+                  ></app-lead-detail>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showChartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Leads By Status
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button>
+                  </div>
+                  <app-user-chart [chartList]="'leads'"></app-user-chart>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="showModalCall" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true" data-bs-backdrop="static"
+              data-bs-keyboard="false">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Call</h5>
+                  </div>
+                  <app-add-call (dataEmitter)="closeCallModal()" [callResponse]="selectedCustomerName" [isCallList]="'Add'"></app-add-call>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

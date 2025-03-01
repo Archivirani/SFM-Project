@@ -1,0 +1,79 @@
+<form [formGroup]="expenseMasterForm" class="horizontal-form" autocomplete="off"
+  (submit)="onSubmitExpense(expenseMasterForm)">
+  <div class="modal-body">
+    <input type="hidden" id="id-field" />
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Designation</label>
+          <ng-select [items]="designationList" bindLabel="codeDesc" bindValue="codeId" formControlName="designationId"
+            placeholder="Search designation" [searchable]="true" [clearable]="true" [readonly]="type === 'Update Expense' ? true:false"
+            [ngClass]="{ 'border-danger': expenseMasterForm.controls['designationId'].invalid && expenseMasterForm.controls['designationId'].touched}">
+          </ng-select>
+          <div *ngIf=" expenseMasterForm.controls['designationId'].invalid && expenseMasterForm.controls['designationId']?.touched" class="text-danger">
+            <small *ngIf="expenseMasterForm.controls['designationId'].errors?.['required']">Transport mode is
+              required.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div>
+          <label>Transport Mode</label>
+          <div class="input-group">
+            <ng-select [items]="transportModes" bindLabel="codeDesc" bindValue="codeId"
+              formControlName="transportModeId" placeholder="Search Transport Mode" [searchable]="true"
+              [clearable]="true" [readonly]="true"  [readonly]="type === 'Update Expense' ? true:false"
+              [ngClass]="{ 'border-danger': expenseMasterForm.controls['transportModeId'].invalid && expenseMasterForm.controls['transportModeId'].touched}">
+            </ng-select>
+          </div>
+
+          <div *ngIf="
+              expenseMasterForm.controls['transportModeId'].invalid &&
+              expenseMasterForm.controls['transportModeId']?.touched
+            " class="text-danger">
+            <small *ngIf="expenseMasterForm.controls['transportModeId'].errors?.['required']">transportMode is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label>Rate Per Km</label>
+          <div class="input-group">
+            <input type="number" class="form-control" formControlName="ratePerKM" />
+          </div>
+
+          <div *ngIf="
+              expenseMasterForm.controls['ratePerKM'].invalid &&
+              expenseMasterForm.controls['ratePerKM']?.touched
+            " class="text-danger">
+            <small *ngIf="expenseMasterForm.controls['ratePerKM'].errors?.['required']">ratePerKm is required.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="d-flex mt-4">
+          <input
+            id="dafault-checkbox"
+            type="checkbox"
+            formControlName="active"
+           class="me-2"
+          />
+          <label class="mb-0" for="dafault-checkbox">Active</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="hstack gap-2 justify-content-end">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
+        Close
+      </button>
+      <button type="submit" class="btn btn-success" id="add-btn">
+        {{type}}
+      </button>
+    </div>
+  </div>
+</form>

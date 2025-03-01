@@ -1,0 +1,15 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between; /* Space between title and close button */
+  align-items: center; /* Center vertically */
+  padding: 1rem; /* Adjust padding if needed */
+}
+.call-event {
+  background-color: #3498db !important;
+  border-color: #3498db !important;
+}
+
+.meeting-event {
+  background-color: #2ecc71 !important;
+  border-color: #2ecc71 !important;
+}

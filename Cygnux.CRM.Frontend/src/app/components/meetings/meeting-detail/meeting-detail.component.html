@@ -1,0 +1,71 @@
+<div class="modal-body">
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <td><strong>Customer Name:</strong> {{ meetingResponse?.customerName ? meetingResponse?.customerName :'--' }}</td>
+          <td><strong>Contact Person:</strong> {{ meetingResponse?.contactName ? meetingResponse?.contactName : '--'}}</td>
+        </tr>
+        <tr>
+          <td><strong>Contact No:</strong> {{ meetingResponse?.contactNo ? meetingResponse?.contactNo :'--'}}</td>
+          <td><strong>Email:</strong> {{ meetingResponse?.email ? meetingResponse?.email :'--' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Lead Source:</strong> {{ meetingResponse?.leadSource ?meetingResponse?.leadSource :'--' }}</td>
+          <td><strong>Add Day Event:</strong> {{ meetingResponse?.isAllDayEvent ? "Year" : "No" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Meeting Date & Time:</strong> {{ meetingResponse?.meetingDate ? meetingResponse?.meetingDate :'--'}}</td>
+          <td><strong>Meeting Type:</strong> {{ meetingResponse?.meetingType ? meetingResponse?.meetingType :'--' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Meeting MOM:</strong> {{ meetingResponse?.meetingMOM ? meetingResponse?.meetingMOM :'--' }}</td>
+          <td><strong>Attendees:</strong> {{ meetingResponse?.attendeeNames ? meetingResponse?.attendeeNames :'--'}}</td>
+        </tr>
+        <tr>
+          <td><strong>Meeting Added By:</strong> {{ meetingResponse?.createdBy ? meetingResponse?.createdBy :'--' }}</td>
+          <td><strong>Meeting Edited By:</strong> {{ meetingResponse?.modifiedBy ? meetingResponse?.modifiedBy :'--' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Meeting Added Date:</strong>
+             {{ meetingResponse?.createdDate | date : "dd/MM/yyyy" }}
+          </td>
+          <td><strong>Meeting Edit Date:</strong> 
+            {{ meetingResponse?.modifiedDate | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Check In Location:</strong> {{ meetingResponse?.geoLocation ? meetingResponse?.geoLocation :'--' }}</td>
+          <td><strong>Check Out Location:</strong> {{ meetingResponse?.geoLocation ? meetingResponse?.geoLocation :'--' }}</td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong>Check In Date:</strong> 
+            {{ meetingResponse?.checkIn | date : "dd/MM/yyyy" }}
+          </td>
+          <td>
+            <strong>Check Out Date:</strong>
+            {{ meetingResponse?.checkOut | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+        <tr>
+          <!-- <td scope="row">
+            Check In Date:
+            {{ meetingResponse?.checkInDate | date : "dd/MM/yyyy" }}
+          </td> -->
+          <td scope="row">
+            <strong>Lat:</strong> 
+            {{ meetingResponse?.latitude ? meetingResponse?.latitude :'--' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="hstack gap-2 justify-content-end">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+      Close
+    </button>
+  </div>
+</div>

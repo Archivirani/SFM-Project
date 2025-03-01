@@ -1,0 +1,41 @@
+.truncate-text {
+    // width:110px ;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    color: rgb(48, 48, 48) !important;
+  }
+  .border{
+   border: 2px solid rgb(148, 148, 148) !important;
+   border-radius: 7px;
+  }
+  .green{
+    background-color: #daf4f0;
+  }
+  .wheat{
+    background-color: #fde8e4;
+  }
+  .pink{
+    background-color: #ffe8fc;
+  }
+  .lightgreen{
+    background-color: #fef4e4;
+  }
+  .blue{
+    background-color: #dff0fa;
+  }
+  .purple{
+    background-color: #f5f9d0;
+  }
+  .bluecolor{
+    background-color: #dee5ff;
+  }
+  .tan{
+    background-color: #fadabe;
+  }
+  .Lilac{
+    background-color: #c1e9cd;
+  }
+  .card-body{
+    height: 90px;
+  }

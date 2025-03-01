@@ -1,0 +1,215 @@
+<form
+  [formGroup]="taskForm"
+  class="form-horizontal"
+  autocomplete="off"
+  (submit)="onSubmitTask(taskForm)"
+>
+  <div class="modal-body">
+    <input type="hidden" id="id-field" />
+    <div class="row g-3">
+      <div class="form-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div>
+              <label class="col-form-label">Task Name</label>
+              <input
+                class="form-control"
+                formControlName="taskName"
+                type="text"
+                required
+              />
+              <div
+                *ngIf="
+                  taskForm.controls['taskName'].invalid &&
+                  taskForm.controls['taskName']?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="taskForm.controls['taskName'].errors?.['required']"
+                  >Task name is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label class="col-form-label">Description</label>
+              <input
+                class="form-control"
+                formControlName="taskDescription"
+                type="text"
+                required
+              />
+              <div
+                *ngIf="
+                  taskForm.controls['taskDescription'].invalid &&
+                  taskForm.controls['taskDescription']?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="taskForm.controls['taskDescription'].errors?.['required']"
+                  >Description name is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label for="datePicker">Task Date</label>
+              <div class="input-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    placeholder="dd/mm/yyyy"
+                    formControlName="taskDate"
+                    ngbDatepicker
+                    #d2="ngbDatepicker"
+                    [markDisabled]="commonService.isDateDisabled"
+                  />
+                  <button
+                    class="btn btn-sm btn-outline-secondary ri-calendar-line"
+                    (click)="d2.toggle()"
+                    type="button"
+                  ></button>
+                </div>
+                <div
+                  *ngIf="
+                    taskForm.controls['taskDate'].invalid &&
+                    taskForm.controls['taskDate']?.touched
+                  "
+                  class="text-danger"
+                >
+                  <small
+                    *ngIf="taskForm.controls['taskDate'].errors?.['required']"
+                    >Task date is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label class="col-form-label">Lead Category</label>
+              <select
+                id="dropdown"
+                class="form-control"
+                formControlName="leadCategoryId"
+              >
+                <option value="" disabled selected>--Select--</option>
+                <option
+                  *ngFor="let item of leadCategories"
+                  [value]="item.codeId"
+                >
+                  {{ item.codeDesc }}
+                </option>
+              </select>
+
+              <div
+                *ngIf="
+                  taskForm.controls['leadCategoryId'].invalid &&
+                  taskForm.controls['leadCategoryId']?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="taskForm.controls['leadCategoryId'].errors?.['required']"
+                  >Category is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label class="col-form-label">Customer</label>
+
+              <ng-select
+                [items]="customers"
+                bindLabel="customerName"
+                bindValue="leadId"
+                formControlName="leadId"
+                placeholder="Search Customer"
+                [searchable]="true"
+                [clearable]="true"
+              >
+              </ng-select>
+              <div
+                *ngIf="
+                  taskForm.controls['leadId'].invalid &&
+                  taskForm.controls['leadId']?.touched
+                "
+                class="text-danger"
+              >
+                <small *ngIf="taskForm.controls['leadId'].errors?.['required']"
+                  >Customer is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label class="col-form-label">Priority</label>
+
+              <select
+                id="dropdown"
+                class="form-control"
+                formControlName="priorityId"
+              >
+                <option value="" disabled selected>--Select--</option>
+                <option *ngFor="let item of priorities" [value]="item.codeId">
+                  {{ item.codeDesc }}
+                </option>
+              </select>
+
+              <div
+                *ngIf="
+                  taskForm.controls['priorityId'].invalid &&
+                  taskForm.controls['priorityId']?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="taskForm.controls['priorityId'].errors?.['required']"
+                  >Priority is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label class="col-form-label">Assigned To</label>
+              <ng-select
+                [items]="users"
+                bindLabel="name"
+                bindValue="userId"
+                formControlName="assignedToIDs"
+                placeholder="Search Assigned To"
+                [multiple]="true"
+                [clearable]="true"
+                [searchable]="true"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="hstack gap-2 justify-content-end">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
+        Close
+      </button>
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="taskForm.invalid"
+        id="add-btn"
+      >
+        {{ taskId == "" ? "Add Task" : "Update Task" }}
+      </button>
+    </div>
+  </div>
+</form>

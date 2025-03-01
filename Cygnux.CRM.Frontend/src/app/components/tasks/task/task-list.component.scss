@@ -1,0 +1,11 @@
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center vertically */
+    padding: 1rem; /* Adjust padding if needed */
+}
+.form-group{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}

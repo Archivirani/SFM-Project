@@ -1,0 +1,66 @@
+<div class="modal-body">
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <tbody>
+        
+        <tr>
+          <td><strong>Expense Code:</strong> {{ expenseResponse?.expenseCode }}</td>
+          <td><strong>Customer Name:</strong> {{ expenseResponse?.companyName }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Request ID:</strong> {{ expenseResponse?.requestID }}</td>
+          <td><strong class="me-2">Meeting Date:</strong>{{ expenseResponse?.expenseDate }} </td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Req. ID Date:</strong>{{ expenseResponse?.requestDate }}</td>
+          <td><strong class="me-2">RTGS No.:</strong></td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Expense Date:</strong> {{ expenseResponse?.expenseDate }}</td>
+          <td><strong class="me-2">Transport Mode:</strong> {{ expenseResponse?.transportMode }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Checked Out Location:</strong> {{expenseResponse?.checkedInLocation}} </td>
+          <td><strong class="me-2">Checked In Location:</strong> {{ expenseResponse?.checkedInLocation }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Distance In Km:</strong> {{ expenseResponse?.distanceInKm }}</td>
+          <td><strong class="me-2">Amount:</strong> {{ expenseResponse?.amount }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Supporting Document:</strong>  {{ expenseResponse?.supportingDocument }} </td>
+          <td><strong class="me-2">Remarks:</strong> {{ expenseResponse?.remarks }}
+        </tr>
+        <tr>
+          <td><strong class="me-2">Expense Added By:</strong> {{ expenseResponse?.createdBy }}</td>
+          <td><strong class="me-2">Expense Added Date & Time:</strong> {{ expenseResponse?.expenseAddedDate | date : "dd/MM/yyyy" }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Expense Edited By:</strong> {{ expenseResponse?.expenseModifiedBy }}</td>
+          <td><strong class="me-2">Expense Edited Date:</strong> {{ expenseResponse?.expenseModifiedDate | date : "dd/MM/yyyy" }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Approved By Manager:</strong> {{ expenseResponse?.approvedBy }}</td>
+          <td><strong class="me-2">Manager Approved Date & Time:</strong> {{ expenseResponse?.approvedDate | date : "dd/MM/yyyy" }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Approved By Auditor:</strong>{{ expenseResponse?.auditedBy }} </td>
+          <td><strong class="me-2">Auditor Approved Date & Time:</strong>{{ expenseResponse?.auditDate }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Status:</strong> {{ expenseResponse?.status }}</td>
+          <td><strong class="me-2">Auditor Remarks:</strong>{{ expenseResponse?.auditRemarks }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal-footer">
+  <div class="hstack gap-2 justify-content-end">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+      Close
+    </button>
+  </div>
+</div>

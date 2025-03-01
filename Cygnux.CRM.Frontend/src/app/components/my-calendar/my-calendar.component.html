@@ -1,0 +1,73 @@
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- <h3 class="page-title">My Calendar</h3> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet">
+          <div class="portlet-body">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="showModalMeeting"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Update Meeting</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="close-modal"
+        ></button>
+      </div>
+      <app-add-meeting
+        (dataEmitter)="closeEditMeetingModal()"
+        [meetingResponse]="selectedMeeting"
+      ></app-add-meeting>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="showModalCall"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Update Call</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="close-modal"
+        ></button>
+      </div>
+      <app-add-call
+        (dataEmitter)="closeEditCallModal()"
+        [callResponse]="selectedCall"
+      ></app-add-call>
+    </div>
+  </div>
+</div>

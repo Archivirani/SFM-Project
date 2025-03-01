@@ -1,0 +1,52 @@
+<div class="modal-body">
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <td><strong>Lead Category:</strong> {{ leadResponse?.leadCategory }}</td>
+          <td><strong>Lead Date:</strong> {{ leadResponse?.leadDate }}</td>
+        </tr>
+        <tr>
+          <td><strong>Customer Name:</strong> {{ leadResponse?.companyName }}</td>
+          <td><strong>Contact Person:</strong> {{ leadResponse?.contactName }}</td>
+        </tr>
+        <tr>
+          <td><strong>Contact No:</strong> {{ leadResponse?.contactNo }}</td>
+          <td><strong>Active:</strong> {{ leadResponse?.isActive ? "Yes" : "No" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Designation:</strong> {{ leadResponse?.designation }}</td>
+          <td><strong>Assign To:</strong> {{ leadResponse?.assignedTo }}</td>
+        </tr>
+        <tr>
+          <td><strong>Lead Source:</strong> {{ leadResponse?.leadSource }}</td>
+          <td><strong>Email:</strong> {{ leadResponse?.email }}</td>
+        </tr>
+        <tr>
+          <td><strong>City:</strong> {{ leadResponse?.city }}</td>
+          <td><strong>Region:</strong> {{ leadResponse?.region }}</td>
+        </tr>
+        <tr>
+          <td><strong>Industry Type:</strong> {{ leadResponse?.industryType }}</td>
+          <td><strong>Services Interested:</strong> {{ leadResponse?.serviceInterestedNames }}</td>
+        </tr>
+        <tr>
+          <td><strong>Lead Created By:</strong> {{ leadResponse?.createdBy }}</td>
+          <td><strong>Lead Modified By:</strong> {{ leadResponse?.modifiedBy }}</td>
+        </tr>
+        <tr>
+          <td><strong>Branch Name:</strong> {{ leadResponse?.branch }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal-footer">
+  <div class="hstack gap-2 justify-content-end">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+      Close
+    </button>
+  </div>
+</div>

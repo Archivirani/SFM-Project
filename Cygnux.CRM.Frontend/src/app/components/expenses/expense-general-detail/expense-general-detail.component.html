@@ -1,0 +1,32 @@
+<div class="modal-body">
+    <div class="table-container">
+      <table class="table table-striped table-hover">
+        <tbody>
+            <tr>
+                <td><strong class="me-2">Designation:</strong>{{ expenseResponse?.designation}}</td>
+                <td><strong class="me-2">Transport Mode:</strong>{{ expenseResponse?.transportMode}}</td>
+            </tr>
+            <tr>
+                <td><strong class="me-2">Rate Per KM:</strong> {{ expenseResponse?.ratePerKM}}</td>
+                <td><strong class="me-2">Expense Added By:</strong>{{ expenseResponse?.createdBy}}</td>
+            </tr>
+            <tr>
+                <td><strong class="me-2">Expense Added By Date & Time:</strong>{{ expenseResponse?.createdDate | date : "dd/MM/yyyy"}}</td>
+                <td><strong class="me-2">Expense Edited By:</strong>{{ expenseResponse?.modifiedBy}}</td>
+            </tr>
+            <tr>
+                <td><strong class="me-2">Expense Edited By Date & Time:</strong>{{ expenseResponse?.modifiedDate | date : "dd/MM/yyyy"}}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <div class="hstack gap-2 justify-content-end">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+        Close
+      </button>
+    </div>
+  </div>
+  

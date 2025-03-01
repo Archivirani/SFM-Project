@@ -1,0 +1,160 @@
+<form [formGroup]="expenseForm" class="horizontal-form" autocomplete="off" (submit)="onSubmitExpense(expenseForm)">
+  <div class="modal-body">
+    <input type="hidden" id="id-field" />
+    <div class="row g-3">
+      <div class="col-lg-6" *ngIf="typeData === 'EditExpense'">
+        <div>
+          <label class="control-label">Expense Code:</label>
+          <input class="form-control" formControlName="expenseCode" type="text" readonly  
+          [ngClass]="{ 'border-danger': expenseForm.controls['expenseCode'].invalid && expenseForm.controls['expenseCode'].touched}"/>
+          <div *ngIf="
+        expenseForm.controls['expenseCode'].invalid &&
+        expenseForm.controls['expenseCode']?.touched
+      " class="text-danger" >
+            <small *ngIf="expenseForm.controls['expenseCode'].errors?.['required']">Customer Name is
+              required.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Customer Name:</label>
+          <input class="form-control" formControlName="customerName" type="text" readonly
+          [ngClass]="{ 'border-danger': expenseForm.controls['customerName'].invalid && expenseForm.controls['customerName'].touched}"/>
+          <div *ngIf="
+        expenseForm.controls['customerName'].invalid &&
+        expenseForm.controls['customerName']?.touched
+      " class="text-danger">
+            <small *ngIf="expenseForm.controls['customerName'].errors?.['required']">Customer Name is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label>Meeting Date:</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="dd/mm/yyyy" formControlName="MeetingDate" ngbDatepicker
+              #d3="ngbDatepicker" [class.disabled]="typeData ? true:false"  
+              [ngClass]="{ 'border-danger': expenseForm.controls['MeetingDate'].invalid && expenseForm.controls['MeetingDate'].touched}"/>
+            <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d3.toggle()"
+              type="button" [class.disabled]="typeData ? true:false"></button>
+          </div>
+          <div *ngIf=" expenseForm.controls['MeetingDate'].invalid && expenseForm.controls['MeetingDate']?.touched" class="text-danger">
+            <small *ngIf="expenseForm.controls['MeetingDate'].errors?.['required']">Meeting Date is required.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Transport Mode</label>
+          <ng-select [items]="transportModes" bindLabel="codeDesc" bindValue="codeId" formControlName="TransportModeId"
+            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true" 
+            [ngClass]="{'border-danger': expenseForm.controls['TransportModeId'].invalid && expenseForm.controls['TransportModeId'].touched}">
+          </ng-select>
+          <div *ngIf="expenseForm.controls['TransportModeId'].invalid && expenseForm.controls['TransportModeId']?.touched" class="text-danger">
+            <small *ngIf="expenseForm.controls['TransportModeId'].errors?.['required']">Transport mode is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label>Expense Date</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="dd/mm/yyyy" formControlName="ExpenseDate" ngbDatepicker
+              #d2="ngbDatepicker" [class.disabled]="typeData ? true:false"
+              [ngClass]="{ 'border-danger': expenseForm.controls['ExpenseDate'].invalid && expenseForm.controls['ExpenseDate'].touched}"/>
+            <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()"
+              type="button" [class.disabled]="typeData ? true:false"></button>
+          </div>
+
+          <div *ngIf="
+              expenseForm.controls['ExpenseDate'].invalid &&
+              expenseForm.controls['ExpenseDate']?.touched
+            " class="text-danger">
+            <small *ngIf="expenseForm.controls['ExpenseDate'].errors?.['required']">Expense date is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Checked Out Location:</label>
+          <input class="form-control" formControlName="checkedOutLocation" type="text" readonly />
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Checked In Location</label>
+          <input class="form-control" formControlName="checkedInLocation" type="text" readonly />
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label"> Distance In Km</label>
+          <input class="form-control" formControlName="DistanceInKm" type="text" appOnlyNumber  readonly/>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Exp. Rate</label>
+          <input class="form-control" formControlName="expRate" type="text" appAmount readonly
+          [ngClass]="{ 'border-danger': expenseForm.controls['expRate'].invalid && expenseForm.controls['expRate'].touched}"/>
+          <div *ngIf="
+              expenseForm.controls['expRate'].invalid &&
+              expenseForm.controls['expRate']?.touched
+            " class="text-danger">
+            <small *ngIf="expenseForm.controls['expRate'].errors?.['required']">Exp. Rate is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Amount</label>
+          <input class="form-control" formControlName="Amount" type="text" appAmount readonly  />
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Supporting Document</label>
+          <input id="file" type="file" (change)="onFileChange($event)" accept="image/*" formControlName="SupportingDocument"  [class.disabled]="typeData === 'EditExpense' ? true:false"/>
+          <div *ngIf="fileError" class="text-danger">
+            {{ fileError }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Remarks</label>
+          <input class="form-control" formControlName="remarks" type="text" [ngClass]="{ 'border-danger': expenseForm.controls['remarks'].invalid && expenseForm.controls['remarks'].touched}"/>
+          <div *ngIf="
+              expenseForm.controls['remarks'].invalid &&
+              expenseForm.controls['remarks']?.touched
+            " class="text-danger">
+            <small *ngIf="expenseForm.controls['remarks'].errors?.['required']">Remarks is
+              required.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="hstack gap-2 justify-content-end">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
+        Close
+      </button>
+      <button type="submit" class="btn btn-success"  id="add-btn"  [disabled]="expenseForm.invalid">
+        {{typeData}}
+      </button>
+    </div>
+  </div>
+</form>

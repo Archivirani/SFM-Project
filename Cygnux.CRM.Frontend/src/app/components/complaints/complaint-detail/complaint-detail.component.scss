@@ -1,0 +1,26 @@
+/* Ensure that input and button are on the same line */
+.input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+/* Make sure the button doesn't shrink */
+.input-group .btn {
+  flex-shrink: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Ensure the form input has no round corners on the right */
+.input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Adjust the calendar icon button */
+.btn-outline-secondary {
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

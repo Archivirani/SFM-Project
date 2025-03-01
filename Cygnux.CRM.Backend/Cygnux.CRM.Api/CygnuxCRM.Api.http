@@ -1,0 +1,6 @@
+@CygnuxLSP.API_HostAddress = http://localhost:5116
+
+GET {{CygnuxLSP.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

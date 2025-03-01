@@ -1,0 +1,68 @@
+.ng-select-multiple {
+  width: 100%;
+  .ng-value-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .ng-value {
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    margin: 2px;
+    font-size: 0.9em;
+
+    .ng-value-icon {
+      color: #888;
+      margin-right: 5px;
+      cursor: pointer;
+
+      &:hover {
+        color: #ff4d4d;
+      }
+    }
+
+    .ng-value-label {
+      color: #333;
+    }
+  }
+
+  .ng-placeholder {
+    color: #999;
+    font-size: 0.9em;
+    padding: 4px 8px;
+  }
+  .ng-input {
+    flex-grow: 1;
+
+    input {
+      border: 1px solid #ccc;
+      padding: 6px;
+      border-radius: 4px;
+      outline: none;
+      font-size: 0.9em;
+
+      &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+    }
+  }
+
+  .ng-clear-wrapper {
+    cursor: pointer;
+
+    .ng-clear {
+      color: #ff4d4d;
+      font-size: 1.2em;
+    }
+  }
+}
+
+p{
+  font-weight: normal;
+  margin-left: 10px; 
+}

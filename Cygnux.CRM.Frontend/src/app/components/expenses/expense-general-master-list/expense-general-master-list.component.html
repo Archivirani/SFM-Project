@@ -1,0 +1,236 @@
+<!-- <div class="page-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+            <div
+              class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent"
+            >
+              <h4 class="mb-sm-0">Expenses General master</h4>
+    
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item">
+                    <a href="javascript: void(0);">CRM</a>
+                  </li>
+                  <li class="breadcrumb-item active">Expenses</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-card-list></app-card-list>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="row g-4 align-items-center">
+                  <div class="col-sm-auto ms-auto">
+                    <div class="hstack gap-2">
+                      <button
+                        class="btn btn-info material-shadow-none"
+                      >
+                        Add
+                      </button>
+                      <button
+                        class="btn btn-info material-shadow-none"
+                      >
+                        Import
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                  <div>
+                    <div class="table-responsive table-card">
+                      <table class="table align-middle table-striped" id="customerTable">
+                        <thead class="table-light">
+                          <tr class="table-header">
+                            <th>Designation</th>
+                            <th>Transport Mode</th>
+                            <th>Rate Per Km</th>
+                            <th>Action</th>
+                          </tr>
+                          <tr>
+                            <th>
+                              <input type="text" class="form-control"/>
+                            </th>
+                            <th>
+                              <input type="text" class="form-control"/>
+                            </th>
+                            <th>
+                              <div class="input-group">
+                                <input type="text" class="form-control"/>
+                              </div>
+                            </th>
+                            <th>
+                              <input type="text" class="form-control"/>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="list form-check-all">
+                          <tr>
+                            <th>Designation</th>
+                            <th>Transport Mode</th>
+                            <th>Rate Per Km</th>
+                            <th>Action</th>
+                          </tr>
+                          <tr>
+                            <th>Designation</th>
+                            <th>Transport Mode</th>
+                            <th>Rate Per Km</th>
+                            <th>Action</th>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="noresult" >
+                        <div class="text-center">
+                          <h5 class="mt-2">Sorry! No Result Found</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex justify-content-end mt-3"
+                 
+                    >
+                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+       
+  </div>
+</div> -->
+
+<div class="page-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+          <h4 class="mb-sm-0">Expenses General master</h4>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row g-4 align-items-center">
+              <div class="col-sm-auto ms-auto">
+                <div class="hstack gap-2">
+                  <button class="btn btn-success material-shadow-none" (click)="openModal('Add Expense')">
+                    + Add
+                  </button>
+                  <button class="btn btn-info material-shadow-none" (click)="exportExpense($event)">
+                    Export
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="table-responsive table-card">
+                <table class="table align-middle" id="customerTable">
+                  <thead class="table-light">
+                    <tr class="table-header">
+                      <th class="text-center">Designation</th>
+                      <th class="text-center">Transport Mode</th>
+                      <th class="text-center">Rate Per Km</th>
+                      <th class="text-center">Active</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                    <tr>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['Designation']" (input)="getExpensesGeneralMaster()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['TransportMode']" (input)="getExpensesGeneralMaster()"
+                          class="form-control" />
+                      </th>
+                      <th>
+                        <input type="text" [(ngModel)]="filters['RatePerKM']" (input)="getExpensesGeneralMaster()"
+                          class="form-control" />
+                      </th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list form-check-all">
+                    <tr *ngFor="let expense of expenses">
+                      <td class="text-center">{{expense.designation ? expense.designation:'--'}}</td>
+                      <td class="text-center">{{expense.transportMode ? expense.transportMode:'--'}}</td>
+                      <td class="text-center">{{expense.ratePerKM ? expense.ratePerKM:'--'}}</td>
+                      <td class="text-center"> <input class="form-check-input" type="checkbox" disabled="true" [checked]="expense.isActive"
+                      /></td>
+                      <td class="text-center d-flex justify-content-center">
+                        <ul class="list-inline hstack gap-2 mb-0">
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="Edit" (click)="editModal($event, expense,'Update Expense')">
+                            <a class="edit-item-btn" href="#"><i class="ri-pencil-fill align-bottom text-muted"></i></a>
+                          </li>
+
+                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="View" (click)="viewModal($event, expense)">
+                            <a href="#"><i class="ri-eye-fill align-bottom text-muted"></i></a>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="noresult" *ngIf="expenses.length === 0">
+                  <div class="text-center">
+                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3"
+              *ngIf="expenses.length!=0">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [maxSize]="3"
+                  (pageChange)="onPageChange($event)">
+                </ngb-pagination>
+              </div>
+            </div>
+            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      {{ expenseId }} General Master
+                    </h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button> -->
+                  </div>
+                  <app-add-expense-general-master (dataEmitter)="closeEditModal()"
+                    [expenseResponse]="selectedExpense" [type]="expenseId"></app-add-expense-general-master>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="showModalDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Expense Detail
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      id="close-modal"></button>
+                  </div>
+                  <app-expense-general-detail [expenseResponse]="selectedExpense"></app-expense-general-detail>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

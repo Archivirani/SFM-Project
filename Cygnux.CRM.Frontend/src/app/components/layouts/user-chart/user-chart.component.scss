@@ -1,0 +1,38 @@
+.doughnut{
+    width: 230px !important;
+    height: 230px !important;
+}
+
+.userbackground{
+    background: #fbf9f5;
+    border-radius: 22px;
+}
+.canvasTicket{
+    height: 230px !important;
+    width: 1000px !important;
+}
+
+#MyPieChart {
+    width: 250px !important;
+    height: 250px !important;
+  }
+  ::ng-deep.bs-datepicker-predefined-btns button:hover{
+    color: white !important;
+} 
+
+.truncate-text {
+    // width:110px ;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    color: rgb(48, 48, 48) !important;
+  }
+
+  #MyRatingChart{
+    width: 250px !important;
+    height: 250px !important;
+  }
+  .bg-color{
+    background-color: aliceblue !important;
+    border-radius: 8px;
+  }

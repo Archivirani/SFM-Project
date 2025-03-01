@@ -1,0 +1,206 @@
+<form
+  [formGroup]="callForm"
+  class="tablelist-form"
+  autocomplete="off"
+  (submit)="onSubmitCall(callForm)"
+>
+  <div class="modal-body">
+    <input type="hidden" id="id-field" />
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Call Purpose</label>
+          <select class="form-control" formControlName="callPurpose" 
+          [ngClass]="{ 'border-danger': callForm.controls['callPurpose'].invalid && callForm.controls['callPurpose'].touched}">
+            <option value="" disabled selected>Select Purpose</option>
+            <option *ngFor="let item of callPurposes" [value]="item.codeId">
+              {{ item.codeDesc }}
+            </option>
+          </select>
+          <span
+            *ngIf="
+              callForm.controls['callPurpose'].invalid &&
+              callForm.controls['callPurpose']?.touched
+            "
+            class="help-block"
+          >
+            <small *ngIf="callForm.controls['callPurpose'].errors?.['required']"
+              class="text-danger">Call purpose is required.</small
+            >
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Call Category</label>
+          <select
+            id="dropdown"
+            class="form-control"
+            formControlName="callCategoryId"
+            [ngClass]="{ 'border-danger': callForm.controls['callCategoryId'].invalid && callForm.controls['callCategoryId'].touched}">
+            <option value="" disabled selected>--Select--</option>
+            <option *ngFor="let item of callCategories" [value]="item.codeId">
+              {{ item.codeDesc }}
+            </option>
+          </select>
+
+          <span
+            *ngIf="
+              callForm.controls['callCategoryId'].invalid &&
+              callForm.controls['callCategoryId']?.touched
+            "
+            class="help-block"
+          >
+            <small
+              *ngIf="callForm.controls['callCategoryId'].errors?.['required']"
+              class="text-danger">Category is required.</small
+            >
+          </span>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div>
+          <label class="control-label">Call Date</label>
+
+          <div class="input-group">
+            <input
+              width="100%"
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              formControlName="callDate"
+              ngbDatepicker
+              #d3="ngbDatepicker"
+              [markDisabled]="commonService.isDateDisabled"  [ngClass]="{ 'border-danger': callForm.controls['callDate'].invalid && callForm.controls['callDate'].touched}"/>
+            <button
+              class="btn btn-sm btn-outline-secondary ri-calendar-line"
+              (click)="d3.toggle()"
+              type="button"
+            ></button>
+          </div>
+          <div *ngIf="
+                      callForm.get('callDate')?.invalid &&
+                      callForm.controls['callDate']?.touched
+                    " class="text-danger">
+            <small *ngIf="callForm.get('callDate')?.errors?.['required']">Meeting date is required.</small>
+            <small *ngIf="callForm.get('callDate')?.errors?.['notFutureDate']">Meeting date must be in the future.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div>
+          <label for="startTime" class="control-label">Start Time</label>
+          <input
+            type="time"
+            class="form-control"
+            id="startTime"
+            formControlName="startTime"
+            [ngClass]="{ 'border-danger': callForm.controls['startTime'].invalid && callForm.controls['startTime'].touched}"/>
+          <div *ngIf="callForm.invalid && callForm.touched" class="text-danger">
+            <small *ngIf="callForm.errors?.['startTimeAfterCurrentTime']">
+                Start time must be after the current time.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div>
+          <label for="endTime" class="control-label">End Time</label>
+          <input
+            type="time"
+            class="form-control"
+            id="endTime"
+            formControlName="endTime"
+            [ngClass]="{ 'border-danger': callForm.controls['endTime'].invalid && callForm.controls['endTime'].touched}"/>
+          <div *ngIf="callForm.invalid && callForm.touched" class="text-danger">
+            <small *ngIf="callForm.errors?.['timeRangeValidator']">
+                End time must be after the start time.
+            </small>
+          </div>
+        </div>
+      </div>
+      <!-- @if(isCallList === 'Add'){
+      } -->
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Customer Name</label>
+          <input type="text" formControlName="companyName" class="form-control" readonly>
+        </div>
+      </div>
+      <!-- @if(isCallList === 'Update'){
+        <div class="col-lg-6">
+          <div>
+            <label class="control-label">Customer Name</label>
+            <ng-select
+              [items]="customerService.customersList"
+              bindLabel="customerName"
+              bindValue="customerCode"
+              formControlName="customerCode"
+              placeholder="Search Customer"
+              (input)="customerService.customerDropdown($event)"
+              [searchable]="true"
+              [ngClass]="{ 'border-danger': callForm.controls['customerCode'].invalid && callForm.controls['customerCode'].touched }"
+              [clearable]="true">
+            </ng-select>
+            <span *ngIf="callForm.controls['customerCode'].invalid && callForm.controls['customerCode']?.touched " class="help-block">
+              <small *ngIf="callForm.controls['customerCode'].errors?.['required']" class="text-danger">Customer name is required.</small>
+            </span>
+          </div>
+        </div>
+      } -->
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Call Status</label>
+          <select
+            id="dropdown"
+            class="form-control"
+            formControlName="callStatusId"
+            [ngClass]="{ 'border-danger': callForm.controls['callStatusId'].invalid && callForm.controls['callStatusId'].touched}">
+            <option disabled selected>--Select--</option>
+            <option *ngFor="let item of callStatuses" [value]="item.codeId">
+              {{ item.codeDesc }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Remarks</label>
+          <input
+            class="form-control"
+            maxlength="500"
+            formControlName="remarks"
+            type="text"
+          />
+          <span
+            *ngIf="
+              callForm.controls['remarks'].invalid &&
+              callForm.controls['remarks']?.touched
+            "
+            class="help-block"
+          >
+            <small
+              *ngIf="callForm.controls['remarks'].errors?.['required']"
+              class="text-danger">remarks is required.</small
+            >
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="hstack gap-2 justify-content-end">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
+        Close
+      </button>
+      <button
+        type="submit"
+        class="btn btn-success"
+        id="add-btn"
+      >
+      {{isCallList}} Call
+      </button>
+    </div>
+  </div>
+</form>

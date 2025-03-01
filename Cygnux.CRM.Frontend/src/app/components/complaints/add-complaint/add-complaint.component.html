@@ -1,0 +1,187 @@
+<form [formGroup]="complaintForm" class="horizontal-form" autocomplete="off"
+  (submit)="onSubmitComplaint(complaintForm)">
+  <div class="modal-body">
+    <input type="hidden" id="id-field" />
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Docket No</label>
+          <input class="form-control" formControlName="docketNo" type="text" required />
+          <div *ngIf=" complaintForm.controls['docketNo'].invalid && complaintForm.controls['docketNo']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['docketNo'].errors?.['required']">Docket no. is required.</small>
+            <small *ngIf="docketNotFound">Docket no. is not found.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Billing Party Name</label>
+          <input class="form-control" readonly formControlName="billingPartyName" type="text"
+            required />
+          <div *ngIf=" complaintForm.controls['billingPartyName'].invalid && complaintForm.controls['billingPartyName']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['billingPartyName'].errors?.['required']">Billing party name is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Origin</label>
+          <input class="form-control" readonly formControlName="origin" type="text" required />
+          <div *ngIf=" complaintForm.controls['origin'].invalid && complaintForm.controls['origin']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['origin'].errors?.['required']">Origin is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Destination</label>
+          <input class="form-control" maxlength="10" readonly formControlName="destination" type="text" required />
+          <div *ngIf=" complaintForm.controls['destination'].invalid && complaintForm.controls['destination']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['destination'].errors?.['required']">Destination is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Docket Status</label>
+          <input class="form-control" maxlength="255" readonly formControlName="docketStatus" type="text" required />
+          <div *ngIf=" complaintForm.controls['docketStatus'].invalid && complaintForm.controls['docketStatus']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['docketStatus'].errors?.['required']">Docket status is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Defaulter Branch</label>
+          <ng-select [items]="locations" bindLabel="locName" bindValue="locCode" formControlName="defaulterBranch"
+            placeholder="Search Defaulter Branch" [searchable]="true" [clearable]="true">
+          </ng-select>
+          <div *ngIf=" complaintForm.controls['defaulterBranch'].invalid && complaintForm.controls['defaulterBranch']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['defaulterBranch'].errors?.['required']">Defaulter branch is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label for="datePicker">Complaint Date</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="dd/mm/yyyy" formControlName="complaintDate" ngbDatepicker
+              #d3="ngbDatepicker" />
+            <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d3.toggle()" type="button"></button>
+          </div>
+          <div *ngIf=" complaintForm.controls['complaintDate'].invalid && complaintForm.controls['complaintDate']?.touched " class="text-danger">
+            <small *ngIf="complaintForm.controls['complaintDate'].errors?.['required']">Date is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Complaint Type</label>
+          <select id="dropdown" class="form-control" formControlName="complaintType">
+            <option value="" disabled selected>--Select--</option>
+            <option *ngFor="let item of complaintTypes" [value]="item.codeId">
+              {{ item.codeDesc }}
+            </option>
+          </select>
+
+          <div *ngIf=" complaintForm.controls['complaintType'].invalid && complaintForm.controls['complaintType']?.touched " class="text-danger">
+            <small *ngIf="complaintForm.controls['complaintType'].errors?.['required']">Type is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Complaint Sub Type</label>
+          <select id="dropdown" class="form-control" formControlName="complaintSubType">
+            <option value="" disabled selected>--Select--</option>
+            <option *ngFor="let item of complaintSubTypes" [value]="item.codeId">
+              {{ item.codeDesc }}
+            </option>
+          </select>
+          <div *ngIf=" complaintForm.controls['complaintSubType'].invalid && complaintForm.controls['complaintSubType']?.touched " class="text-danger">
+            <small *ngIf="complaintForm.controls['complaintSubType'].errors?.['required']">Sub type is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Complaint Priority</label>
+          <select id="dropdown" class="form-control" formControlName="complaintPriorityId">
+            <option value="" disabled selected>--Select--</option>
+            <option *ngFor="let item of priorities" [value]="item.codeId">
+              {{ item.codeDesc }}
+            </option>
+          </select>
+
+          <div *ngIf=" complaintForm.controls['complaintPriorityId'].invalid && complaintForm.controls['complaintPriorityId']?.touched
+            " class="text-danger">
+            <small *ngIf="complaintForm.controls['complaintPriorityId'].errors?.['required']">priority is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">Complaint Description</label>
+          <input class="form-control" maxlength="255" formControlName="complaintDescription" type="text" required />
+          <div *ngIf="
+              complaintForm.controls['complaintDescription'].invalid &&
+              complaintForm.controls['complaintDescription']?.touched
+            " class="text-danger">
+            <small *ngIf="complaintForm.controls['complaintDescription'].errors?.['required']">description is
+              required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div>
+          <label class="control-label">AssignTo</label>
+          <ng-select [items]="users" bindLabel="name" bindValue="userId" formControlName="assignTo"
+            placeholder="Search AssignTo" [clearable]="true" [searchable]="true">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-lg-6" *ngIf="complaintId != ''">
+        <div>
+          <label for="datePicker">Resolution Date</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="dd/mm/yyyy" formControlName="resolutionDate" ngbDatepicker
+              #d2="ngbDatepicker" />
+            <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()"
+              type="button"></button>
+          </div>
+          <div *ngIf="complaintForm.controls['resolutionDate'].invalid && complaintForm.controls['resolutionDate']?.touched" class="text-danger">
+            <small *ngIf="complaintForm.controls['complaintDate'].errors?.['required']">Complaint date is
+              required.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="hstack gap-2 justify-content-end">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button type="submit" class="btn btn-success" [disabled]="complaintForm.invalid" id="add-btn">
+        {{ complaintId == "" ? "Add Complaint" : "Update Complaint" }}
+      </button>
+    </div>
+  </div>
+</form>

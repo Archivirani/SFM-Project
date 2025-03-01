@@ -1,0 +1,14 @@
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center vertically */
+    padding: 1rem; /* Adjust padding if needed */
+}
+
+#showChartModal{
+    --vz-modal-width: 1100px;
+}
+
+.fontsize{
+    font-size: 10px;
+}

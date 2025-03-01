@@ -1,0 +1,25 @@
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center vertically */
+    padding: 1rem; /* Adjust padding if needed */
+}
+.disabled-icon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    a {
+        color: white;
+        i {
+          color: white !important;
+        }
+    }
+}
+
+.bg-color{
+    background: rgb(128, 128, 128);
+}
+
+.bg-blue {
+    background: #405189;
+}
