@@ -11,6 +11,7 @@ import { MeetingService } from '../../shared/services/meeting.service';
 import { CallService } from '../../shared/services/call.service';
 import { MeetingResponse } from '../../shared/models/meeting.model';
 import { CallResponse } from '../../shared/models/call.model';
+import { IdentityService } from '../../shared/services/identity.service';
 
 @Component({
   selector: 'app-my-calendar',
@@ -65,7 +66,8 @@ export class MyCalendarComponent implements OnInit {
     private toasterService: ToastrService,
     private meetingService: MeetingService,
     private callService: CallService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private identityService:IdentityService
   ) {}
 
   ngOnInit() {
@@ -74,7 +76,10 @@ export class MyCalendarComponent implements OnInit {
 
   getCalendar() {
     this.commonService.updateLoader(true);
-    this.calendarService.getCalendar({}).subscribe({
+    const filter={
+      userId:this.identityService.getLoggedUserId()
+    }
+    this.calendarService.getCalendar(filter).subscribe({
       next: (response) => {
         if (response) {
           this.calendarOptions.events = response.data;

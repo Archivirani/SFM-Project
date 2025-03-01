@@ -72,7 +72,7 @@ export class MeetingListComponent implements OnInit {
         (position) => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
-          
+  
           const data = {
             meetingId: meeting.meetingId,
             userID: this.identityService.getLoggedUserId(),
@@ -86,9 +86,9 @@ export class MeetingListComponent implements OnInit {
           this.meetingService.addMeetingCheckInOut(data).subscribe(
             (response) => {
               if(response.success === true){
-                  meeting.isCheckIn = false;
-                  this.toasterService.success(response.data.message);
-                  this.getMeetings();
+                meeting.isCheckIn = false;
+                this.toasterService.success(response.data.message);
+                this.getMeetings();
               }else{
                 this.toasterService.error(response.error.message);
               }

@@ -33,6 +33,7 @@ import { CalendarService } from '../../../shared/services/calendar.service';
 import { CalendarResponse } from '../../../shared/models/calendar.model';
 import {Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IdentityService } from '../../../shared/services/identity.service';
 
 @Component({
   selector: 'app-add-meeting',
@@ -72,6 +73,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     public commonService: CommonService,
     private toasterService: ToastrService,
     private calendarService:CalendarService,
+    private identityService:IdentityService,
     public router: Router
   ) {
     this.meetingForm = new FormGroup({});
@@ -237,7 +239,10 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
 
   getCalendar() {
     this.commonService.updateLoader(true);
-    this.calendarService.getCalendar({}).subscribe({
+    const filter={
+      userId:this.identityService.getLoggedUserId()
+    }
+    this.calendarService.getCalendar(filter).subscribe({
       next: (response) => {
         if (response) {
           this.calendarOptions = response.data;

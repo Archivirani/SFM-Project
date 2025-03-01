@@ -503,10 +503,12 @@ export class UserChartComponent {
   
 
   funnelChart(leadCategory: any[]): void {
-    let dataPoints = leadCategory.map(item => ({
+    let dataPoints = leadCategory
+    .filter(item => item.categoryName !== "Total") // Remove "Total" category
+    .map(item => ({
       y: item.leadCount,
       name: item.categoryName
-  }));
+    }));
   dataPoints.sort((a, b) => b.y - a.y);
   this.chartOptions = { ...this.chartOptions };
     this.chartOptions = {
