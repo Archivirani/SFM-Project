@@ -32,7 +32,7 @@
                      placeholder="Daterangepicker"
                      class="form-control"
                      bsDaterangepicker  [(ngModel)]="dateRange" (bsValueChange)="getLeads($event)"
-                     [bsConfig]="{ ranges: commonService.ranges }">
+                     [bsConfig]="{ dateInputFormat: 'dd/MM/yyyy',ranges: commonService.ranges }">
             </div>
       </div>
     </div>

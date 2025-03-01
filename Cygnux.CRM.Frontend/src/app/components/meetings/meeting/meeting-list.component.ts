@@ -79,8 +79,8 @@ export class MeetingListComponent implements OnInit {
             isAttendee: true,
             date: formattedDate,
             checkIn: formattedDateTime,
-            lat: userLat,  // User's current latitude
-            lng: userLng,  // User's current longitude
+            Lat: userLat, // User's current latitude
+            Lng: userLng, // User's current longitude
           };
           
           this.meetingService.addMeetingCheckInOut(data).subscribe(

@@ -25,6 +25,7 @@ import { CommonService } from '../../../shared/services/common.service';
 import { ExternalService } from '../../../shared/services/external.service';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { LeadService } from '../../../shared/services/lead.service';
+import { CustomerService } from '../../../shared/services/customer.service';
 
 @Component({
   selector: 'app-add-lead',
@@ -54,7 +55,8 @@ export class AddLeadComponent implements OnInit, OnChanges {
     private externalService: ExternalService,
     public commonService: CommonService,
     private toasterService: ToastrService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    public customerService: CustomerService,
   ) {
     this.leadForm = new FormGroup({});
   }
@@ -79,7 +81,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
     this.leadForm = new FormGroup({
       leadCategoryId: new FormControl(null, [Validators.required]),
       LeadDate: new FormControl(todayDate, [Validators.required]),
-      companyName: new FormControl(null, [Validators.required]),
+      companyName: new FormControl('', [Validators.required]),
       contactName: new FormControl(null, [Validators.required]),
       contactNo: new FormControl(null, [
         Validators.required,
@@ -99,6 +101,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
       industryTypeId: new FormControl(null),
       ServiceInterestedIDs: new FormControl([], [Validators.required]),
       isActive: new FormControl(true),
+      // customerCode:new FormControl('', [Validators.required])
     });
   }
 
@@ -151,6 +154,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
   }
 
   onSubmitLead(form: FormGroup): void {
+    // const companyName = this.customerService.customersList.find((d)=>d.customerCode === form.value.customerCode)?.customerName
     if (form.valid) {
       let assignedTo = this.identityService.getLoggedUserId();
       const dataToSubmit = {
@@ -159,6 +163,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
         ServiceInterestedIDs: form.value.ServiceInterestedIDs.join(','),
         CreatedBy:assignedTo,
         leadCategoryId:parseInt(form.value.leadCategoryId),
+        // companyName:companyName
       };
       !this.leadId ? this.addLead(dataToSubmit) : this.updateLead(dataToSubmit);
     }else{
