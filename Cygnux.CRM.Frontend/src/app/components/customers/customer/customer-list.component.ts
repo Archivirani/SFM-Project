@@ -18,8 +18,6 @@ interface IRange {
   styleUrls: ['./customer-list.component.scss'],
 })
 
-
-
 export class CustomerListComponent implements OnInit {
   public customers: CustomerResponse[] = [];
   public startDate!: string ;

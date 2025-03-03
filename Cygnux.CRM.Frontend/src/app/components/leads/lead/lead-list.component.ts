@@ -52,8 +52,8 @@ export class LeadListComponent {
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
-      startDate: event?.[0] ? event[0].toUTCString() : this.dateRange?.[0]?.toUTCString() || null,
-      endDate: event?.[1] ? event[1].toUTCString() : this.dateRange?.[1]?.toUTCString() || null
+      startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
+      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     };
     this.leadService.getLeadList(filters).subscribe({
       next: (response) => {
@@ -96,6 +96,7 @@ export class LeadListComponent {
     if (modalElement) {
       const modal = new Modal(modalElement);
       modal.show();
+      this.commonService.userChart.next(true)
     }
   }
 

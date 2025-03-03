@@ -185,6 +185,11 @@ export class UserChartComponent {
         this.getMeetingCountDayWise();
       }else if(this.chartList === 'complaint'){
         this.getTicketByDayWise();
+      }else if(this.chartList === 'leads'){
+        this.getLeadCatagoryChart();
+        this.getLeadSourceChart();
+        const selectedDates = [this.startDate, this.endDate]
+        this.getCustomerfilters(selectedDates,this.userIdData);
       }
     });
   }
@@ -367,8 +372,8 @@ export class UserChartComponent {
     if(event?.length && userid){
       var filters = {
         userid:userid,
-        startdate:event[0].toUTCString(),
-        enddate:event[1].toUTCString()
+        startdate:this.startDate,
+        enddate: this.endDate
       }
     if(this.chartList === 'leads'){
       this.leadService.getLeadCatagoryData(filters).subscribe({
