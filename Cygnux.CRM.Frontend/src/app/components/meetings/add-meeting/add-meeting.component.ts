@@ -150,7 +150,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       checkOutDateTime:new FormControl(null)
     },
   );
-  this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
+  // this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
   }
 
   getMeetingMom(){
@@ -172,24 +172,24 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     this.meetingForm.reset();
     this.buildForm();
   }
-  checkDuplicateMeetingTimes(control?: AbstractControl): ValidationErrors | null {
-    if((this.checkOutValue =='-' && !this.meetingId)|| (this.checkOutValue =='-' && this.meetingId) ){
-    const meetingDate = this.meetingForm.get('meetingDate')?.value;
-    const startTime = this.meetingForm.get('startTime')?.value;
-    const endTime = this.meetingForm.get('endTime')?.value;
-    const today = new Date();
-    const dateParts = meetingDate?.split('/');
-    const formattedDate = `${dateParts?.[2]}-${dateParts?.[1]}-${dateParts?.[0]}`;
-    const startDateTime = new Date(`${formattedDate}T${startTime}`);
-    const endDateTime = new Date(`${formattedDate}T${endTime}`);
-    if(startDateTime <= today){
-      return { startTimeAfterCurrentTime: true }; // Custom error key
-    }else if(endDateTime <= startDateTime){
-      return { timeRangeValidator: true }; // Custom error key
-    }
-  }
-    return null;
-  }
+  // checkDuplicateMeetingTimes(control?: AbstractControl): ValidationErrors | null {
+  //   if((this.checkOutValue =='-' && !this.meetingId)|| (this.checkOutValue =='-' && this.meetingId) ){
+  //   const meetingDate = this.meetingForm.get('meetingDate')?.value;
+  //   const startTime = this.meetingForm.get('startTime')?.value;
+  //   const endTime = this.meetingForm.get('endTime')?.value;
+  //   const today = new Date();
+  //   const dateParts = meetingDate?.split('/');
+  //   const formattedDate = `${dateParts?.[2]}-${dateParts?.[1]}-${dateParts?.[0]}`;
+  //   const startDateTime = new Date(`${formattedDate}T${startTime}`);
+  //   const endDateTime = new Date(`${formattedDate}T${endTime}`);
+  //   if(startDateTime <= today){
+  //     return { startTimeAfterCurrentTime: true }; // Custom error key
+  //   }else if(endDateTime <= startDateTime){
+  //     return { timeRangeValidator: true }; // Custom error key
+  //   }
+  // }
+  //   return null;
+  // }
   
   onAllDayEventChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
