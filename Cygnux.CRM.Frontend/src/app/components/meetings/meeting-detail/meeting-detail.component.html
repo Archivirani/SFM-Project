@@ -15,8 +15,12 @@
           <td><strong>Add Day Event:</strong> {{ meetingResponse?.isAllDayEvent ? "Year" : "No" }}</td>
         </tr>
         <tr>
-          <td><strong>Meeting Date & Time:</strong> {{ meetingResponse?.meetingDate ? meetingResponse?.meetingDate :'--'}}</td>
+          <td><strong>Meeting Date:</strong> {{ meetingResponse?.meetingDate ? meetingResponse?.meetingDate :'--'}}</td>
           <td><strong>Meeting Type:</strong> {{ meetingResponse?.meetingType ? meetingResponse?.meetingType :'--' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Start Time:</strong> {{ meetingResponse?.startTime ? meetingResponse?.startTime :'--'}}</td>
+          <td><strong>End Time:</strong> {{ meetingResponse?.endTime ? meetingResponse?.endTime :'--'}}</td>
         </tr>
         <tr>
           <td><strong>Meeting MOM:</strong> {{ meetingResponse?.meetingMOM ? meetingResponse?.meetingMOM :'--' }}</td>
@@ -49,12 +53,22 @@
           </td>
         </tr>
         <tr>
-          <!-- <td scope="row">
-            Check In Date:
-            {{ meetingResponse?.checkInDate | date : "dd/MM/yyyy" }}
-          </td> -->
           <td scope="row">
-            <strong>Lat:</strong> 
+            <strong>CheckIn Longitude:</strong> 
+            {{meetingResponse?.longitude ? meetingResponse?.longitude :'--' }}
+          </td>
+          <td scope="row">
+            <strong>CheckOut longitude:</strong> 
+            {{ meetingResponse?.latitude ? meetingResponse?.longitude :'--' }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong>CheckIn latitude:</strong> 
+            {{meetingResponse?.longitude ? meetingResponse?.latitude :'--' }}
+          </td>
+          <td scope="row">
+            <strong>CheckOut Latitude:</strong> 
             {{ meetingResponse?.latitude ? meetingResponse?.latitude :'--' }}
           </td>
         </tr>

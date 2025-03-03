@@ -296,7 +296,7 @@ export class AddTicketComponent {
  
   onSubmitTicket() {
     if (this.complaint === 'Update') {
-      const {customerID, closeDate, closeRemark,closureDate,docketNo, closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, ticketAddressTo, userName, ...update } = this.ticketForm.value;
+      const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,document,documentNo,priority,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
       update.documentNo=this.ticketForm.value.docketNo,
       update.document = 'docket',
       this.updateTicket(update)

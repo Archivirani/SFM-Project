@@ -130,8 +130,8 @@
                       <td class="text-center">{{ meeting.checkOut ? meeting.checkOut:'--'}}</td>
                       <td class="text-center">{{meeting.meetingTimeInMins ? meeting.meetingTimeInMins:'--'}} </td>
                       <td class="d-flex text-center">
-                        <button class="btn btn-danger p-1 me-1 fontsize" (click)="onCheckIn(meeting,i)" [disabled]="!meeting.isCheckInEnabled">Check In</button>
-                        <button class="btn btn-secondary p-1 fontsize" (click)="onCheckOut(meeting,i)" [disabled]="!meeting.isCheckOutEnabled">Check Out</button>
+                      <span [title]="meeting.checkInReason"><button class="btn btn-danger p-1 me-1 fontsize"  (click)="onCheckIn(meeting,i)"  [disabled]="!meeting.isCheckInEnabled">Check In</button></span>
+                       <span [title]="meeting.checkOutReason"><button class="btn btn-secondary p-1 fontsize"  (click)="onCheckOut(meeting,i)"  [disabled]="!meeting.isCheckOutEnabled">Check Out</button></span>
                       </td> 
                       <!-- <td>{{ meeting.taTinHrs }}</td> -->
                       <td class="text-center">{{ meeting.meetingStatus ? meeting.meetingStatus:'--'}}</td>
