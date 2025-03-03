@@ -124,6 +124,15 @@ export class CustomerListComponent implements OnInit {
     this.getCustomers()
   }
 
+  onQuatation(event: Event, customer:any){
+    event.preventDefault(); 
+    const filters={
+      customerName:customer.customerName,
+      token:localStorage.getItem('token')
+    }
+    console.log(filters)
+  }
+
   exportCustomers(event: any) {
     event.preventDefault();
     this.commonService.updateLoader(true);

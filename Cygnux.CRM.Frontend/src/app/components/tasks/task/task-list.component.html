@@ -213,13 +213,21 @@
                 class="d-flex justify-content-end mt-3"
                 *ngIf="tasks.length != 0"
               >
-                <div class="pagination-wrap hstack gap-2">
+                <!-- <div class="pagination-wrap hstack gap-2">
                   <a class="page-item pagination-prev disabled" href="#">
                     Previous
                   </a>
                   <ul class="pagination listjs-pagination mb-0"></ul>
                   <a class="page-item pagination-next" href="#"> Next </a>
-                </div>
+                </div> -->
+                <ngb-pagination
+                  [collectionSize]="totalItems"
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                  [maxSize]="3"
+                  (pageChange)="onPageChange($event)"
+                >
+                </ngb-pagination>
               </div>
             </div>
 

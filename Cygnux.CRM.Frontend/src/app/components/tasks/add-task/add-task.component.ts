@@ -41,7 +41,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
   constructor(
     private taskService: TaskService,
     private externalService: ExternalService,
-    private customerService: CustomerService,
+    public customerService: CustomerService,
     public commonService: CommonService,
     private toasterService: ToastrService,
   ) {

@@ -124,7 +124,7 @@
             <div>
               <label class="col-form-label">Customer</label>
 
-              <ng-select
+              <!-- <ng-select
                 [items]="customers"
                 bindLabel="customerName"
                 bindValue="leadId"
@@ -133,7 +133,18 @@
                 [searchable]="true"
                 [clearable]="true"
               >
-              </ng-select>
+              </ng-select> -->
+              <ng-select
+              [items]="customerService.customersList"
+              bindLabel="customerName"
+              bindValue="customerName"
+              formControlName="leadId"
+              placeholder="Search Customer"
+              (input)="customerService.customerDropdown($event)"
+              [searchable]="true"
+              [ngClass]="{ 'border-danger': taskForm.controls['leadId'].invalid && taskForm.controls['leadId'].touched }"
+              [clearable]="true">
+            </ng-select>
               <div
                 *ngIf="
                   taskForm.controls['leadId'].invalid &&
