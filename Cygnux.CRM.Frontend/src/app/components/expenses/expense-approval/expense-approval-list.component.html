@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                       <th>
-                        <input type="text" [(ngModel)]="filters['ExpenseCode']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['expenseId']" (input)="getExpenses()"
                           class="form-control" />
                       </th>
                       <th>
@@ -102,7 +102,7 @@
                   </thead>
                   <tbody class="list form-check-all">
                     <tr *ngFor="let expense of expenses; let i = index">
-                      <td class="text-center">{{ expense.expenseCode ? expense.expenseCode:'--' }}</td>
+                      <td class="text-center">{{ expense.expenseId ? expense.expenseId:'--' }}</td>
                       <td class="text-center">{{ expense.expenseDate ?expense.expenseDate :'--'}}</td>
                       <td class="text-center">{{expense.companyName ? expense.companyName:'--' }}</td>
                       <td class="text-center">{{ expense.expenseDate ? expense.expenseDate :'--'}}</td>

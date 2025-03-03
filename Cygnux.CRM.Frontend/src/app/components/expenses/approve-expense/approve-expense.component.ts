@@ -30,7 +30,8 @@ export class ApproveExpenseComponent {
     if (changes['expenseResponse'] && this.expenseResponse) {
       this.approveForm.patchValue(this.expenseResponse);
       this.approveForm.patchValue({
-        checkOutLocation:this.expenseResponse.checkedInLocation
+        checkOutLocation:this.expenseResponse.checkedInLocation,
+        expenseCode:this.expenseResponse.expenseId
       })
     }else{
       this.approveForm?.reset();
