@@ -187,33 +187,6 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     }else if(endDateTime <= startDateTime){
       return { timeRangeValidator: true }; // Custom error key
     }
-    let conflictingMeetings: any[] = [];
-    let time: any[] = [];
-  
-    const hasConflict = this.calendarOptions.filter((meeting: any) => {
-      const meetingStart = new Date(meeting.start);
-      const meetingEnd = new Date(meeting.end);
-  
-      const meetingStartDateOnly = new Date(Date.UTC(meetingStart.getUTCFullYear(), meetingStart.getUTCMonth(), meetingStart.getUTCDate())).toISOString().split('T')[0];  // 'YYYY-MM-DD'
-      if (formattedDate === meetingStartDateOnly) {
-        conflictingMeetings.push(meeting);
-        const meetingStartTime = meetingStart.toTimeString().split(' ')[0].substring(0, 5);
-        const meetingEndTime = meetingEnd.toTimeString().split(' ')[0].substring(0, 5);
-        if (
-          (startTime >= meetingStartTime && startTime < meetingEndTime) ||
-          (endTime > meetingStartTime && endTime <= meetingEndTime) || 
-          (startTime <= meetingStartTime && endTime >= meetingEndTime) 
-        ) {
-          time.push(meeting);
-        }
-      }
-    });
-  
-    if (time.length > 0) {
-      this.meetingForm.setErrors({ duplicateMeeting: true });
-    } else {
-      this.meetingForm.setErrors(null);
-    }
   }
     return null;
   }
@@ -234,7 +207,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
         endTime: ''
       });
     }
-    this.checkDuplicateMeetingTimes();
+    // this.checkDuplicateMeetingTimes();
   }
 
   getCalendar() {

@@ -143,9 +143,9 @@
             <small *ngIf="meetingForm.errors?.['startTimeAfterCurrentTime']">
               Start time must be after the current time.
             </small>
-            <div *ngIf="meetingForm.hasError('duplicateMeeting')">
+            <!-- <div *ngIf="meetingForm.hasError('duplicateMeeting')">
               <small>Meeting with the same start or end time exists on this day.</small>
-            </div>
+            </div> -->
           </div>
           }
         </div>
@@ -162,9 +162,9 @@
             <small *ngIf="meetingForm.errors?.['timeRangeValidator']">
               End time must be after the start time.
             </small>
-            <div *ngIf="meetingForm.hasError('duplicateMeeting') ">
+            <!-- <div *ngIf="meetingForm.hasError('duplicateMeeting') ">
               <small>Meeting with the same start or end time exists on this day.</small>
-            </div>
+            </div> -->
           </div>
           }
         </div>
