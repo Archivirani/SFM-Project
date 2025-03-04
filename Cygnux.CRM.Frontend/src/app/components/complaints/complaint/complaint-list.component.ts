@@ -136,7 +136,7 @@ export class ComplaintListComponent implements OnInit {
       export:true
     }
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintList(filters).subscribe({
+    this.complaintService.getComplaintListexport(filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -157,7 +157,7 @@ export class ComplaintListComponent implements OnInit {
       export:true
     }
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintList(filters).subscribe({
+    this.complaintService.getComplaintListexport(filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);

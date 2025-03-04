@@ -44,6 +44,9 @@ export class AddTicketComponent {
   @Input() set complaintResponse(ComplaintResponse: ComplaintResponse | null) {
     if (ComplaintResponse) {
      const assignedTo = this.users.find(d=>d.name === ComplaintResponse.assignedTo)?.userId
+     if(ComplaintResponse.documentNo){
+      this.onDocketNo(ComplaintResponse.documentNo);
+    }
       this.ticketForm.patchValue({
         userID:ComplaintResponse.userID,
         docketNo:ComplaintResponse.documentNo,
@@ -59,16 +62,14 @@ export class AddTicketComponent {
         updateRemarks:ComplaintResponse.updateRemark,
         assignedToId:assignedTo,
         remarks:ComplaintResponse.remarks,
+        ticketAddressTo:ComplaintResponse.ticketAddressTo,
         customerID: ComplaintResponse.customerID
       })
       this.createEscalationForm(ComplaintResponse,assignedTo);
-      if(ComplaintResponse.documentNo){
-        this.onDocketNo(ComplaintResponse.documentNo);
-      }
-      this.getComplaintGetUser();
     } else {
       this.buildForm();
     }
+    this.getComplaintGetUser();
   }
   constructor(
     public identityService: IdentityService,

@@ -162,12 +162,12 @@
 
         <tr>
           <td>
+            <strong>  Closure By/Date:</strong>
+              {{ complaintResponse?.closeBy }}
+            </td>
+          <td>
             <strong>Assign To :</strong>
             {{ complaintResponse?.assignedTo }}
-          </td>
-          <td>
-            <strong> Escalation History:</strong>
-            {{ complaintResponse?.escalationHistory }}
           </td>
         </tr>
         <tr>
@@ -181,19 +181,42 @@
           </td>
         </tr>
         <tr>
-          <th scope="row">
+          <td scope="row">
             <strong>Update History:</strong>
-            {{ complaintResponse?.updateHistory }}
-          </th>
+            <table class="table table-bordered tbordered table-striped mt-3">
+              <tr>
+                <th>Update By</th>
+                <th>Update Date</th>
+                <th>Update Remark</th>
+              </tr>
+              <tr *ngFor="let history of updateHistoryList">
+                <td>{{history?.updateBy ? history.updateBy :'--'}}</td>
+                <td>{{history?.updateDate ? history.updateDate :'--'}}</td>
+                <td>{{history?.updateRemark ? history.updateRemark :'--'}}</td>
+              </tr>
+             </table>
+          </td>
           <td>
-          <strong>  Closure By/Date:</strong>
-            {{ complaintResponse?.closeBy }}
+            <strong> Escalation History:</strong>
+            <table class="table table-bordered tbordered table-striped mt-3">
+              <tr>
+                <th>Escalated To</th>
+                <th>Escalated Email</th>
+                <th>Escalated Date</th>
+              </tr>
+              <tr *ngFor="let history of escalatedHistory">
+                <td>{{history.escalatedTo ? history.escalatedTo :'--'}}</td>
+                <td>{{history?.escalatedEmail ? history.escalatedEmail :'--'}}</td>
+                <td>{{history?.escalatedDate ? history.escalatedDate :'--'}}</td>
+              </tr>
+             </table>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+
 <div class="modal-footer">
   <div class="hstack gap-2 justify-content-end">
     <button type="button" class="btn btn-light" data-bs-dismiss="modal">

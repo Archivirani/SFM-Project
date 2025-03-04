@@ -11,6 +11,8 @@ import {
   ComplaintGetUser,
   ComplaintResponse,
   DocDataDetail,
+  EscalatedHistory,
+  UpdateHistory,
 } from '../models/complaint.model';
 import { ApiHandlerService } from './api-handler.service';
 
@@ -26,6 +28,12 @@ export class ComplaintService {
     filters: any
   ): Observable<IApiBaseResponse<ComplaintResponse[]>> {
     return this.apiHandlerService.Get('Complaint/GetList', filters);
+  }
+
+  getComplaintListexport(
+    filters: any
+  ): Observable<IApiBaseResponse<ComplaintResponse[]>> {
+    return this.apiHandlerService.Get('Complaint/export', filters);
   }
 
   importComplaint(formData: any): Observable<IApiBaseResponse<CommonResponse>> {
@@ -96,5 +104,13 @@ export class ComplaintService {
 
       getAssignTo():Observable<IApiBaseResponse<any>>{
         return this.apiHandlerService.Get('Complaint/AssignTo');
+      }
+
+      getupdateHistory(Id:string):Observable<IApiBaseResponse<UpdateHistory>>{
+        return this.apiHandlerService.Get(`Complaint/UpdateHistory?Id=${Id}`);
+      }
+
+      getEscalatedHistory(Id:string):Observable<IApiBaseResponse<EscalatedHistory>>{
+        return this.apiHandlerService.Get(`Complaint/EscalatedHistory?Id=${Id}`);
       }
 }

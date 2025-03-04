@@ -34,6 +34,7 @@ closeDate: any;
   customerID:string;
   UserID:string;
   IsActive:string;
+  ticketAddressTo:string;
   isUpdated:boolean;
 }
 
@@ -67,6 +68,7 @@ export interface ComplaintDetailResponse extends ComplaintResponse {
   modifiedDate: Date;
   remarks: string;
   supportingDocument: string;
+  complaintID:string;
 }
 
 export interface AddComplaintRequest {
@@ -117,4 +119,34 @@ export interface ComplaintCountDayWise {
 export interface AssignToList {
   userId: string;
   userName: string;
+}
+
+export interface UpdateHistory {
+  complaintID: string;
+  documentNo: string;
+  complaintDate: string;
+  ticketSource: string;
+  ticketType: string;
+  ticketSubType: string;
+  ticketPriority: string;
+  ticketDescription: string;
+  customerName: string;
+  ticketCreateBy: string;
+  updateBy: string;
+  updateRemark: string;
+  assignedTo: string;
+  complaintStatus: string;
+  ticketAddressTo: string;
+  updateDate: string;
+  remark: string;
+}
+
+export interface EscalatedHistory {
+  complaintID: string;
+  escalatedTo: string;
+  escalatedEmail: string;
+  escalatedDate: string;
+  remark: string;
+  createBy: string;
+  createDate: string;
 }
