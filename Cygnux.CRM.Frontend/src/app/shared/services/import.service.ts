@@ -4,6 +4,7 @@ import { LeadService } from './lead.service';
 import { ToastrService } from 'ngx-toastr';
 import { CallService } from './call.service';
 import { ComplaintService } from './complaint.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { ComplaintService } from './complaint.service';
 export class ImportService {
   selectedFile: File | null = null;
   constructor(private commonService: CommonService,private leadService: LeadService,private toasterService: ToastrService, private callService: CallService,private complaintService:ComplaintService) { }
-
+  typeSubject=new Subject<boolean>()
 triggerFileInput(event: Event): void {
   event.preventDefault();
   const fileInput = document.getElementById('fileInput') as HTMLInputElement;
@@ -42,11 +43,11 @@ onFileChange(event: any, type: string): void {
       formData.append('file', file);
 
       if (type === 'lead') {
-        this.importData(formData, this.leadService.importLead.bind(this.leadService));
+        this.importData(formData, this.leadService.importLead.bind(this.leadService),type);
       } else if (type === 'call') {
-        this.importData(formData, this.callService.importCall.bind(this.callService));
+        this.importData(formData, this.callService.importCall.bind(this.callService),type);
       }else if (type === 'complaints') {
-        this.importData(formData, this.complaintService.importComplaint.bind(this.complaintService));
+        this.importData(formData, this.complaintService.importComplaint.bind(this.complaintService),type);
       } else {
         this.toasterService.error('Invalid type specified for file import.');
       }
@@ -58,13 +59,20 @@ onFileChange(event: any, type: string): void {
   }
 }
 
-private importData(dataToSubmit: any, importFunction: (data: any) => any): void {
+private importData(dataToSubmit: any, importFunction: (data: any) => any,type:string): void {
   this.commonService.updateLoader(true);
 
   importFunction(dataToSubmit).subscribe({
     next: (response: any) => {
       if (response.success) {
         this.toasterService.success(response.data.message);
+        if(type === 'lead'){
+          this.typeSubject.next(true);
+        }else if(type === 'call'){
+          this.typeSubject.next(true);
+        }else if(type === 'complaints'){
+          this.typeSubject.next(true);
+        }
       } else {
         this.toasterService.error(response.error.message);
       }

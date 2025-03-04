@@ -5,7 +5,8 @@
     </div>
     <div class="col-5">
       <input type="text" placeholder="Daterangepicker" class="form-control" bsDaterangepicker [(ngModel)]="dateRange"
-        (bsValueChange)="onDateRangeSelected($event,userIdData)" [bsConfig]="{ ranges: ranges,containerClass: 'theme-dark-blue'}">
+        (bsValueChange)="onDateRangeSelected($event,userIdData)" [bsConfig]="{rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
+                     'DD.MM.YYYY', ranges: ranges,containerClass: 'theme-dark-blue'}">
     </div>
     <div class="col-1" *ngIf="chartList === 'complaint' && userType === 'managar'">
       <label class="col-form-label">UserId:</label>

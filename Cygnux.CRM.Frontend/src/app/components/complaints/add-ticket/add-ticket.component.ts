@@ -61,7 +61,7 @@ export class AddTicketComponent {
         remarks:ComplaintResponse.remarks,
         customerID: ComplaintResponse.customerID
       })
-      this.createEscalationForm(ComplaintResponse);
+      this.createEscalationForm(ComplaintResponse,assignedTo);
       if(ComplaintResponse.documentNo){
         this.onDocketNo(ComplaintResponse.documentNo);
       }
@@ -152,7 +152,7 @@ export class AddTicketComponent {
     });
   }
 
-  createEscalationForm(data?: any) {
+  createEscalationForm(data?: any,escalatedTo?:any) {
     let assignedTo = this.identityService.getLoggedUserId();
     this.escalationForm = new FormGroup({
       complaintId: new FormControl(data?.complaintID),
@@ -162,7 +162,7 @@ export class AddTicketComponent {
       assigned: new FormControl(data?.assignedTo),
       status: new FormControl(data?.compaintStatus),
       priority: new FormControl(data?.priority.toString()),
-      escalatedTo: new FormControl('', [Validators.required]),
+      escalatedTo: new FormControl(escalatedTo, [Validators.required]),
       escalatedEmail: new FormControl(data?.customerEmail),
       escalatedDate: new FormControl('', [Validators.required]),
       escalatedRemark: new FormControl('', [Validators.required]),

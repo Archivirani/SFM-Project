@@ -10,6 +10,7 @@ import { CommonService } from '../../../shared/services/common.service';
 import { ExportService } from '../../../shared/services/export.service';
 import { ImportService } from '../../../shared/services/import.service';
 import { GetFilter } from '../../../shared/models/customer.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-call',
@@ -27,6 +28,7 @@ export class CallListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
   @Output() edit = new EventEmitter<CallResponse>();
   getfilter:GetFilter[]=[];
+  typeSubjectSubscription:Subscription;
   cardList: string = 'Call'
   constructor(
     private callService: CallService,
@@ -36,6 +38,11 @@ export class CallListComponent implements OnInit {
     public importService: ImportService
   ) {
     defineElement(lottie.loadAnimation);
+    this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
+      if(res){
+        this.getCalls()
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -222,5 +229,7 @@ export class CallListComponent implements OnInit {
     this.filters['CallDate'] = '';
     this.getCalls();
   }
-
+  ngOnDestroy(): void {
+    if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe()}
+  }
 }

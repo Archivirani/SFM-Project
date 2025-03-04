@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonService } from '../../../shared/services/common.service';
 import {
   LeadDetailResponse,
@@ -11,6 +11,7 @@ import { AddMeetingResponse} from '../../../shared/models/meeting.model';
 import { ExportService } from '../../../shared/services/export.service';
 import { environment } from '../../../../environments/environment';
 import { ImportService } from '../../../shared/services/import.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lead',
@@ -18,7 +19,7 @@ import { ImportService } from '../../../shared/services/import.service';
   templateUrl: './lead-list.component.html',
   styleUrls: ['./lead-list.component.scss'],
 })
-export class LeadListComponent {
+export class LeadListComponent implements OnDestroy{
   public leads: LeadResponse[] = [];
   selectedLead: LeadDetailResponse | null = null;
   leadId: string = '';
@@ -30,6 +31,7 @@ export class LeadListComponent {
   filters: { [key: string]: string } = {}; // Dynamic filter object
   cardList:string = 'Leads';
   isReadonly = false;
+  typeSubjectSubscription:Subscription;
   selectedCustomerName: LeadDetailResponse | null = null;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
@@ -41,7 +43,14 @@ export class LeadListComponent {
     private toasterService: ToastrService,
     private exportService: ExportService,
     public importService:ImportService
-  ) {}
+  ) {
+    this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
+      if(res){
+        this.getLeads()
+      }
+    });
+  }
+  
 
   getLeads(event?:any,page: number = 1) {
     this.commonService.updateLoader(true);
@@ -251,5 +260,8 @@ export class LeadListComponent {
   onPageChange(page: number) {
     this.page = page;
     this.getLeads(this.dateRange,this.page);
+  }
+  ngOnDestroy(): void {
+    if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe()}
   }
 }
