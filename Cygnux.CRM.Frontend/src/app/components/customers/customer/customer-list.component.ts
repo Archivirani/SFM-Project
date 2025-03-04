@@ -68,6 +68,13 @@ export class CustomerListComponent implements OnInit {
       ],
       label: 'Last Month',
     },
+    {
+      value: [
+        new Date(new Date().getFullYear(), 0, 1), // First day of the year
+        new Date(new Date().getFullYear(), 11, 31), // Last day of the year
+      ],
+      label: 'This Year',
+    },
   ];
   
   constructor(
