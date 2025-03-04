@@ -50,7 +50,7 @@ export class ExpenseListComponent implements OnInit {
     );
     const filters: any = {
       ...this.filters,
-      userId:this.identifyService.getLoggedUserId(),
+      UserID:this.identifyService.getLoggedUserId(),
       Page: page,
       PageSize: this.pageSize,
     };
