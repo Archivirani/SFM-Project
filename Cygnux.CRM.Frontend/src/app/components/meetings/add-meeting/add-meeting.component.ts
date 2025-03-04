@@ -154,23 +154,24 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
   }
 
   isDateDisabled = (date: { year: number; month: number; day: number }): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    const selectedDate = new Date(date.year, date.month - 1, date.day);
+    selectedDate.setHours(0, 0, 0, 0); 
+    if (selectedDate < today) {
+        return true; 
+    }
     if (!this.addmeetingResponse?.leadDate) return false;
-
-    // Check if the leadDate is in "dd/mm/yyyy" format
     const dateParts = this.addmeetingResponse.leadDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
     if (!dateParts) {
-        return false; // Do not disable anything if date is invalid
+        return false; 
     }
-
-    // Extract day, month, and year (convert to numbers)
     const [, day, month, year] = dateParts.map(Number);
-    
-    // Create the leadDate object correctly
-    const leadDate = new Date(year, month - 1, day); // Month is 0-based
-    const selectedDate = new Date(date.year, date.month - 1, date.day); // Month is 0-based
-
-    return selectedDate < leadDate;
+    const leadDate = new Date(year, month - 1, day);
+    leadDate.setHours(0, 0, 0, 0); // Normalize lead date
+    return selectedDate < leadDate; // Disable dates before leadDate
 };
+
 
   getMeetingMom(){
     this.commonService.updateLoader(true);
