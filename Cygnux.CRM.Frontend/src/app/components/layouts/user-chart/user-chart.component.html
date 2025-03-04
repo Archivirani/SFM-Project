@@ -8,10 +8,10 @@
         (bsValueChange)="onDateRangeSelected($event,userIdData)" [bsConfig]="{rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
                      'DD.MM.YYYY', ranges: ranges,containerClass: 'theme-dark-blue'}">
     </div>
-    <div class="col-1" *ngIf="chartList === 'complaint' && userType === 'managar'">
+    <div class="col-1" *ngIf="chartList === 'complaint' && userType === 'MANAGER'">
       <label class="col-form-label">UserId:</label>
     </div>
-    <div class="col-3" *ngIf="chartList === 'complaint' && userType === 'managar'">
+    <div class="col-3" *ngIf="chartList === 'complaint' && userType === 'MANAGER'">
       <ng-select [items]="users" bindLabel="name" bindValue="name" [(ngModel)]="userIdData"
         (ngModelChange)="onDateRangeSelected(dateRange,userIdData)" placeholder="Search Attendees" [clearable]="true"
         [searchable]="true" [ngModelOptions]="{standalone: true}">

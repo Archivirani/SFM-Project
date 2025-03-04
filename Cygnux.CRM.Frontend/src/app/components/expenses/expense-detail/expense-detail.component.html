@@ -33,11 +33,11 @@
         </tr>
         <tr>
           <td><strong class="me-2">Expense Added By:</strong> {{ expenseResponse?.createdBy }}</td>
-          <td><strong class="me-2">Expense Added Date & Time:</strong> {{ expenseResponse?.expenseAddedDate | date : "dd/MM/yyyy" }}</td>
+          <td><strong class="me-2">Expense Added Date & Time:</strong> {{ expenseResponse?.expenseAddedDate | date : "dd/MM/yyyy" }} {{expenseResponse?.expenseAddedTime}}</td>
         </tr>
         <tr>
           <td><strong class="me-2">Expense Edited By:</strong> {{ expenseResponse?.expenseModifiedBy }}</td>
-          <td><strong class="me-2">Expense Edited Date:</strong> {{ expenseResponse?.expenseModifiedDate | date : "dd/MM/yyyy" }}</td>
+          <td><strong class="me-2">Expense Edited Date & Time:</strong> {{ expenseResponse?.expenseModifiedDate | date : "dd/MM/yyyy" }} {{expenseResponse?.expenseAddedTime}}</td>
         </tr>
         <tr>
           <td><strong class="me-2">Approved By Manager:</strong> {{ expenseResponse?.approvedBy }}</td>

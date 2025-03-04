@@ -38,6 +38,7 @@ export interface ExpenseDetailResponse extends ExpenseResponse {
   approvedDate:string;
   approvedBy:string;
   expenseAddedDate:string;
+  expenseAddedTime:string;
   expenseModifiedDate:string;
   expenseModifiedBy:string;
 }

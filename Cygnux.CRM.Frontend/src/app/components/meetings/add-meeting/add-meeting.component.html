@@ -111,7 +111,7 @@
                 formControlName="meetingDate" 
                 ngbDatepicker 
                 #d2="ngbDatepicker"  
-                [markDisabled]="commonService.isDateDisabled"
+                [markDisabled]="isDateDisabled"
                 [readonly]="meetingId !== '' || checkOutValue !== '-'" 
                 [class.disabled]="checkOutValue !== '-'" 
                 required

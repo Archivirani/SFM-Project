@@ -153,6 +153,25 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
   // this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
   }
 
+  isDateDisabled = (date: { year: number; month: number; day: number }): boolean => {
+    if (!this.addmeetingResponse?.leadDate) return false;
+
+    // Check if the leadDate is in "dd/mm/yyyy" format
+    const dateParts = this.addmeetingResponse.leadDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!dateParts) {
+        return false; // Do not disable anything if date is invalid
+    }
+
+    // Extract day, month, and year (convert to numbers)
+    const [, day, month, year] = dateParts.map(Number);
+    
+    // Create the leadDate object correctly
+    const leadDate = new Date(year, month - 1, day); // Month is 0-based
+    const selectedDate = new Date(date.year, date.month - 1, date.day); // Month is 0-based
+
+    return selectedDate < leadDate;
+};
+
   getMeetingMom(){
     this.commonService.updateLoader(true);
     this.meetingService.getMeetingMomDetails().subscribe({

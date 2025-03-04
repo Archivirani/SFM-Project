@@ -84,7 +84,7 @@
                       <th class="text-center w-10">SLA in Hrs</th>
                       <th class="text-center w-10">Raised By</th>
                       <th class="text-center w-10">Assigned To</th>
-                      <th class="text-center w-10" *ngIf="userType === 'manager' || userType === 'ADMINISTRATOR'">Esc. Status</th>
+                      <th class="text-center w-10" *ngIf="userType === 'manager' ||userType === 'MANAGER'|| userType === 'ADMINISTRATOR'">Esc. Status</th>
                       <th class="text-center w-8">Actions</th>
                     </tr>
                     <tr>
@@ -162,7 +162,7 @@
                       <td class="text-center w-10 truncate-text" [title]="complaint.slaInHr">{{ complaint.slaInHr ?complaint.slaInHr:'--' }}</td>
                       <td class="text-center w-10 truncate-text" [title]="complaint.raisedBy">{{ complaint.raisedBy ?complaint.raisedBy:'--' }}</td> 
                       <td class="text-center w-10 truncate-text" [title]="complaint.assignedTo" >{{ complaint.assignedTo ?complaint.assignedTo:'--' }}</td>
-                      <td  class="text-center w-10"*ngIf="userType === 'manager' || userType === 'ADMINISTRATOR'">{{complaint.compaintStatus === 'Escalated' ? 'Yes':''}}</td>
+                      <td  class="text-center w-10"*ngIf="userType === 'manager' ||userType === 'MANAGER' || userType === 'ADMINISTRATOR'">{{complaint.compaintStatus === 'Escalated' ? 'Yes':''}}</td>
                       <td class="text-center w-8">
                         <ul class="list-inline hstack gap-2 mb-0">
                           <!-- <li *ngIf="complaint.complaintStatus != 'Closed'" class="list-inline-item text-center"

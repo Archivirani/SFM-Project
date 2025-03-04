@@ -172,7 +172,7 @@
                             <a (click)="viewModal($event, expense)"><i
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
-                          <div *ngIf="userType === 'manager'">
+                          <div *ngIf="userType === 'manager'||userType === 'MANAGER'">
                             <li
                               class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center"
                               data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved"

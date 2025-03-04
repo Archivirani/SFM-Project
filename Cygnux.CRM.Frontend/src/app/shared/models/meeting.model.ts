@@ -51,6 +51,7 @@ export interface AddMeetingResponse {
   address: string;
   contactNo: string;
   email: string;
+  leadDate:string;
 }
 export interface MeetingTypeResponse {
   meetingTypeId: number;

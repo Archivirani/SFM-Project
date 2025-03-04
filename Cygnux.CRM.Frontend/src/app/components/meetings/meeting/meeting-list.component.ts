@@ -87,7 +87,7 @@ export class MeetingListComponent implements OnInit {
             (response) => {
               if(response.success === true){
                 meeting.isCheckIn = false;
-                this.toasterService.success(response.data.message);
+                this.toasterService.success('Meeting checkIn successfully');
                 this.getMeetings();
               }else{
                 this.toasterService.error(response.error.message);
@@ -126,7 +126,7 @@ onCheckOut(meeting: any, i: number): void {
             if(response.success === true){
               meeting.checkInDisabled = true;
               meeting.checkOutDisabled = true;
-              this.toasterService.success("Meeting checkout successful");
+              this.toasterService.success("Meeting checkout successfully");
               this.getMeetings();
           }else{
             this.toasterService.error(response.error.message);

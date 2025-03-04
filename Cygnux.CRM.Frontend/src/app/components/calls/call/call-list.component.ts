@@ -94,10 +94,10 @@ export class CallListComponent implements OnInit {
      this.callService.getCallfilters().subscribe({
       next:(response) =>{
         this.getfilter = [
-          { name: "Total Calls", count: response.totalCount  ,color:'green' },
-          { name: "Opportunity", count: response.data[2].totalCount || 0 ,color:'wheat' },
-          { name: "Complaints", count: response.data[0].totalCount || 0 ,color:'pink' },
-          { name: "Lead Creation", count: response.data[1].totalCount || 0 ,color:'lightgreen' },
+          { name: "Total Calls", count: response?.totalCount  ,color:'green' },
+          { name: "Opportunity", count: response.data[2]?.totalCount || 0 ,color:'wheat' },
+          { name: "Complaints", count: response.data[0]?.totalCount || 0 ,color:'pink' },
+          { name: "Lead Creation", count: response.data[1]?.totalCount || 0 ,color:'lightgreen' },
         ];
       },
       error: (response: any) => {

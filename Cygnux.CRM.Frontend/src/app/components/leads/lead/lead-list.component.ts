@@ -230,6 +230,7 @@ export class LeadListComponent implements OnDestroy{
         email: lead.email,
         address: lead.address,
         contactNo: lead.contactNo,
+        leadDate:lead.leadDate
       };
       this.checkOutValue='-';
       modal.show();
