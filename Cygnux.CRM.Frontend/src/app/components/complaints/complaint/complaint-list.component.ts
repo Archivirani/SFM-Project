@@ -9,6 +9,7 @@ import { CommonService } from '../../../shared/services/common.service';
 import { ComplaintService } from '../../../shared/services/complaint.service';
 import { ExportService } from '../../../shared/services/export.service';
 import { ImportService } from '../../../shared/services/import.service';
+import { debounceTime, distinctUntilChanged, finalize, take } from 'rxjs';
 
 @Component({
   selector: 'app-complaint',
@@ -27,7 +28,8 @@ export class ComplaintListComponent implements OnInit {
   page = 1; // Current page number
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
-  selectedFilter:string='All'
+  selectedFilter:string=''
+  private debounceTimer: any;
   filters: { [key: string]: string } = {}; // Dynamic filter object
   userType = localStorage.getItem('UserType')
   cardList:string = 'Complaints';
@@ -42,92 +44,39 @@ export class ComplaintListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getComplaints();
-    this.applyFilter();
   }
 
-  applyFilter() {
-    if (this.selectedFilter === 'All') {
-      this.complaints = this.complaintsBackup; // Assign all data to complaints
-    } else {
-      this.complaints = this.complaintsBackup.filter(
-        complaint => complaint.compaintStatus === this.selectedFilter
-      );
-    }
-  }
+  fetchComplaints(page: number = 1) {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.getComplaints(page);
+    }, 500);
+}
 
-  getComplaints(page: number = 1) {
-    this.commonService.updateLoader(true);
-
-    this.filters = Object.fromEntries(
-      Object.entries(this.filters).filter(([key, value]) => value !== null)
-    );
-    const filters: any = {
-      ...this.filters,
-      Page: page,
-      PageSize: this.pageSize,
-      export:false
-    };
-    this.complaintService.getComplaintList(filters).subscribe({
-      next: (response) => {
-        if (response) {
-          this.complaints = response.data;
-          this.complaintsBackup = response.data;
-          this.totalItems = response.totalCount;
-        }
-        this.commonService.updateLoader(false);
-      },
-      error: (response: any) => {
-        this.toasterService.error(response);
-        this.commonService.updateLoader(false);
-      },
-    });
-  }
-
-  // getComplaints(page: number = 1) {
-  //   this.commonService.updateLoader(true);
-
-  //   this.filters = Object.fromEntries(
-  //     Object.entries(this.filters).filter(([key, value]) => value !== null)
-  //   );
-  //   const filters: any = {
-  //     ...this.filters,
-  //     Page: page,
-  //     PageSize: this.pageSize,
-  //   };
-  //   this.complaintService.getComplaintList(filters).subscribe({
-  //     next: (response) => {
-  //       if (response) {
-  //         if(this.userRole=='Admin'){
-  //          this.complaints=response.data.filter((complaint:any)=>complaint.country==='india' &&
-  //                        (this.filters['AssignedTo']
-  //                          ? complaint.assignedTo?.toLowerCase().includes(this.filters['AssignedTo'].toLowerCase())
-  //                          : true) &&
-  //                        (this.filters['RaisedBy']
-  //                          ? complaint.raisedBy?.toLowerCase().includes(this.filters['RaisedBy'].toLowerCase())
-  //                          : true)
-  //                    );
-  //         }else if(this.userRole==='manager'){
-  //           this.complaints=response.data.filter((complaint:any)=>complaint.isLoggin===true &&
-  //                        (this.filters['AssignedTo']
-  //                          ? complaint.assignedTo?.toLowerCase().includes(this.filters['AssignedTo'].toLowerCase())
-  //                          : true) &&
-  //                        (this.filters['RaisedBy']
-  //                          ? complaint.raisedBy?.toLowerCase().includes(this.filters['RaisedBy'].toLowerCase())
-  //                          : true)
-  //                    );
-  //         }
-  //         this.complaints = response.data;
-  //         this.totalItems = response.totalCount;
-  //       }
-  //       this.commonService.updateLoader(false);
-  //     },
-  //     error: (response: any) => {
-  //       this.toasterService.error(response);
-  //       this.commonService.updateLoader(false);
-  //     },
-  //   });
-  // }
-
+private getComplaints(page: number = 1) {
+  this.commonService.updateLoader(true);
+  this.filters = Object.fromEntries(
+    Object.entries(this.filters).filter(([key, value]) => value !== null)
+  );
+  const filters: any = {
+    ...this.filters,
+    Page: page,
+    PageSize: this.pageSize,
+    export: false,
+  };
+  this.complaintService.getComplaintList(filters).pipe(take(1), finalize(() => this.commonService.updateLoader(false))).subscribe({
+    next: (response: any) => {
+      if (response) {
+        this.complaints = response.data;
+        this.complaintsBackup = response.data;
+        this.totalItems = response.totalCount;
+      }
+    },
+    error: (error: any) => {
+      this.toasterService.error(error?.message || 'Something went wrong.');
+    },
+  });
+}
 
   exportComplaints(event: any) {
     event.preventDefault();

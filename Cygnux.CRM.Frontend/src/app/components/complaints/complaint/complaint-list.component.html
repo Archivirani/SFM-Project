@@ -18,11 +18,11 @@
           <div class="card-header border-0">
             <div class="row g-4 align-items-center">
               <div class="wrapper col-sm-auto">
-                <input class="abc" type="radio" name="filter" value="" [(ngModel)]="filters['compaintStatus']" (change)="getComplaints()"> <label class="fs-5">All</label>
-                <input class="abc" type="radio" name="filter" value="New" [(ngModel)]="filters['compaintStatus']" (change)="getComplaints()"> <label class="fs-5">New</label>
-                <input class="abc" type="radio" name="filter" value="Closed" [(ngModel)]="filters['compaintStatus']" (change)="getComplaints()"> <label class="fs-5">Closed</label>
-                <input class="abc" type="radio" name="filter" value="Escalated" [(ngModel)]="filters['compaintStatus']" (change)="getComplaints()"><label class="fs-5">Escalated</label> 
-                <input class="abc" type="radio" name="filter" value="Updated" [(ngModel)]="filters['compaintStatus']" (change)="getComplaints()"><label class="fs-5">Updated</label> 
+                <input class="abc" type="radio" name="filter" value="" [(ngModel)]="filters['compaintStatus']" (change)="fetchComplaints()"> <label class="fs-5">All</label>
+                <input class="abc" type="radio" name="filter" value="New" [(ngModel)]="filters['compaintStatus']" (change)="fetchComplaints()"> <label class="fs-5">New</label>
+                <input class="abc" type="radio" name="filter" value="Closed" [(ngModel)]="filters['compaintStatus']" (change)="fetchComplaints()"> <label class="fs-5">Closed</label>
+                <input class="abc" type="radio" name="filter" value="Escalated" [(ngModel)]="filters['compaintStatus']" (change)="fetchComplaints()"><label class="fs-5">Escalated</label> 
+                <input class="abc" type="radio" name="filter" value="Updated" [(ngModel)]="filters['compaintStatus']" (change)="fetchComplaints()"><label class="fs-5">Updated</label> 
               </div>
               <div class="col-sm-auto ms-auto">
                 <div class="hstack gap-2">
@@ -89,21 +89,21 @@
                     </tr>
                     <tr>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['complaintID']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['complaintID']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['documentNo']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['documentNo']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-15">
-                        <input type="text" [(ngModel)]="filters['customerName']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['customerName']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-10">
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
-                            [(ngModel)]="filters['compalaintDate']" ngbDatepicker (ngModelChange)="getComplaints()"
+                            [(ngModel)]="filters['compalaintDate']" ngbDatepicker (ngModelChange)="fetchComplaints()"
                             #d3="ngbDatepicker" readonly/>
                             <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['compalaintDate']">
                               <span aria-hidden="true" class="ng-clear clear">×</span>
@@ -113,13 +113,13 @@
                         </div>
                       </th>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['compaintStatus']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['compaintStatus']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-10">
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
-                            [(ngModel)]="filters['resolutionDate']" ngbDatepicker (ngModelChange)="getComplaints()"
+                            [(ngModel)]="filters['resolutionDate']" ngbDatepicker (ngModelChange)="fetchComplaints()"
                             #d2="ngbDatepicker" readonly/>
                             <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['resolutionDate']">
                               <span aria-hidden="true" class="ng-clear clear">×</span>
@@ -129,19 +129,19 @@
                         </div>
                       </th>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['slaInHr']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['slaInHr']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['raisedBy']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['raisedBy']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['assignedTo']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['assignedTo']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-10">
-                        <input type="text" [(ngModel)]="filters['escStatus']" (input)="getComplaints()"
+                        <input type="text" [(ngModel)]="filters['escStatus']" (input)="fetchComplaints()"
                           class="form-control" />
                       </th>
                       <th class="w-8"></th>
@@ -170,11 +170,11 @@
                             <a class="edit-item-btn" href="#" (click)="editModal($event, complaint.complaintId)"><i
                                 class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li> -->
-                          <li  [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" class="list-inline-item text-center"
+                          <!-- <li  [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" class="list-inline-item text-center"
                           data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit" >
                           <a class="edit-item-btn"  (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Edit',complaint.complaintID)"><i
                               class="ri-pencil-fill align-bottom text-muted"></i></a>
-                          </li>
+                          </li> -->
                           <li [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" ><a><img src="assets/images/update-icon.svg" title="Update" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Update',complaint.complaintID)" height="17" /></a></li>
                           <li *ngIf="complaint.complaintStatus === 'Closed'" class="pe-3"> </li>
                           <li class="list-inline-item text-center" data-bs-toggle="tooltip" data-bs-trigger="hover"
