@@ -286,12 +286,16 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
 
   onSubmitMeeting(form: FormGroup): void {
     // const leadId = this.customers.find((d)=>d.customerName === this.meetingForm.value.leadId)?.leadId
+    if(this.customerService.customersList){
+      var customerCode = this.customerService.customersList.find((d)=>d.customerName === form.value.customerName)?.customerCode
+    }
     if (form.valid) {
       const dataToSubmit = {
         ...form.value,
         attendeeIDs: form.value.attendeeIDs?.join(','),
         meetingMOM:form.value.meetingMOM?.join(','),
         meetingDate:this.formatDate(form.value.meetingDate),
+        customerCode:form.value.customerCode ? form.value.customerCode : customerCode
         // leadId:leadId ?leadId :'',
         // isAllDayEvent:false
       };
