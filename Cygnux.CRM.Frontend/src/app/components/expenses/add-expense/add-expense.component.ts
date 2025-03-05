@@ -110,7 +110,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       checkedOutLocation:new FormControl(null),
       expRate:new FormControl(),
       expenseCode:new FormControl(),
-      SupportingDocument:new FormControl(''),
+      SupportingDocument:new FormControl('',[Validators.required]),
       CreatedBy:new FormControl(assignedTo)
     });
   }

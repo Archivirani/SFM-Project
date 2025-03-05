@@ -129,6 +129,12 @@
           <div *ngIf="fileError" class="text-danger">
             {{ fileError }}
           </div>
+          <div *ngIf="
+              expenseForm.controls['SupportingDocument'].invalid &&
+              expenseForm.controls['SupportingDocument']?.touched
+            " class="text-danger">
+            <small *ngIf="expenseForm.controls['SupportingDocument'].errors?.['required']">SupportingDocument is required.</small>
+          </div>
         </div>
       </div>
 
