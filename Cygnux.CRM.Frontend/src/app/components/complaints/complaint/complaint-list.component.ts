@@ -30,7 +30,9 @@ export class ComplaintListComponent implements OnInit {
   totalItems = 0; // Total number of items
   selectedFilter:string=''
   private debounceTimer: any;
-  filters: { [key: string]: string } = {}; // Dynamic filter object
+  filters: { [key: string]: string } = {
+    compaintStatus: "" 
+  };
   userType = localStorage.getItem('UserType')
   cardList:string = 'Complaints';
   @Output() edit = new EventEmitter<ComplaintResponse>();

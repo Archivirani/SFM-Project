@@ -109,10 +109,14 @@ export class AddCallComponent implements OnInit, OnChanges {
   }
 
   onSubmitCall(form: FormGroup): void {
+    if(this.customerService.customersList){
+      var customerCode = this.customerService.customersList.find((d)=>d.customerName === form.value.companyName)?.customerCode
+    }
     if (form.valid) {
       let { companyName,callId, ...dataToSubmit } = form.value;
       dataToSubmit.userid = this.identifyService.getLoggedUserId();
       dataToSubmit.customerCode = dataToSubmit.customerCode ? dataToSubmit.customerCode : '';
+      dataToSubmit.customerCode = dataToSubmit.customerCode ? dataToSubmit.customerCode : customerCode;
       this.isCallList === 'Add' ? this.addCall(dataToSubmit) : this.updateCall(dataToSubmit);
     }else{
       this.callForm.markAllAsTouched()

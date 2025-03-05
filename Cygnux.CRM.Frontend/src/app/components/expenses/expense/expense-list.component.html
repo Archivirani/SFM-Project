@@ -133,7 +133,7 @@
                       <td class="text-center truncate-text">{{expense.checkIn? expense.checkIn:'--'}}</td>
                       <td class="text-center truncate-text">{{expense.checkOut?expense.checkOut:'--'}}</td>
                       <td class="text-center truncate-text">{{expense.distanceTravelled?expense.distanceTravelled:'--'}}</td>
-                      <td class="text-center truncate-text">{{expense.requestDate ? (expense.requestDate | date: 'dd/MM/yyyy'):'--' }}
+                      <td class="text-center truncate-text">{{expense.requestDate!=='01/01/1900' ? (expense.requestDate):'--' }}
                       </td>
                       <td class="text-center"></td>
                       <td class="text-center truncate-text">{{ expense.amount ? expense.amount:'--' }}</td>
