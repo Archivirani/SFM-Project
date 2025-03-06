@@ -69,6 +69,8 @@ export interface ComplaintDetailResponse extends ComplaintResponse {
   remarks: string;
   supportingDocument: string;
   complaintID:string;
+  edd:string;
+  documentDate:string;
 }
 
 export interface AddComplaintRequest {
@@ -149,4 +151,5 @@ export interface EscalatedHistory {
   remark: string;
   createBy: string;
   createDate: string;
+  escalatedId:string;
 }

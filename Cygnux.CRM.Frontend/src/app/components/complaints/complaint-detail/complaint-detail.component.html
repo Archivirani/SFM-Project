@@ -113,104 +113,128 @@
       <tbody>
         <tr>
           <td scope="row">
-            <strong> Complaint ID:</strong> {{ complaintResponse?.complaintID }}
+            <strong> Complaint ID: </strong> {{ complaintResponse?.complaintID }}
           </td>
           <td>
-            <strong> Complaint Date:</strong>
+            <strong> Complaint Date: </strong>
             {{ complaintResponse?.compalaintDate }}
           </td>
         </tr>
         <tr>
           <td scope="row">
-            <strong> Ticket Addressed To:</strong>
+            <strong> Ticket Addressed To: </strong>
             {{ complaintResponse?.ticketAddressTo }}
           </td>
           <td>
-            <strong> Ticket Source:</strong>
+            <strong> Ticket Source: </strong>
             {{ complaintResponse?.ticketSource }}
           </td>
         </tr>
         <tr>
           <td scope="row">
-            <strong> Ticket Type:</strong>
+            <strong> Ticket Type: </strong>
             {{ complaintResponse?.ticketType }}
           </td>
           <td>
-            <strong> Ticket Sub Type:</strong>
+            <strong> Ticket Sub Type: </strong>
             {{ complaintResponse?.ticketSubType }}
           </td>
         </tr>
         <tr>
           <td scope="row">
-            <strong> Ticket Priority:</strong>
+            <strong> Ticket Priority: </strong>
             {{ complaintResponse?.ticketPriority }}
           </td>
           <td><strong>Ticket Description: </strong>
             {{ complaintResponse?.description }}
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td scope="row">
           <strong>  Escalation ID:</strong>
             {{ complaintResponse?.escalationId }}
           </td>
-          <td>
+           <td>
            <strong> Escalated To/ Date:</strong>
             {{ complaintResponse?.escalationTo }}
-          </td>
-        </tr>
+          </td> 
+        </tr> -->
 
         <tr>
           <td>
-            <strong>  Closure By/Date:</strong>
+            <strong>  Closure By: </strong>
               {{ complaintResponse?.closeBy }}
             </td>
-          <td>
-            <strong>Assign To :</strong>
-            {{ complaintResponse?.assignedTo }}
-          </td>
+            <td>
+              <strong>  Closure Date: </strong>
+                {{ complaintResponse?.closeDate }}
+              </td>
         </tr>
         <tr>
           <td scope="row">
-            <strong> Last Update By/Date:</strong>
+            <strong> Last Update Date: </strong>
             {{ complaintResponse?.updateDate }}
           </td>
           <td>
-            <strong> Last Update Remarks:</strong>
+            <strong> Last Update Remarks: </strong>
             {{ complaintResponse?.updateRemark }}
           </td>
         </tr>
         <tr>
           <td scope="row">
-            <strong>Update History:</strong>
-            <table class="table table-bordered tbordered table-striped mt-3">
-              <tr>
-                <th>Update By</th>
-                <th>Update Date</th>
-                <th>Update Remark</th>
-              </tr>
-              <tr *ngFor="let history of updateHistoryList">
-                <td>{{history?.updateBy ? history.updateBy :'--'}}</td>
-                <td>{{history?.updateDate ? history.updateDate :'--'}}</td>
-                <td>{{history?.updateRemark ? history.updateRemark :'--'}}</td>
-              </tr>
-             </table>
+            <strong>Update History: </strong>
+            <a (click)="openHistoryPopup()" class="color"> Update History</a>
           </td>
           <td>
-            <strong> Escalation History:</strong>
-            <table class="table table-bordered tbordered table-striped mt-3">
-              <tr>
-                <th>Escalated To</th>
-                <th>Escalated Email</th>
-                <th>Escalated Date</th>
-              </tr>
-              <tr *ngFor="let history of escalatedHistory">
-                <td>{{history.escalatedTo ? history.escalatedTo :'--'}}</td>
-                <td>{{history?.escalatedEmail ? history.escalatedEmail :'--'}}</td>
-                <td>{{history?.escalatedDate ? history.escalatedDate :'--'}}</td>
-              </tr>
-             </table>
+            <strong> Escalation History: </strong>
+            <a (click)="openEscalation()" class="color"> Escalation History</a>
           </td>
+        </tr>
+        <tr>
+          <td scope="row">
+          <strong>Docket No: </strong>
+            {{ complaintResponse?.documentNo }}
+          </td>
+          <td>
+           <strong>Doc Date: </strong>
+            {{ docketNoList?.documentDate }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+          <strong>  EDD: </strong>
+            {{ docketNoList?.edd }}
+          </td>
+          <td>
+           <strong>Billing Party: </strong>
+            {{ docketNoList?.customerName }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+          <strong>Origin: </strong>
+            {{docketNoList?.origin }}
+          </td>
+          <td>
+           <strong>Destination: </strong>
+            {{ docketNoList?.destination }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+          <strong>Current Location: </strong>
+            {{ docketNoList?.currentLocation }}
+          </td>
+          <td>
+            <strong>Assign To :</strong>
+            {{ complaintResponse?.assignedTo }}
+          </td>
+       </tr> 
+        <tr>
+          <td colspan="2">
+            <strong>Current Status: </strong>
+             {{ docketNoList?.currentStatus }}
+           </td> 
         </tr>
       </tbody>
     </table>
@@ -222,5 +246,63 @@
     <button type="button" class="btn btn-light" data-bs-dismiss="modal">
       Close
     </button>
+  </div>
+</div>
+<div class="modal fade" id="showUpdateHistoryModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-lights p-3">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Update History
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          id="close-modal"></button>
+      </div>
+    <div class="m-3">
+      <table class="table table-bordered tbordered table-striped mt-3">
+        <tr>
+          <th>Update By</th>
+          <th>Update Date</th>
+          <th>Update Remark</th>
+        </tr>
+        <tr *ngFor="let history of updateHistoryList" class="custom-row">
+          <td>{{history?.updateBy ? history.updateBy :'--'}}</td>
+          <td>{{history?.updateDate ? history.updateDate :'--'}}</td>
+          <td>{{history?.updateRemark ? history.updateRemark :'--'}}</td>
+        </tr>
+      </table>
+    </div> 
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="showUpdateEscalation"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-lights p-3">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Escalation History
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          id="close-modal"></button>
+      </div>
+    <div class="m-3">
+      <table class="table table-bordered tbordered table-striped mt-3">
+        <tr>
+          <th>Escalated Id</th>
+          <th>Escalated To</th>
+          <th>Escalated Email</th>
+          <th>Escalated Date</th>
+        </tr>
+        <tr *ngFor="let history of escalatedHistory">
+          <td>{{history.escalatedId ? history.escalatedId :'--'}}</td>
+          <td>{{history.escalatedTo ? history.escalatedTo :'--'}}</td>
+          <td>{{history?.escalatedEmail ? history.escalatedEmail :'--'}}</td>
+          <td>{{history?.escalatedDate ? history.escalatedDate :'--'}}</td>
+        </tr>
+       </table>
+    </div> 
+    </div>
   </div>
 </div>
