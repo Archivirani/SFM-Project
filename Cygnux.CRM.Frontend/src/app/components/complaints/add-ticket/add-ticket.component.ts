@@ -110,6 +110,7 @@ export class AddTicketComponent {
   onClose(){
     this.ticketForm.reset();
     this.buildForm();
+    this.emails =[]
   }
   onEscalationClose(){
     this.escalationForm.reset();
@@ -327,8 +328,9 @@ export class AddTicketComponent {
  
   onSubmitTicket() {
     if (this.complaint === 'Update') {
-      const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,document,documentNo,priority,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
+      const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,customerEmail,document,documentNo,priority,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
       update.documentNo=this.ticketForm.value.docketNo,
+      update.CustomerEmail = this.emails.join(';'),
       update.document = 'docket',
       this.updateTicket(update)
     } else if (this.complaint === 'Add') {
@@ -349,6 +351,7 @@ export class AddTicketComponent {
         ComplaintID: this.ticketForm.value.complaintId,
         CloseBy: this.ticketForm.value.closeBy,
         CloseRemark: this.ticketForm.value.closeRemark,
+        CustomerEmail : this.emails.join(';'),
         // closureDate:this.ticketForm.value.closureDate
       }
       this.closeTicket(close)

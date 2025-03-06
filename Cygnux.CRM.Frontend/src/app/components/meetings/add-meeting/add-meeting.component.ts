@@ -90,23 +90,14 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       this.center.lng = this.meetingResponse.longitude;
       this.meetingId = this.meetingResponse.meetingId;
       this.meetingForm.patchValue(this.meetingResponse);
-      // this.meetingForm.setValue({customerName:this.meetingResponse.customerName || this.meetingResponse.companyName,customerCode:this.meetingResponse.customerCode});
-      // this.meetingForm.patchValue({
-      //   leadId:this.meetingResponse.leadId
-      // })
       
     } else {
       this.meetingForm.reset();
       this.meetingId = '';
     }
-
     if (changes['addmeetingResponse'] && this.addmeetingResponse) {
       this.meetingForm.patchValue(this.addmeetingResponse);
     }
-    // if (changes['addMeetingResponse'] && this.addMeetingResponse) {
-    //   this.customerService.customerDropdown(this.addMeetingResponse);
-    //   this.meetingForm.patchValue({ leadId: this.addMeetingResponse });
-    // }
   }
 
   ngOnInit(): void {
@@ -192,24 +183,6 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     this.meetingForm.reset();
     this.buildForm();
   }
-  // checkDuplicateMeetingTimes(control?: AbstractControl): ValidationErrors | null {
-  //   if((this.checkOutValue =='-' && !this.meetingId)|| (this.checkOutValue =='-' && this.meetingId) ){
-  //   const meetingDate = this.meetingForm.get('meetingDate')?.value;
-  //   const startTime = this.meetingForm.get('startTime')?.value;
-  //   const endTime = this.meetingForm.get('endTime')?.value;
-  //   const today = new Date();
-  //   const dateParts = meetingDate?.split('/');
-  //   const formattedDate = `${dateParts?.[2]}-${dateParts?.[1]}-${dateParts?.[0]}`;
-  //   const startDateTime = new Date(`${formattedDate}T${startTime}`);
-  //   const endDateTime = new Date(`${formattedDate}T${endTime}`);
-  //   if(startDateTime <= today){
-  //     return { startTimeAfterCurrentTime: true }; // Custom error key
-  //   }else if(endDateTime <= startDateTime){
-  //     return { timeRangeValidator: true }; // Custom error key
-  //   }
-  // }
-  //   return null;
-  // }
   
   onAllDayEventChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -227,7 +200,6 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
         endTime: ''
       });
     }
-    // this.checkDuplicateMeetingTimes();
   }
 
   getCalendar() {

@@ -255,13 +255,14 @@ private getComplaints(page: number = 1) {
       this.getComplaint(complaintId);
     }
   }
-  viewModal(event: Event, complaintId: string) {
+  viewModal(event: Event, complaintId: string,items:any) {
     event.preventDefault(); // Prevent default anchor behavior
     const modalElement = document.getElementById('showModalDetail');
     if (modalElement) {
       const modal = new Modal(modalElement);
       modal.show();
       this.getComplaint(complaintId);
+      this.commonService.complaintViewModal.next(items)
     }
   }
   callModal(event: Event, leadId: string) {

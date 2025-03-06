@@ -7,7 +7,7 @@ export class CommonService {
   loading = new BehaviorSubject(false);
   isLoading = this.loading.asObservable();
   public userChart = new Subject<boolean>()
-
+  public complaintViewModal = new Subject<any>()
   updateLoader(isLoading: boolean) {
     this.loading.next(isLoading);
   }
