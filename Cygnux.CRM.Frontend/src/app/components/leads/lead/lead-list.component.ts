@@ -120,9 +120,13 @@ export class LeadListComponent implements OnDestroy{
   }
   
   exportLeads(event: any) {
+    const filters: any = {
+      ...this.filters,
+      UserID:this.identityService.getLoggedUserId(),
+    };
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.leadService.exportLead(this.filters).subscribe({
+    this.leadService.exportLead(filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -137,6 +141,10 @@ export class LeadListComponent implements OnDestroy{
   }
 
   exportCSVLeads(event: any) {
+    const filters: any = {
+      ...this.filters,
+      UserID:this.identityService.getLoggedUserId(),
+    };
     event.preventDefault();
     this.commonService.updateLoader(true);
     this.leadService.exportLead(this.filters).subscribe({

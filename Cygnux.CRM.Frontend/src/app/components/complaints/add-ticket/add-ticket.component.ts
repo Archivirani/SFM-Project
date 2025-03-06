@@ -165,7 +165,7 @@ export class AddTicketComponent {
       assigned: new FormControl(data?.assignedTo),
       status: new FormControl(data?.compaintStatus),
       priority: new FormControl(data?.priority.toString()),
-      escalatedTo: new FormControl(escalatedTo, [Validators.required]),
+      escalatedTo: new FormControl([escalatedTo], [Validators.required]),
       escalatedEmail: new FormControl(data?.customerEmail),
       escalatedDate: new FormControl('', [Validators.required]),
       escalatedRemark: new FormControl('', [Validators.required]),
@@ -293,7 +293,11 @@ export class AddTicketComponent {
     this.complaintService.getAssignTo().subscribe({
       next: (response) => {
         if (response) {
-          this.assignToList = response.data;
+          // this.assignToList = response.data;
+          this.assignToList = response.data.map((user: any) => ({
+            userId: user.userId,
+            userName: `${user.userId}: ${user.userName}`,
+          }));
         }
         this.commonService.updateLoader(false);
       },
@@ -311,8 +315,8 @@ export class AddTicketComponent {
         if (response.success) {
           this.userList = response.data
           this.ticketForm.patchValue({
-            managerName:this.userList.managerName,
-            managerId:this.userList.managerId,
+            managerName:this.userList.complaintManagerName,
+            managerId:this.userList.complaintManagerID,
             userName:this.userList.userName,
             userID:this.userList.userId,
           });

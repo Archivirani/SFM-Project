@@ -2,23 +2,24 @@
   <div class="modal-body">
     <input type="hidden" id="id-field" />
     <div class="row g-3">
-        <!-- <div class="col-lg-6">
-          <div>
-            <label class="control-label">Customer Name</label>
-            <input type="text" formControlName="customerName" class="form-control" readonly>
-          </div>
-        </div> -->
-      <!-- @if(meetingForm.value.leadId){ -->
         <div class="col-lg-6">
           <div>
             <label class="control-label">Customer Name*</label>
             <div>
-              <ng-select [items]="customerService.customersList" bindLabel="customerName" bindValue="customerName" formControlName="customerName"  (input)="customerService.customerDropdown($event)"
+              <input style="text-transform: uppercase;"
+              class="form-control"
+              maxlength="255"
+              formControlName="customerName"
+              type="text"
+              required
+              [ngClass]="{ 'border-danger': meetingForm.controls['customerName'].invalid && meetingForm.controls['customerName'].touched}" readonly/>
+
+              <!-- <ng-select [items]="customerService.customersList" bindLabel="customerName" bindValue="customerName" formControlName="customerName"  (input)="customerService.customerDropdown($event)"
                 placeholder="Search customer" [searchable]="true" [clearable]="true" required
                 [disabled]="checkOutValue !== '-' || meetingResponse?.customerName || addMeetingResponse?true:false" [readonly]="checkOutValue !== '-' || meetingResponse?.customerName || addMeetingResponse?true:false" 
                 [ngClass]="{ 'border-danger': meetingForm.controls['customerName'].invalid && meetingForm.controls['customerName'].touched}" 
                 [readonly]="router.url.includes('/customer') || router.url.includes('/meeting/list')">
-              </ng-select>
+              </ng-select> -->
             </div>
             <div *ngIf="
                 meetingForm.controls['customerName'].invalid &&
@@ -28,7 +29,6 @@
             </div>
           </div>
         </div>
-      <!-- } -->
       <div class="col-lg-6">
         <div>
           <label class="control-label">Contact Name</label>

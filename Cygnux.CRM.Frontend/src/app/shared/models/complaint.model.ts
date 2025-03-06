@@ -96,6 +96,8 @@ export interface ComplaintGetUser {
   userName: string;
   managerId: string;
   managerName: string;
+  complaintManagerID:string;
+  complaintManagerName:string;
 }
 
 export interface DocDataDetail {

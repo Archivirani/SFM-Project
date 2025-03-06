@@ -294,12 +294,14 @@
           <th>Escalated To</th>
           <th>Escalated Email</th>
           <th>Escalated Date</th>
+          <th>Escalated Remark</th>
         </tr>
         <tr *ngFor="let history of escalatedHistory">
           <td>{{history.escalatedId ? history.escalatedId :'--'}}</td>
           <td>{{history.escalatedTo ? history.escalatedTo :'--'}}</td>
           <td>{{history?.escalatedEmail ? history.escalatedEmail :'--'}}</td>
-          <td>{{history?.escalatedDate ? history.escalatedDate :'--'}}</td>
+          <td>{{history?.escalatedDate ? (history.escalatedDate | date : 'dd/MM/yyyy') :'--'}}</td>
+          <td>{{history?.remark ? history.remark :'--'}}</td>
         </tr>
        </table>
     </div> 

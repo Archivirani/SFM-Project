@@ -154,7 +154,6 @@ export class AddLeadComponent implements OnInit, OnChanges {
   }
 
   onSubmitLead(form: FormGroup): void {
-    // const companyName = this.customerService.customersList.find((d)=>d.customerCode === form.value.customerCode)?.customerName
     if (form.valid) {
       let assignedTo = this.identityService.getLoggedUserId();
       const dataToSubmit = {
@@ -163,7 +162,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
         ServiceInterestedIDs: form.value.ServiceInterestedIDs.join(','),
         CreatedBy:assignedTo,
         leadCategoryId:parseInt(form.value.leadCategoryId),
-        // companyName:companyName
+        companyName: form.value.companyName.toUpperCase()
       };
       !this.leadId ? this.addLead(dataToSubmit) : this.updateLead(dataToSubmit);
     }else{
@@ -270,7 +269,11 @@ export class AddLeadComponent implements OnInit, OnChanges {
     this.externalService.getUserMaster().subscribe({
       next: (response) => {
         if (response) {
-          this.users = response.data;
+          this.users = response.data.map((user: any) => ({
+            userId: user.userId,
+            name: `${user.userId } : ${ user.name}`,
+          }));
+          // this.users = response.data;
         }
         this.commonService.updateLoader(false);
       },
