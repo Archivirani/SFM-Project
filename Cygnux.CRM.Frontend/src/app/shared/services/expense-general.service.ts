@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ApiHandlerService } from './api-handler.service';
 import { filter, Observable } from 'rxjs';
 import { IApiBaseResponse } from '../interfaces/api-base-action-response';
-import { GeneralMaster, GeneralMasterResponse } from '../models/expenseGeneral.model';
+import { GeneralMaster, GeneralMasterResponseList } from '../models/expenseGeneral.model';
 import { CommonResponse } from '../models/common.model';
 
 @Injectable({
@@ -18,15 +18,15 @@ constructor(
       return this.apiHandlerService.Get(`GeneralMaster?codeType=${codeType}&searchText=${searchText}`);
     }
 
-getGeneralmasterList(filters:any): Observable<IApiBaseResponse<GeneralMasterResponse[]>> {
+getGeneralmasterList(filters:any): Observable<IApiBaseResponse<GeneralMasterResponseList[]>> {
   return this.apiHandlerService.Get(`Expense/generalmaster/list`,filters);   
  }
 
- addGeneralMaster( generalmaster: GeneralMasterResponse): Observable<IApiBaseResponse<CommonResponse>> {
+ addGeneralMaster( generalmaster: GeneralMasterResponseList): Observable<IApiBaseResponse<CommonResponse>> {
      return this.apiHandlerService.Post('Expense/generalmaster/add', generalmaster);
    }
 
-   updateGeneralMaster( generalmaster: GeneralMasterResponse): Observable<IApiBaseResponse<CommonResponse>> {
+   updateGeneralMaster( generalmaster: GeneralMasterResponseList): Observable<IApiBaseResponse<CommonResponse>> {
     return this.apiHandlerService.Post(`Expense/generalmaster/edit?id=${generalmaster.id}`, generalmaster);
   }
 }

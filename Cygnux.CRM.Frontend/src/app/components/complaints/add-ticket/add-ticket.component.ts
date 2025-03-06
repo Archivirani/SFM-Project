@@ -30,6 +30,7 @@ export class AddTicketComponent {
   public escalationForm!: FormGroup;
   public docketNotFound = false;
   public emails: string[] = [];
+  public escEmail:string[]=[];
   public emailInput: string = '';
   public emailError: boolean = false;
   public locations: LocationResponse[] = [];
@@ -179,6 +180,12 @@ export class AddTicketComponent {
     }
   }
 
+  onEscKeyUp(event: KeyboardEvent){
+    if (event.key === ';') {
+      this.addEscEmail();
+    }
+  }
+
   addEmail() {
     let emailList = this.ticketForm.value.customerEmail
       .split(';')
@@ -196,11 +203,34 @@ export class AddTicketComponent {
   
     this.ticketForm.get('customerEmail')?.setValue('');
   }
+
+  addEscEmail(){
+    let emailList = this.escalationForm.value.escalatedEmail
+    .split(';')
+    .map((email: any) => email.trim())
+    .filter((email: any) => email);
+
+  emailList.forEach((email: any) => {
+    if (MultipleEmailRegex.test(email) && !this.escEmail.includes(email)) {
+      this.escEmail.push(email);
+      this.emailError = false;
+    } else {
+      this.emailError = true;
+    }
+  });
+
+  this.escalationForm.get('escalatedEmail')?.setValue('');
+  }
   
 
   removeEmail(index: number) {
     this.emails.splice(index, 1);
     this.ticketForm.get('customerEmail')?.setValue(this.emails.join(';'));
+  }
+
+  removeEscEmail(index:number){
+    this.escEmail.splice(index, 1);
+    this.escalationForm.get('escalatedEmail')?.setValue(this.escEmail.join(';'));
   }
 
   onDocketNoChange(event: any) {

@@ -23,7 +23,8 @@ import { CustomerService } from '../../../shared/services/customer.service';
 import { ExpenseService } from '../../../shared/services/expense.service';
 import { ExternalService } from '../../../shared/services/external.service';
 import { IdentityService } from '../../../shared/services/identity.service';
-
+import { ExpenseGeneralService } from '../../../shared/services/expense-general.service';
+import { GeneralMasterResponseList } from '../../../shared/models/expenseGeneral.model';
 @Component({
   selector: 'app-add-expense',
   standalone: false,
@@ -34,6 +35,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   public expenseForm!: FormGroup;
   public expenseId: string = '';
   public transportModes: GeneralMasterResponse[] = [];
+  public getGeneralmaster:GeneralMasterResponseList[] = [];
   public users: UserResponse[] = [];
   public customers: LeadCustomerResponse[] = [];
   public leadContacts: LeadContactResponse[] = [];
@@ -52,7 +54,8 @@ export class AddExpenseComponent implements OnInit, OnChanges {
     private customerService: CustomerService,
     private commonService: CommonService,
     private toasterService: ToastrService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    private expenseGeneralService:ExpenseGeneralService,
   ) {
     this.expenseForm = new FormGroup({});
   }
@@ -87,6 +90,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.buildForm();
     this.getTransportModes();
+    this.getGeneralmasterList();
   }
 
   onClose(){
@@ -220,6 +224,36 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       },
     });
   }
+
+  getGeneralmasterList(){
+    const filters: any = {
+      Page: 1,
+      PageSize: 5000,
+      export:false
+    };
+   this.expenseGeneralService.getGeneralmasterList(filters).subscribe({
+    next: (response) => {
+      if (response) {
+              this.getGeneralmaster = response.data;
+            }
+            this.commonService.updateLoader(false);
+          },
+          error: (response: any) => {
+            this.toasterService.error(response);
+            this.commonService.updateLoader(false);
+          },
+   })
+  }
+
+  OntransportModeChange(data:any){
+    let storedUser = localStorage.getItem('loginUser');
+    let parsedUser = JSON.parse(storedUser || '');
+    const ratePerKM = this.getGeneralmaster.find((d)=>d.designationId.toString() === parsedUser.designationId && d.transportModeId.toString() === data.codeId)
+    this.expenseForm.patchValue({
+      expRate:ratePerKM?.ratePerKM || 0
+    });
+  }
+  
   getUsers() {
     this.commonService.updateLoader(true);
     this.externalService.getUserMaster().subscribe({
