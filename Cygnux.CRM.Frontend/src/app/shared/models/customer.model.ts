@@ -56,7 +56,8 @@ export interface CustomerFilter {
   totalOS: number;          
   nbd: number;              
   lostCustomerCount: number;
-  avgGP: number;            
+  avgGP: number;
+  yield:number;           
 }
 
 export interface GetFilter {

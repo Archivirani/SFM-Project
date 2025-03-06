@@ -1,4 +1,4 @@
-export interface GeneralMasterResponse {
+export interface GeneralMasterResponseList {
         id: number,
         designationId: number,
         designation: string,

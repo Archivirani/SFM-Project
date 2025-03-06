@@ -104,8 +104,8 @@ export class CustomerListComponent implements OnInit {
     if(event?.length){
       const filters = {
         userid:this.identityService.getLoggedUserId(),
-        startdate:this.startDate,
-        enddate:this.endDate
+        // startdate:this.startDate,
+        // enddate:this.endDate
       }
      this.customerService.getLeadCustomerfilters(filters).subscribe({
       next:(response) =>{
@@ -117,7 +117,7 @@ export class CustomerListComponent implements OnInit {
           { name: "Total O/s", count: response.data.totalOS || 0 ,color:'lightgreen' },
           { name: "NBD", count: response.data.nbd || 0 ,color:'blue' },
           { name: "Lost Customer", count: response.data.lostCustomerCount || 0 ,color:'purple ' },
-          { name: "Yield", count: response.data.avgGP || 0 ,color:'bluecolor' },
+          { name: "Yield", count: response.data.yield || 0 ,color:'bluecolor' },
         ];
       },
       error: (response: any) => {

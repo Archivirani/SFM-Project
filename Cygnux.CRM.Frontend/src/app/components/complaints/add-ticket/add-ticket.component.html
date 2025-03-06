@@ -214,7 +214,7 @@
               class="form-control" 
               formControlName="customerEmail"
               (keyup)="onKeyUp($event)" 
-              placeholder="Enter emails separated by semicolon (;)"
+              placeholder="Enter emails separated by semicolon"
             />
           </div>
           <div *ngIf="emailError" class="text-danger">
@@ -438,7 +438,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-3">
+      <!-- <div class="col-3">
         <label>Esc. Email ID</label>
         <input type="text" class="form-control" formControlName="escalatedEmail">
         <div *ngIf="
@@ -447,6 +447,27 @@
         " class="text-danger">
           <small *ngIf="escalationForm.controls['escalatedEmail'].errors?.['required']">Esc. Email ID is
             required.</small>
+        </div>
+      </div> -->
+      <div>
+        <label>Esc. Email ID:</label>
+        <div class="email-container">
+          <div class="email-tags">
+            <span *ngFor="let email of escEmail; let i = index" class="email-tag">
+              {{ email }}
+              <button type="button" (click)="removeEscEmail(i)">×</button>
+            </span>
+          </div>
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="escalatedEmail"
+            (keyup)="onEscKeyUp($event)" 
+            placeholder="Enter emails separated by semicolon"
+          />
+        </div>
+        <div *ngIf="emailError" class="text-danger">
+          <small>Email is invalid.</small>
         </div>
       </div>
       <div class="col-3">

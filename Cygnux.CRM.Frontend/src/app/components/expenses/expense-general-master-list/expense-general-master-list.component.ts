@@ -4,7 +4,7 @@ import { ExpenseDetailResponse } from '../../../shared/models/expense.model';
 import { ExpenseGeneralService } from '../../../shared/services/expense-general.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
-import { GeneralMasterResponse } from '../../../shared/models/expenseGeneral.model';
+import { GeneralMasterResponseList } from '../../../shared/models/expenseGeneral.model';
 import { ExportService } from '../../../shared/services/export.service';
 @Component({
   selector: 'app-expense-general-master-list',
@@ -14,12 +14,12 @@ import { ExportService } from '../../../shared/services/export.service';
 })
 export class ExpenseGeneralMasterListComponent {
   public expenseId: string = '';
-  public expenses: GeneralMasterResponse[] = [];
+  public expenses: GeneralMasterResponseList[] = [];
   page = 1; // Current page number
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
   filters: { [key: string]: string } = {}; // Dynamic filter object
-  selectedExpense: GeneralMasterResponse | null = null;
+  selectedExpense: GeneralMasterResponseList | null = null;
   cardList:string = 'Expenses General master'
   @Output() edit = new EventEmitter<any>();
   
