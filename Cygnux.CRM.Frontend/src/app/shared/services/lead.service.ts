@@ -46,8 +46,8 @@ export class LeadService {
     return this.apiHandlerService.Get('lead/leadCategory', filters);
   }
 
-  getLeadDetails(id: string): Observable<IApiBaseResponse<LeadDetailResponse>> {
-    return this.apiHandlerService.Get('lead/' + id);
+  getLeadDetails(id: string,UserId:string): Observable<IApiBaseResponse<LeadDetailResponse>> {
+    return this.apiHandlerService.Get(`lead/${id}?UserId=${UserId}`);
   }
 
   addLead(

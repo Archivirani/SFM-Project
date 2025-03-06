@@ -187,7 +187,7 @@ export class LeadListComponent implements OnDestroy{
   }
   getLead(leadCode: string) {
     this.commonService.updateLoader(true);
-    this.leadService.getLeadDetails(leadCode).subscribe({
+    this.leadService.getLeadDetails(leadCode,this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedLead = response.data;
