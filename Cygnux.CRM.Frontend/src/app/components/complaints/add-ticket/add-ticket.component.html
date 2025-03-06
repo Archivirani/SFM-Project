@@ -429,9 +429,9 @@
       <div class="col-3">
         <label>Escalate To</label>
         <!-- <input type="text" class="form-control mb-3" formControlName="escalatedTo"> -->
-        <ng-select formControlName="escalatedTo" [items]="assignToList" bindLabel="userName" bindValue="userId"
-            [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
-          </ng-select>
+        <ng-select formControlName="escalatedTo" [items]="assignToList" bindLabel="userName" bindValue="userId" (change)="onAssignToList($event)"
+        [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
+      </ng-select>
         <div *ngIf=" escalationForm.controls['escalatedTo'].invalid && escalationForm.controls['escalatedTo']?.touched" class="text-danger">
           <small *ngIf="escalationForm.controls['escalatedTo'].errors?.['required']">Escalate To is required.</small>
         </div>

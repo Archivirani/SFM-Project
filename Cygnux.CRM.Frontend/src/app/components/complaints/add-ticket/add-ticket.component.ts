@@ -110,11 +110,12 @@ export class AddTicketComponent {
   onClose(){
     this.ticketForm.reset();
     this.buildForm();
-    this.emails =[]
+    this.escEmail = [];
   }
   onEscalationClose(){
     this.escalationForm.reset();
     this.createEscalationForm();
+    this.escEmail = [];
   }
   buildForm(): void {
     this.minDate = new Date();
@@ -166,13 +167,13 @@ export class AddTicketComponent {
       status: new FormControl(data?.compaintStatus),
       priority: new FormControl(data?.priority.toString()),
       escalatedTo: new FormControl([escalatedTo], [Validators.required]),
-      escalatedEmail: new FormControl(data?.customerEmail),
+      escalatedEmail: new FormControl(),
       escalatedDate: new FormControl('', [Validators.required]),
       escalatedRemark: new FormControl('', [Validators.required]),
       documents: new FormControl(''),
       userID: new FormControl(assignedTo),
     });
-
+ 
   }
 
   onKeyUp(event: KeyboardEvent) {
@@ -232,6 +233,23 @@ export class AddTicketComponent {
   removeEscEmail(index:number){
     this.escEmail.splice(index, 1);
     this.escalationForm.get('escalatedEmail')?.setValue(this.escEmail.join(';'));
+  }
+
+  onAssignToList(event:any){
+    if (event && event.length) {
+      const emailIds = event.map((user: any) => user.emailId);
+      this.escEmail = [];
+      emailIds.forEach((email: any) => {
+        if (MultipleEmailRegex.test(email) && !this.escEmail.includes(email)) {
+          this.escEmail.push(email);
+          this.emailError = false;
+        } else {
+          this.emailError = true;
+        }
+      });
+    }else{
+      this.escEmail = [];
+    }
   }
 
   onDocketNoChange(event: any) {
@@ -297,6 +315,7 @@ export class AddTicketComponent {
           this.assignToList = response.data.map((user: any) => ({
             userId: user.userId,
             userName: `${user.userId}: ${user.userName}`,
+            emailId:user.emailId
           }));
         }
         this.commonService.updateLoader(false);
