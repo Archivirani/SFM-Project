@@ -179,7 +179,7 @@
                           <li *ngIf="complaint.complaintStatus === 'Closed'" class="pe-3"> </li>
                           <li class="list-inline-item text-center" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="View">
-                            <a href="#" (click)="viewModal($event, complaint.complaintID)"><i
+                            <a href="#" (click)="viewModal($event, complaint.complaintID,complaint)"><i
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
                           <li class="buttoncss" [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" >

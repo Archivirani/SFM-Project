@@ -141,7 +141,7 @@
               (input)="customerService.customerDropdown($event)"
               [searchable]="true"
               [ngClass]="{ 'border-danger': callForm.controls['customerCode'].invalid && callForm.controls['customerCode'].touched }"
-              [clearable]="true" [readonly]="router.url.includes('/customer')  || router.url.includes('/call/lists')">
+              [clearable]="true" [readonly]="router.url.includes('/customer')  || router.url.includes('/call/lists') || router.url.includes('/my-calendar')">
             </ng-select>
             <span *ngIf="callForm.controls['customerCode'].invalid && callForm.controls['customerCode']?.touched " class="help-block">
               <small *ngIf="callForm.controls['customerCode'].errors?.['required']" class="text-danger">Customer name is required.</small>

@@ -1,8 +1,9 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, SimpleChanges } from '@angular/core';
 import { ComplaintDetailResponse, DocDataDetail, EscalatedHistory, UpdateHistory } from '../../../shared/models/complaint.model';
 import { ComplaintService } from '../../../shared/services/complaint.service';
 import { Modal } from 'bootstrap';
 import { CommonService } from '../../../shared/services/common.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-complaint-detail',
@@ -10,22 +11,26 @@ import { CommonService } from '../../../shared/services/common.service';
   templateUrl: './complaint-detail.component.html',
   styleUrls: ['./complaint-detail.component.scss'],
 })
-export class ComplaintDetailComponent{
+export class ComplaintDetailComponent implements OnDestroy{
   updateHistoryList:UpdateHistory[]=[];
   escalatedHistory:EscalatedHistory[]=[];
   docketNoList?:DocDataDetail;
+  complaintViewModalSubscription!:Subscription;
   @Input() complaintResponse: ComplaintDetailResponse | null = null;
-
-
   constructor(
     private complaintService: ComplaintService,
     public commonService: CommonService,
-  ){}
-  
-  ngOnChanges(changes: SimpleChanges) {
-      this.updateHistory(this.complaintResponse?.complaintID)
-      this.onDocketNo(this.complaintResponse?.documentNo)
-   }
+  ){
+    this.complaintViewModalSubscription = this.commonService.complaintViewModal.subscribe((res)=>{
+      if(res){
+        this.updateHistory(res?.complaintID)
+        this.onDocketNo(res?.documentNo)
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    if(this.complaintViewModalSubscription){this.complaintViewModalSubscription.unsubscribe()}
+  }
   
    updateHistory(complaintID:any){
     this.complaintService.getupdateHistory(complaintID).subscribe((res:any)=>{
