@@ -12,6 +12,7 @@ import { ExportService } from '../../../shared/services/export.service';
 import { environment } from '../../../../environments/environment';
 import { ImportService } from '../../../shared/services/import.service';
 import { Subscription } from 'rxjs';
+import { IdentityService } from '../../../shared/services/identity.service';
 
 @Component({
   selector: 'app-lead',
@@ -42,7 +43,8 @@ export class LeadListComponent implements OnDestroy{
     public commonService: CommonService,
     private toasterService: ToastrService,
     private exportService: ExportService,
-    public importService:ImportService
+    public importService:ImportService,
+    private identityService:IdentityService
   ) {
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
       if(res){
@@ -61,6 +63,7 @@ export class LeadListComponent implements OnDestroy{
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
+      UserID:this.identityService.getLoggedUserId(),
       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
       endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     };
