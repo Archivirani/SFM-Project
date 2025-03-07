@@ -1,3 +1,16 @@
+
+<div class="modal-header bg-light p-3">
+  <h5 class="modal-title" id="exampleModalLabel">
+    {{ leadId == "" ? "Add Lead" : "Update Lead" }}
+  </h5>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+    id="close-modal"
+  ></button>
+</div>
 <form
   [formGroup]="leadForm"
   class="horizontal-form"
