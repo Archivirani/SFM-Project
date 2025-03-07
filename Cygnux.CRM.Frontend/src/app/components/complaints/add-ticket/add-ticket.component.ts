@@ -173,7 +173,12 @@ export class AddTicketComponent {
       documents: new FormControl(''),
       userID: new FormControl(assignedTo),
     });
- 
+    if (escalatedTo && escalatedTo.length) {
+      const selectedUsers = this.assignToList.filter((user) =>
+        escalatedTo.includes(user.userId)
+      );
+      this.onAssignToList(selectedUsers);
+    }
   }
 
   onKeyUp(event: KeyboardEvent) {
