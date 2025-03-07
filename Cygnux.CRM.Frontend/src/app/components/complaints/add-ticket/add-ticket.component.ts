@@ -450,6 +450,8 @@ export class AddTicketComponent {
 
   escalationTicket() {
     const { priority, status, assigned, description, type, docketNo, ...data } = this.escalationForm.value;
+    data.escalatedEmail =  this.escEmail.join(';')
+    data.escalatedTo = this.escalationForm.value.escalatedTo.map((user: any) => user).join(',');
     this.commonService.updateLoader(true);
     this.complaintService.AddEscTktComplaint(data).subscribe({
       next: (response) => {
