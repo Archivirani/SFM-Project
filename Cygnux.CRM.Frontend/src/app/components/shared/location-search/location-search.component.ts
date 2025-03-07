@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MapLocationResponse } from '../../../shared/models/location.model';
 
 declare var google: any;
@@ -12,14 +12,22 @@ export class LocationSearchComponent implements OnInit {
     new EventEmitter<MapLocationResponse>();
   @Input() meetingResponse:any;
   ngOnInit(): void {
+    // const placeSearch = new PlacesSearch('searchInput', 'suggestionsList');
+    // placeSearch.initialize();
+
+    // placeSearch.eventCompleted.subscribe((value) => {
+    //   this.mapDataEmitter.emit(value);
+    // });
+  }
+
+   ngOnChanges(changes: SimpleChanges): void {
     const placeSearch = new PlacesSearch('searchInput', 'suggestionsList');
     placeSearch.initialize();
 
-    // Example: Consume the class to get lat, long, and address
     placeSearch.eventCompleted.subscribe((value) => {
       this.mapDataEmitter.emit(value);
     });
-  }
+   }
 }
 
 class PlacesSearch {

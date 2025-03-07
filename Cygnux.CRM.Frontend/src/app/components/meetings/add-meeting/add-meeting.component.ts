@@ -179,10 +179,19 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       },
     });
   }
-  onClose(){
+  onClose() {
     this.meetingForm.reset();
     this.buildForm();
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.value = ''; 
+    }
+    const suggestionsList = document.getElementById('suggestionsList') as HTMLUListElement;
+    if (suggestionsList) {
+      suggestionsList.innerHTML = ''; 
+    }
   }
+  
   
   onAllDayEventChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;

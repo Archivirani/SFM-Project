@@ -216,9 +216,11 @@
 
           &nbsp;
           <div>
-            <app-location-search [class.disabled]="checkOutValue !== '-'" (mapDataEmitter)="onLocationSearch($event)"
+            <app-location-search [class.disabled]="checkOutValue !== '-'" (mapDataEmitter)="onLocationSearch($event)" 
               [meetingResponse]="this.meetingResponse?.geoLocation"></app-location-search>
           </div>
+          
+          <!-- Display selected location -->
           <div *ngIf="this.meetingResponse?.latitude">
             <label> {{ this.meetingResponse?.geoLocation }}</label>
             <google-map height="150px" width="100%" [center]="center" [zoom]="zoom">

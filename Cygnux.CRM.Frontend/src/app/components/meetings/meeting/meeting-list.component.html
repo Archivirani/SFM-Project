@@ -131,7 +131,7 @@
                       <td class="text-center">{{meeting.meetingTimeInMins ? meeting.meetingTimeInMins:'--'}} </td>
                       <td class="text-center">
                       <div class="d-flex">
-                        <span [title]="meeting.checkInReason"><button class="btn btn-danger me-1 fontsize" (click)="onCheckIn(meeting,i)"  [disabled]="!meeting.isCheckInEnabled">Check In</button></span>
+                        <span [title]="meeting.checkInReason"><button class="btn btn-danger me-1 fontsize" (click)="onCheckIn(meeting,i)"  [disabled]="!meeting.isCheckInEnabled || meeting.checkIn !== '-'">Check In</button></span>
                         <span [title]="meeting.checkOutReason"><button class="btn btn-secondary fontsize" (click)="onCheckOut(meeting,i)"  [disabled]="!meeting.isCheckOutEnabled">Check Out</button></span>
                       </div>
                       </td> 
