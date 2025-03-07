@@ -185,11 +185,11 @@
               data-bs-keyboard="false">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <div class="modal-header bg-light p-3">
+                  <!-- <div class="modal-header bg-light p-3">
                     <h5 class="modal-title" id="exampleModalLabel">
                       Add Meeting
                     </h5>
-                  </div>
+                  </div> -->
                   <app-add-meeting (dataEmitter)="closeMeetingModal()" [checkOutValue]="checkOutValue" [isMeetingList]="'Add'" [meetingResponse]="selectedCustomerName"></app-add-meeting>
                 </div>
               </div>
@@ -200,9 +200,9 @@
               data-bs-keyboard="false">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <div class="modal-header bg-light p-3">
+                  <!-- <div class="modal-header bg-light p-3">
                     <h5 class="modal-title" id="exampleModalLabel">Add Call</h5>
-                  </div>
+                  </div> -->
                   <app-add-call (dataEmitter)="closeCallModal()" [callResponse]="selectedCustomerName" [isCallList]="'Add'"></app-add-call>
                 </div>
               </div>

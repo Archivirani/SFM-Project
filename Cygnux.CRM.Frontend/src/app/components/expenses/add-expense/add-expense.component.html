@@ -1,3 +1,11 @@
+<div class="modal-header bg-light p-3">
+  <h5 class="modal-title" id="exampleModalLabel">
+    {{ typeData }}
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+    id="close-modal" (click)="onClose()"></button>
+</div>
+
 <form [formGroup]="expenseForm" class="horizontal-form" autocomplete="off" (submit)="onSubmitExpense(expenseForm)">
   <div class="modal-body">
     <input type="hidden" id="id-field" />

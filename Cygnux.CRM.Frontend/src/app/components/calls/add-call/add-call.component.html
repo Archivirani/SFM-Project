@@ -1,3 +1,8 @@
+<div class="modal-header bg-light p-3">
+  <h5 class="modal-title" id="exampleModalLabel">{{isCallList}} Call </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="onClose()"></button>
+</div>
+
 <form
   [formGroup]="callForm"
   class="tablelist-form"
