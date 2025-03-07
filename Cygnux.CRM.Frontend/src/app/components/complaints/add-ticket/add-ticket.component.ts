@@ -169,7 +169,7 @@ export class AddTicketComponent {
       escalatedTo: new FormControl([escalatedTo], [Validators.required]),
       escalatedEmail: new FormControl(),
       escalatedDate: new FormControl('', [Validators.required]),
-      escalatedRemark: new FormControl('', [Validators.required]),
+      escalatedRemarks: new FormControl('', [Validators.required]),
       documents: new FormControl(''),
       userID: new FormControl(assignedTo),
     });

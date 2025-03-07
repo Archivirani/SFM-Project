@@ -487,12 +487,12 @@
       </div>
       <div class="col-3">
         <label>Remarks</label>
-        <input type="text" class="form-control" formControlName="escalatedRemark">
+        <input type="text" class="form-control" formControlName="escalatedRemarks">
         <div *ngIf="
-            escalationForm.controls['escalatedRemark'].invalid &&
-            escalationForm.controls['escalatedRemark']?.touched
+            escalationForm.controls['escalatedRemarks'].invalid &&
+            escalationForm.controls['escalatedRemarks']?.touched
           " class="text-danger">
-          <small *ngIf="escalationForm.controls['escalatedRemark'].errors?.['required']">Remarks is required.</small>
+          <small *ngIf="escalationForm.controls['escalatedRemarks'].errors?.['required']">Remarks is required.</small>
         </div>
       </div>
       <div class="col-3 mt-3">
