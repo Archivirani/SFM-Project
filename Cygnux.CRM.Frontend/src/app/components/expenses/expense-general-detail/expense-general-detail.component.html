@@ -1,6 +1,6 @@
 <div class="modal-body">
     <div class="table-container">
-      <table class="table table-striped table-hover">
+      <table class="table table-bordered table-striped">
         <tbody>
             <tr>
                 <td><strong class="me-2">Designation:</strong>{{ expenseResponse?.designation}}</td>
@@ -11,11 +11,11 @@
                 <td><strong class="me-2">Expense Added By:</strong>{{ expenseResponse?.createdBy}}</td>
             </tr>
             <tr>
-                <td><strong class="me-2">Expense Added By Date & Time:</strong>{{ expenseResponse?.createdDate | date : "dd/MM/yyyy"}}</td>
+                <td><strong class="me-2">Expense Added By Date:</strong>{{ expenseResponse?.createdDate | date : "dd/MM/yyyy"}}</td>
                 <td><strong class="me-2">Expense Edited By:</strong>{{ expenseResponse?.modifiedBy}}</td>
             </tr>
             <tr>
-                <td><strong class="me-2">Expense Edited By Date & Time:</strong>{{ expenseResponse?.modifiedDate | date : "dd/MM/yyyy"}}</td>
+                <td><strong class="me-2">Expense Edited By Date:</strong>{{ expenseResponse?.modifiedDate | date : "dd/MM/yyyy"}}</td>
             </tr>
         </tbody>
       </table>

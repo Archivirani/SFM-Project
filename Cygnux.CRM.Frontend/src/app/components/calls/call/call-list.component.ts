@@ -11,6 +11,7 @@ import { ExportService } from '../../../shared/services/export.service';
 import { ImportService } from '../../../shared/services/import.service';
 import { GetFilter } from '../../../shared/models/customer.model';
 import { Subscription } from 'rxjs';
+import { IdentityService } from '../../../shared/services/identity.service';
 
 @Component({
   selector: 'app-call',
@@ -35,7 +36,8 @@ export class CallListComponent implements OnInit {
     private commonService: CommonService,
     private toasterService: ToastrService,
     public exportService: ExportService,
-    public importService: ImportService
+    public importService: ImportService,
+    private identityService:IdentityService
   ) {
     defineElement(lottie.loadAnimation);
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
@@ -58,6 +60,7 @@ export class CallListComponent implements OnInit {
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
+      UserID:this.identityService.getLoggedUserId(),
     };
     this.callService.getCallList(params).subscribe({
       next: (response) => {
@@ -74,9 +77,13 @@ export class CallListComponent implements OnInit {
     });
   }
   exportCalls(event: any) {
+    const filters: any = {
+      ...this.filters,
+      UserID:this.identityService.getLoggedUserId(),
+    };
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.callService.exportCall(this.filters).subscribe({
+    this.callService.exportCall(filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -108,9 +115,13 @@ export class CallListComponent implements OnInit {
   }
 
   exportCSVCalls(event: any) {
+    const filters: any = {
+      ...this.filters,
+      UserID:this.identityService.getLoggedUserId(),
+    };
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.callService.exportCall(this.filters).subscribe({
+    this.callService.exportCall(filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);
@@ -145,7 +156,7 @@ export class CallListComponent implements OnInit {
 
   getCall(callCode: string) {
     this.commonService.updateLoader(true);
-    this.callService.getCallDetails(callCode).subscribe({
+    this.callService.getCallDetails(callCode,this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedCall = response.data;

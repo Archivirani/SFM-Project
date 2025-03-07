@@ -28,8 +28,8 @@ export class CallService {
   exportCall(filters: any): Observable<IApiBaseResponse<any[]>> {
     return this.apiHandlerService.Get('call/export', filters);
   }
-  getCallDetails(id: string): Observable<IApiBaseResponse<CallDetailResponse>> {
-    return this.apiHandlerService.Get('call/' + id);
+  getCallDetails(id: string,UserId:any): Observable<IApiBaseResponse<CallDetailResponse>> {
+    return this.apiHandlerService.Get(`call/${id}?UserId=${UserId}`);
   }
 
   addCall(

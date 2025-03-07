@@ -41,21 +41,18 @@ export class AddCallComponent implements OnInit, OnChanges {
     public identifyService :IdentityService ) { this.callForm = new FormGroup({});}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['callResponse'] && this.callResponse) {
-      this.callForm.patchValue(this.callResponse);
-      // if(this.callResponse.customerCode){
-      //   this.customerService.customerDropdown(this.callResponse.customerCode)
-      // }
-      this.callForm.patchValue({companyName:this.callResponse.customerName || this.callResponse.companyName});
-    } else {
-      this.callForm.reset();
-    }
     const callStatusId = this.callStatuses.find((d)=>d.codeId.toString() === '2')?.codeId
     if(callStatusId){
       this.callForm.patchValue({
         callStatusId:callStatusId
       });
     } 
+    if (changes['callResponse'] && this.callResponse) {
+      this.callForm.patchValue(this.callResponse);
+      this.callForm.patchValue({companyName:this.callResponse.customerName || this.callResponse.companyName});
+    } else {
+      this.callForm.reset();
+    }
   }
 
   ngOnInit(): void {

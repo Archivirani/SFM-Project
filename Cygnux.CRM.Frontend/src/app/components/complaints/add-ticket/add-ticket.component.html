@@ -438,7 +438,7 @@
         <label>Escalate To</label>
         <!-- <input type="text" class="form-control mb-3" formControlName="escalatedTo"> -->
         <ng-select formControlName="escalatedTo" [items]="assignToList" bindLabel="userName" bindValue="userId" (change)="onAssignToList($event)"
-        [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
+        [placeholder]="'Search Escalate To'" [clearable]="true" [searchable]="true" [multiple]="true">
       </ng-select>
         <div *ngIf=" escalationForm.controls['escalatedTo'].invalid && escalationForm.controls['escalatedTo']?.touched" class="text-danger">
           <small *ngIf="escalationForm.controls['escalatedTo'].errors?.['required']">Escalate To is required.</small>
@@ -471,7 +471,7 @@
             class="form-control" 
             formControlName="escalatedEmail"
             (keyup)="onEscKeyUp($event)" 
-            placeholder="Enter emails separated by semicolon"
+            placeholder="Enter Escalated emails"
           />
         </div>
         <div *ngIf="emailError" class="text-danger">

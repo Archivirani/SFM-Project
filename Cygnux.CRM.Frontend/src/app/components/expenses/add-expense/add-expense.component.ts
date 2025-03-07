@@ -70,7 +70,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         TransportModeId:this.expenseResponse.transportModeId ? this.expenseResponse.transportModeId:null,
         ExpenseDate:this.expenseResponse.expenseDate,
         checkedInLocation:this.expenseResponse.checkedInLocation,
-        DistanceInKm:this.expenseResponse.distanceInKm,
+        DistanceInKm:this.expenseResponse.distanceTravelled,
         expRate:this.expenseResponse.expenseRate,
         Amount:this.expenseResponse.amount,
         remarks:this.expenseResponse.remarks,

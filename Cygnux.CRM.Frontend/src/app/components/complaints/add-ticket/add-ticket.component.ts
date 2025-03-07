@@ -66,7 +66,7 @@ export class AddTicketComponent {
         ticketAddressTo:ComplaintResponse.ticketAddressTo,
         customerID: ComplaintResponse.customerID
       })
-      this.createEscalationForm(ComplaintResponse,assignedTo);
+      this.createEscalationForm(ComplaintResponse);
     } else {
       this.buildForm();
     }
@@ -156,8 +156,9 @@ export class AddTicketComponent {
     });
   }
 
-  createEscalationForm(data?: any,escalatedTo?:any) {
+  createEscalationForm(data?: any) {
     let assignedTo = this.identityService.getLoggedUserId();
+    let existingEmails = data?.escEmailId ? data.escEmailId.split(';').map((email: string) => email.trim()) : [];
     this.escalationForm = new FormGroup({
       complaintId: new FormControl(data?.complaintID),
       docketNo: new FormControl(data?.documentNo),
@@ -166,19 +167,14 @@ export class AddTicketComponent {
       assigned: new FormControl(data?.assignedTo),
       status: new FormControl(data?.compaintStatus),
       priority: new FormControl(data?.priority.toString()),
-      escalatedTo: new FormControl([escalatedTo], [Validators.required]),
-      escalatedEmail: new FormControl(),
+      escalatedTo: new FormControl(data?.escalationTo ? data.escalationTo.split(',') : [], [Validators.required]),
+      escalatedEmail: new FormControl(existingEmails.join(';')),
       escalatedDate: new FormControl('', [Validators.required]),
       escalatedRemarks: new FormControl('', [Validators.required]),
       documents: new FormControl(''),
       userID: new FormControl(assignedTo),
     });
-    if (escalatedTo && escalatedTo.length) {
-      const selectedUsers = this.assignToList.filter((user) =>
-        escalatedTo.includes(user.userId)
-      );
-      this.onAssignToList(selectedUsers);
-    }
+    this.escEmail = [...existingEmails];
   }
 
   onKeyUp(event: KeyboardEvent) {

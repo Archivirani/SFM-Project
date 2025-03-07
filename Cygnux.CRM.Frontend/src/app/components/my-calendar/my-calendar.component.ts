@@ -120,7 +120,7 @@ export class MyCalendarComponent implements OnInit {
   }
   getCall(callCode: string) {
     this.commonService.updateLoader(true);
-    this.callService.getCallDetails(callCode).subscribe({
+    this.callService.getCallDetails(callCode,this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedCall = response.data;
