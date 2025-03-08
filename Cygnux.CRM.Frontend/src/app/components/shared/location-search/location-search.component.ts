@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MapLocationResponse } from '../../../shared/models/location.model';
 
 declare var google: any;
@@ -8,26 +8,53 @@ declare var google: any;
   templateUrl: './location-search.component.html',
 })
 export class LocationSearchComponent implements OnInit {
-  @Output() mapDataEmitter: EventEmitter<MapLocationResponse> =
-    new EventEmitter<MapLocationResponse>();
-  @Input() meetingResponse:any;
+  @Output() mapDataEmitter: EventEmitter<MapLocationResponse> = new EventEmitter<MapLocationResponse>();
+  @Input() meetingResponse: any = {}; 
+  @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
+  @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
+  private placeSearch!: PlacesSearch;
+  @Input() resetTrigger:boolean=false;
   ngOnInit(): void {
-    // const placeSearch = new PlacesSearch('searchInput', 'suggestionsList');
-    // placeSearch.initialize();
-
-    // placeSearch.eventCompleted.subscribe((value) => {
-    //   this.mapDataEmitter.emit(value);
-    // });
+   if (!this.meetingResponse) {
+      this.meetingResponse = ''; // Ensure it's initialized
+    }
+  }
+  ngAfterViewInit(): void {
+    if (this.searchInput && this.suggestionsList) {
+      this.initializePlaceSearch();
+    }
   }
 
-   ngOnChanges(changes: SimpleChanges): void {
-    const placeSearch = new PlacesSearch('searchInput', 'suggestionsList');
-    placeSearch.initialize();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.searchInput && this.suggestionsList) {
+      this.initializePlaceSearch();
+    }
 
-    placeSearch.eventCompleted.subscribe((value) => {
+    if (changes['resetTrigger'] && this.resetTrigger) {
+      this.resetSearch();
+    }
+  }
+
+   private initializePlaceSearch(): void {
+    if (!this.searchInput?.nativeElement || !this.suggestionsList?.nativeElement) {
+      console.error('Search input or suggestions list is not available');
+      return;
+    }
+
+    this.placeSearch = new PlacesSearch(this.searchInput.nativeElement, this.suggestionsList.nativeElement);
+    this.placeSearch.initialize();
+
+    this.placeSearch.eventCompleted.subscribe((value) => {
+      this.meetingResponse = value.address;
       this.mapDataEmitter.emit(value);
     });
-   }
+  }
+
+   resetSearch(): void {
+    if (this.meetingResponse) {this.meetingResponse = ''}
+    if (this.searchInput) {this.searchInput.nativeElement.value = ''}
+    if (this.suggestionsList) { this.suggestionsList.nativeElement.innerHTML = ''}
+  }
 }
 
 class PlacesSearch {
@@ -37,9 +64,9 @@ class PlacesSearch {
   private suggestionsList: HTMLUListElement;
   public eventCompleted = new EventEmitter<MapLocationResponse>();
 
-  constructor(inputId: string, listId: string) {
-    this.inputElement = document.getElementById(inputId) as HTMLInputElement;
-    this.suggestionsList = document.getElementById(listId) as HTMLUListElement;
+    constructor(inputElement: HTMLInputElement, listElement: HTMLUListElement) {
+    this.inputElement = inputElement;
+    this.suggestionsList = listElement;
     this.autocompleteService = new google.maps.places.AutocompleteService();
   }
 
@@ -49,11 +76,9 @@ class PlacesSearch {
       return;
     }
 
-    // Add event listener to the input field
     this.inputElement.addEventListener('input', () => {
       const query = this.inputElement.value.trim();
 
-      // Check if input length is >= 2
       if (query.length >= 2) {
         this.getPlaceSuggestions(query);
       } else {

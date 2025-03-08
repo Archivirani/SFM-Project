@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -7,6 +8,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CommonService } from '../../../shared/services/common.service';
@@ -64,8 +66,9 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     lng: 77.0627425, // Replace with your longitude
   };
   zoom = 12;
-
-
+  @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
+  @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
+  resetLocationSearchComponent:boolean =false;
   constructor(
     private meetingService: MeetingService,
     private externalService: ExternalService,
@@ -159,10 +162,9 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     }
     const [, day, month, year] = dateParts.map(Number);
     const leadDate = new Date(year, month - 1, day);
-    leadDate.setHours(0, 0, 0, 0); // Normalize lead date
-    return selectedDate < leadDate; // Disable dates before leadDate
+    leadDate.setHours(0, 0, 0, 0); 
+    return selectedDate < leadDate;
 };
-
 
   getMeetingMom(){
     this.commonService.updateLoader(true);
@@ -182,20 +184,18 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
   onClose() {
     this.meetingForm.reset();
     this.buildForm();
-    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
-    if (searchInput) {
-      searchInput.value = ''; 
-    }
-    const suggestionsList = document.getElementById('suggestionsList') as HTMLUListElement;
-    if (suggestionsList) {
-      suggestionsList.innerHTML = ''; 
-    }
+    this.meetingResponse = {
+      geoLocation: '',
+      latitude: null,
+      longitude: null,
+      customerCode: '', 
+    };
+    this.resetLocationSearchComponent = true; 
+    // setTimeout(() => this.resetLocationSearchComponent = false, 100); 
   }
-  
   
   onAllDayEventChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-
     if (isChecked) {
       this.isChecked=true;
       this.meetingForm.patchValue({

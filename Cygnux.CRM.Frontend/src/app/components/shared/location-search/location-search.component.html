@@ -1,13 +1,10 @@
 <div class="form-group">
   <input
-    id="searchInput"
+    #searchInput
     type="text"
-    placeholder="Search goe location"
+    placeholder="Search geo location"
     class="form-control"
     [(ngModel)]="meetingResponse"
   />
-  <ul
-    id="suggestionsList"
-    style="list-style: none; padding: 0; margin: 10px 0"
-  ></ul>
+  <ul #suggestionsList style="list-style: none; padding: 0; margin: 10px 0"></ul>
 </div>

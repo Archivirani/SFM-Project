@@ -230,7 +230,7 @@
           &nbsp;
           <div>
             <app-location-search [class.disabled]="checkOutValue !== '-'" (mapDataEmitter)="onLocationSearch($event)" 
-              [meetingResponse]="this.meetingResponse?.geoLocation"></app-location-search>
+              [meetingResponse]="this.meetingResponse?.geoLocation" [resetTrigger]="resetLocationSearchComponent"></app-location-search>
           </div>
           
           <!-- Display selected location -->
