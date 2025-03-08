@@ -25,7 +25,7 @@
               formControlName="customerName"
               type="text"
               required
-              [ngClass]="{ 'border-danger': meetingForm.controls['customerName'].invalid && meetingForm.controls['customerName'].touched}" readonly/>
+             readonly/>
 
               <!-- <ng-select [items]="customerService.customersList" bindLabel="customerName" bindValue="customerName" formControlName="customerName"  (input)="customerService.customerDropdown($event)"
                 placeholder="Search customer" [searchable]="true" [clearable]="true" required
@@ -60,7 +60,7 @@
         <div>
           <label class="control-label">Address</label>
           <input class="form-control" maxlength="500" formControlName="address" type="text"
-            [readOnly]="checkOutValue !== '-'"  [ngClass]="{ 'border-danger': meetingForm.controls['address'].invalid && meetingForm.controls['address'].touched}"/>
+            [readOnly]="checkOutValue !== '-'" />
           <div *ngIf="
               meetingForm.controls['address'].invalid &&
               meetingForm.controls['address']?.touched
@@ -73,7 +73,7 @@
         <div>
           <label class="control-label">Contact No*</label>
           <input class="form-control" maxlength="10" formControlName="contactNo" type="text" appOnlyNumber required
-            [readOnly]="checkOutValue !== '-'"  [ngClass]="{ 'border-danger': meetingForm.controls['contactNo'].invalid && meetingForm.controls['contactNo'].touched}"/>
+            [readOnly]="checkOutValue !== '-'"  />
           <div *ngIf="
               meetingForm.controls['contactNo'].invalid &&
               meetingForm.controls['contactNo']?.touched
@@ -88,7 +88,7 @@
         <div>
           <label class="control-label">Email*</label>
           <input class="form-control" maxlength="255" formControlName="email" type="text" required
-            [readOnly]="checkOutValue !== '-'"  [ngClass]="{ 'border-danger': meetingForm.controls['email'].invalid && meetingForm.controls['email'].touched}"/>
+            [readOnly]="checkOutValue !== '-'"  />
           <div *ngIf="
               meetingForm.controls['email'].invalid &&
               meetingForm.controls['email']?.touched
@@ -102,7 +102,7 @@
         <div>
           <label class="control-label">Meeting Purpose*</label>
           <input class="form-control" maxlength="500" formControlName="meetingPurpose" type="text" required
-            [readOnly]="checkOutValue !== '-'"  [ngClass]="{ 'border-danger': meetingForm.controls['meetingPurpose'].invalid && meetingForm.controls['meetingPurpose'].touched}"/>
+            [readOnly]="checkOutValue !== '-'" />
           <div *ngIf="
               meetingForm.controls['meetingPurpose'].invalid &&
               meetingForm.controls['meetingPurpose']?.touched
@@ -128,7 +128,7 @@
                 [readonly]="meetingId !== '' || checkOutValue !== '-'" 
                 [class.disabled]="checkOutValue !== '-'" 
                 required
-                [ngClass]="{ 'border-danger': meetingForm.controls['meetingDate'].invalid && meetingForm.controls['meetingDate'].touched}"
+                
               />
             <button [class.disabled]="checkOutValue !== '-'" class="btn btn-sm btn-outline-secondary ri-calendar-line"
               (click)="d2.toggle()" type="button"></button>
@@ -187,7 +187,7 @@
         <div>
           <label class="control-label">Meeting Type*</label>
           <div>
-            <select id="dropdown" class="form-control" formControlName="meetingTypeId" [ngClass]="{ 'border-danger': meetingForm.controls['meetingTypeId'].invalid && meetingForm.controls['meetingTypeId'].touched}" [class.disabled]="checkOutValue !== '-'">
+            <select id="dropdown" class="form-control" formControlName="meetingTypeId"  [class.disabled]="checkOutValue !== '-'">
               <option value="" disabled selected>--Select--</option>
               <option *ngFor="let item of meetingTypes" [value]="item.codeId">
                 {{ item.codeDesc }}
@@ -208,7 +208,7 @@
           <ng-select [items]="users" bindLabel="name" bindValue="userId" formControlName="attendeeIDs"
             placeholder="Search Attendees" [multiple]="true" [clearable]="true" [searchable]="true"
             [disabled]="checkOutValue !== '-'?true:false" [readonly]="checkOutValue !== '-'?true:false" 
-            [ngClass]="{ 'border-danger': meetingForm.controls['attendeeIDs'].invalid && meetingForm.controls['attendeeIDs'].touched}">
+           >
           </ng-select>
           <div *ngIf="
               meetingForm.controls['attendeeIDs'].invalid &&
@@ -254,7 +254,7 @@
           <label class="control-label">Meeting MOM</label>
           <!-- <textarea class="form-control" maxlength="500" formControlName="meetingMOM"></textarea> -->
           <ng-select [items]="meetingMom" bindLabel="moM" bindValue="moM" formControlName="meetingMOM"
-          placeholder="Search Mom" [multiple]="true" [clearable]="true" [searchable]="true">
+          placeholder="Search Mom" [multiple]="true" [clearable]="true" [searchable]="true" [class.disabled]="checkOutValue === '-'">
         </ng-select>
         </div>
       </div>
