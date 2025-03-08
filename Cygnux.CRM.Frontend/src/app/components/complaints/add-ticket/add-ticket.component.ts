@@ -48,6 +48,7 @@ export class AddTicketComponent {
      if(ComplaintResponse.documentNo){
       this.onDocketNo(ComplaintResponse.documentNo);
     }
+    let customerEmail = ComplaintResponse.customerEmail ? ComplaintResponse.customerEmail.split(';').map((email: string) => email.trim()) : [];
       this.ticketForm.patchValue({
         userID:ComplaintResponse.userID,
         docketNo:ComplaintResponse.documentNo,
@@ -57,7 +58,7 @@ export class AddTicketComponent {
         ticketDate:ComplaintResponse.compalaintDate,
         description:ComplaintResponse.description,
         type:ComplaintResponse.type.toString(),
-        customerEmail:ComplaintResponse.customerEmail,
+        customerEmail:[customerEmail],
         subType:ComplaintResponse.subType.toString(),
         updateDate: this.formatDate(ComplaintResponse?.updateDate),
         updateRemarks:ComplaintResponse.updateRemark,
@@ -66,6 +67,7 @@ export class AddTicketComponent {
         ticketAddressTo:ComplaintResponse.ticketAddressTo,
         customerID: ComplaintResponse.customerID
       })
+      this.emails = [...customerEmail];
       this.createEscalationForm(ComplaintResponse);
     } else {
       this.buildForm();

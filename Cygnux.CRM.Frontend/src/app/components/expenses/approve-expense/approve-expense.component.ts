@@ -31,7 +31,8 @@ export class ApproveExpenseComponent {
       this.approveForm.patchValue(this.expenseResponse);
       this.approveForm.patchValue({
         checkOutLocation:this.expenseResponse.checkedInLocation,
-        expenseCode:this.expenseResponse.expenseId
+        expenseCode:this.expenseResponse.expenseId,
+        requestDate:this.expenseResponse.requestDate === '01/01/1900 00:00:00' ? '' : '',
       })
     }else{
       this.approveForm?.reset();
