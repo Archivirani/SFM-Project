@@ -155,7 +155,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       formData.append("UserId", this.identityService.getLoggedUserId());
       formData.append("PunchedInLocation", form.value.punchedInLocation);
       formData.append("TransportModeId",form.value.TransportModeId);
-      formData.append("SupportingDocument",form.value.SupportingDocument.split('\\').pop());
+      formData.append("SupportingDocument",form.value.SupportingDocument ? form.value.SupportingDocument.split('\\').pop() :form.value.SupportingDocument);
       formData.append("Remarks", form.value.remarks);
       formData.append("MeetingId", this.expenseResponse?.meetingId ?? '');
       formData.append("Amount", form.value.Amount);
