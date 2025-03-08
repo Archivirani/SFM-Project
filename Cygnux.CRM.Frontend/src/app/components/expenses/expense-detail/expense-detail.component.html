@@ -11,7 +11,7 @@
           <td><strong class="me-2">Meeting Date:</strong>{{ expenseResponse?.expenseDate }} </td>
         </tr>
         <tr>
-          <td><strong class="me-2">Req. ID Date:</strong>{{ expenseResponse?.requestDate | date : "dd/MM/yyyy" }}</td>
+          <td><strong class="me-2">Req. ID Date:</strong>{{ expenseResponse?.requestDate==='01/01/1900 00:00:00'?'--': expenseResponse?.requestDate |date :"dd/MM/yyyy" }}</td>
           <td><strong class="me-2">RTGS No.:</strong></td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
           <td><strong class="me-2">Checked In Location:</strong> {{ expenseResponse?.checkedInLocation }}</td>
         </tr>
         <tr>
-          <td><strong class="me-2">Distance In Km:</strong> {{ expenseResponse?.distanceInKm }}</td>
+          <td><strong class="me-2">Distance In Km:</strong> {{ expenseResponse?.distanceTravelled }}</td>
           <td><strong class="me-2">Amount:</strong> {{ expenseResponse?.amount }}</td>
         </tr>
         <tr>

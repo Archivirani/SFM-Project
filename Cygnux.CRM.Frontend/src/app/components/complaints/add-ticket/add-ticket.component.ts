@@ -110,7 +110,7 @@ export class AddTicketComponent {
   onClose(){
     this.ticketForm.reset();
     this.buildForm();
-    this.escEmail = [];
+    this.emails=[];
   }
   onEscalationClose(){
     this.escalationForm.reset();

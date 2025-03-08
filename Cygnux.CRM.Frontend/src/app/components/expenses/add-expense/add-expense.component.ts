@@ -77,6 +77,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         // SupportingDocument:this.expenseResponse.supportingDocument,
         // expenseCreated:this.expenseResponse.remarks
       })
+      this.OntransportModeChange(this.expenseResponse.transportModeId)
     } else {
       this.expenseForm.reset();
       this.expenseId = '';
@@ -114,7 +115,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       checkedOutLocation:new FormControl(null),
       expRate:new FormControl(),
       expenseCode:new FormControl(),
-      SupportingDocument:new FormControl('',[Validators.required]),
+      SupportingDocument:new FormControl(''),
       CreatedBy:new FormControl(assignedTo)
     });
   }
@@ -248,7 +249,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   OntransportModeChange(data:any){
     let storedUser = localStorage.getItem('loginUser');
     let parsedUser = JSON.parse(storedUser || '');
-    const ratePerKM = this.getGeneralmaster.find((d)=>d.designationId.toString() === parsedUser.designationId && d.transportModeId.toString() === data.codeId);
+    const ratePerKM = this.getGeneralmaster.find((d)=>d.designationId.toString() === parsedUser.designationId && d.transportModeId.toString() === data);
     const expRate = ratePerKM?.ratePerKM ?? 0;
     const amount = expRate * (this.expenseForm.value.DistanceInKm || 0);
     this.expenseForm.patchValue({
