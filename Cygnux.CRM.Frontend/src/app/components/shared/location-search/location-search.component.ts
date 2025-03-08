@@ -1,5 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MapLocationResponse } from '../../../shared/models/location.model';
+import { MeetingService } from '../../../shared/services/meeting.service';
+import { Subscription } from 'rxjs';
 
 declare var google: any;
 
@@ -7,16 +9,24 @@ declare var google: any;
   selector: 'app-location-search',
   templateUrl: './location-search.component.html',
 })
-export class LocationSearchComponent implements OnInit {
+export class LocationSearchComponent implements OnInit ,OnDestroy{
   @Output() mapDataEmitter: EventEmitter<MapLocationResponse> = new EventEmitter<MapLocationResponse>();
   @Input() meetingResponse: any = {}; 
   @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
   @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
   private placeSearch!: PlacesSearch;
-  @Input() resetTrigger:boolean=false;
+  private resetLocationSearchSubscription!:Subscription;
+  constructor(private meetingService: MeetingService){
+    this.resetLocationSearchSubscription = this.meetingService.resetLocationSearch.subscribe((res)=>{
+      if(res){
+        this.resetSearch();
+      }
+    })
+  }
+  
   ngOnInit(): void {
    if (!this.meetingResponse) {
-      this.meetingResponse = ''; // Ensure it's initialized
+      this.meetingResponse = ''; 
     }
   }
   ngAfterViewInit(): void {
@@ -28,10 +38,6 @@ export class LocationSearchComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.searchInput && this.suggestionsList) {
       this.initializePlaceSearch();
-    }
-
-    if (changes['resetTrigger'] && this.resetTrigger) {
-      this.resetSearch();
     }
   }
 
@@ -54,6 +60,10 @@ export class LocationSearchComponent implements OnInit {
     if (this.meetingResponse) {this.meetingResponse = ''}
     if (this.searchInput) {this.searchInput.nativeElement.value = ''}
     if (this.suggestionsList) { this.suggestionsList.nativeElement.innerHTML = ''}
+  }
+
+  ngOnDestroy(): void {
+    if(this.resetLocationSearchSubscription){this.resetLocationSearchSubscription.unsubscribe()}
   }
 }
 

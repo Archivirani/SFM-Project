@@ -68,7 +68,6 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
   zoom = 12;
   @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
   @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
-  resetLocationSearchComponent:boolean =false;
   constructor(
     private meetingService: MeetingService,
     private externalService: ExternalService,
@@ -190,8 +189,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       longitude: null,
       customerCode: '', 
     };
-    this.resetLocationSearchComponent = true; 
-    // setTimeout(() => this.resetLocationSearchComponent = false, 100); 
+    this.meetingService.resetLocationSearch.next(true);
   }
   
   onAllDayEventChange(event: Event): void {

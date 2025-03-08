@@ -25,6 +25,7 @@ export class MeetingService {
     @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService
   ) {}
 public meetingResponseSubject=new Subject<any>()
+public resetLocationSearch=new Subject<boolean>()
   getMeetingList(
     filters: any
   ): Observable<IApiBaseResponse<MeetingResponse[]>> {
