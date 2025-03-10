@@ -43,6 +43,9 @@ export interface MeetingDetailResponse extends MeetingResponse {
   attendeeNames: string;
   createdDate?:Date;
   modifiedDate?:Date;
+  checkInOutLocation:string;
+  checkOutDateTime:string;
+  checkInDateTime:string;
 }
 export interface AddMeetingResponse {
   leadId: string;
