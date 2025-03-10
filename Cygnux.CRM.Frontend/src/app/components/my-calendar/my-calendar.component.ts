@@ -136,7 +136,7 @@ export class MyCalendarComponent implements OnInit {
   }
   getMeeting(id: string) {
     this.commonService.updateLoader(true);
-    this.meetingService.getMeetingDetails(id).subscribe({
+    this.meetingService.getMeetingDetails(id,this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedMeeting = response.data;

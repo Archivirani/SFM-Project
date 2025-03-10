@@ -39,17 +39,17 @@
           </td>
         </tr>
         <tr>
-          <td><strong>Check In Location:</strong> </td>
-          <td><strong>Check Out Location:</strong> </td>
+          <td><strong>Check In Location:</strong>  {{ meetingResponse?.checkInOutLocation ? meetingResponse?.checkInOutLocation :'--' }}</td>
+          <td><strong>Check Out Location:</strong>  {{ meetingResponse?.checkInOutLocation ? meetingResponse?.checkInOutLocation :'--' }}</td>
         </tr>
         <tr>
           <td scope="row">
             <strong>Check In Date:</strong> 
-            {{ meetingResponse?.checkIn | date : "dd/MM/yyyy" }}
+            {{ meetingResponse?.meetingDate}}{{' ' + meetingResponse?.checkIn }}
           </td>
           <td>
             <strong>Check Out Date:</strong>
-            {{ meetingResponse?.checkOut | date : "dd/MM/yyyy" }}
+            {{ meetingResponse?.meetingDate}}{{' ' + meetingResponse?.checkOut }}
           </td>
         </tr>
         <tr>
