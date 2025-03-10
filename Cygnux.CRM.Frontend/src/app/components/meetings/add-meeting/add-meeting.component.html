@@ -150,7 +150,7 @@
           <label for="startTime" class="form-label">Start Time*</label>
           <input type="time" class="form-control" formControlName="startTime"
              required [readonly]="checkOutValue !== '-' || isChecked "  
-            [ngClass]="{ 'border-danger': meetingForm.controls['startTime'].invalid && meetingForm.controls['startTime'].touched}"/>
+           />
           @if(this.router.url !== '/my-calendar'){
           <div *ngIf="meetingForm.invalid && meetingForm.touched" class="text-danger">
             <small *ngIf="meetingForm.errors?.['startTimeAfterCurrentTime']">
@@ -169,7 +169,7 @@
           <label for="endTime" class="form-label">End Time*</label>
           <input type="time" class="form-control" id="endTime" formControlName="endTime"
              required [readonly]="checkOutValue !== '-' || isChecked"
-            [ngClass]="{ 'border-danger': meetingForm.controls['endTime'].invalid && meetingForm.controls['endTime'].touched}" />
+             />
           @if(this.router.url !== '/my-calendar'){
           <div *ngIf="meetingForm.invalid && meetingForm.touched" class="text-danger">
             <small *ngIf="meetingForm.errors?.['timeRangeValidator']">

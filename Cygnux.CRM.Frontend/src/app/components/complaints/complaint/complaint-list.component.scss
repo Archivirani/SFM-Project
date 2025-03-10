@@ -53,6 +53,7 @@ input[type="radio"]:after{
 }
 .buttoncss{
   display: flex;
+  cursor: pointer;
   button{
     font-size: 4px;
     border-radius: 50px;

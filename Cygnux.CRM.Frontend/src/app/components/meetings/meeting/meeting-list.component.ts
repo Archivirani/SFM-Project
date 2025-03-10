@@ -62,6 +62,22 @@ export class MeetingListComponent implements OnInit {
     });
   }
 
+  getGeoLocation(lat: number, lng: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.display_name) {
+                    resolve(data.display_name); // Full address
+                } else {
+                    reject("No address found");
+                }
+            })
+            .catch(() => reject("Error fetching address"));
+    });
+}
+
   onCheckIn(meeting: any, i: number): void {
     const today = new Date();
     const formattedDate = today.toLocaleDateString("en-GB").replace(/\//g, "/"); // dd/mm/yyyy
@@ -72,30 +88,34 @@ export class MeetingListComponent implements OnInit {
         (position) => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
-  
-          const data = {
-            meetingId: meeting.meetingId,
-            userID: this.identityService.getLoggedUserId(),
-            isAttendee: true,
-            date: formattedDate,
-            checkIn: formattedDateTime,
-            Lat: userLat, // User's current latitude
-            Lng: userLng, // User's current longitude
-          };
-          
-          this.meetingService.addMeetingCheckInOut(data).subscribe(
-            (response) => {
-              if(response.success === true){
-                meeting.isCheckIn = false;
-                this.toasterService.success('Meeting checkIn successfully');
-                this.getMeetings();
-              }else{
-                this.toasterService.error(response.error.message);
-              }
-            }
-          );
-        }
-      );
+          this.getGeoLocation(userLat, userLng).then((geoLocation) => {
+            const data = {
+                meetingId: meeting.meetingId,
+                userID: this.identityService.getLoggedUserId(),
+                isAttendee: true,
+                date: formattedDate,
+                checkIn: formattedDateTime,
+                Lat: userLat, 
+                Lng: userLng, 
+                GeoLocation: geoLocation // Address
+            };
+
+            this.meetingService.addMeetingCheckInOut(data).subscribe(
+                (response) => {
+                    if(response.success === true){
+                        meeting.isCheckIn = false;
+                        this.toasterService.success('Meeting checkIn successfully');
+                        this.getMeetings();
+                    } else {
+                        this.toasterService.error(response.error.message);
+                    }
+                }
+            );
+        }).catch(() => {
+            this.toasterService.error("Failed to get location address.");
+        });
+    }
+);
     } else {
       this.toasterService.error("Geolocation is not supported by this browser.");
     }
@@ -112,6 +132,7 @@ onCheckOut(meeting: any, i: number): void {
       (position) => {
         const userLat = position.coords.latitude;
         const userLng = position.coords.longitude;
+        this.getGeoLocation(userLat, userLng).then((geoLocation) => {
         const data = {
           meetingId: meeting.meetingId,
           userID: this.identityService.getLoggedUserId(),
@@ -120,6 +141,7 @@ onCheckOut(meeting: any, i: number): void {
           checkOut: formattedDateTime,
           lat: userLat, // User's current latitude
           lng: userLng, // User's current longitude
+          GeoLocation: geoLocation
         };
         this.meetingService.addMeetingCheckInOut(data).subscribe(
           (response) => {
@@ -132,6 +154,7 @@ onCheckOut(meeting: any, i: number): void {
             this.toasterService.error(response.error.message);
           }
           });
+        });
       }
     );
   } else {
