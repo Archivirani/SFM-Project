@@ -35,10 +35,8 @@ public resetLocationSearch=new Subject<boolean>()
     return this.apiHandlerService.Get('meeting/export', filters);
   }
 
-  getMeetingDetails(
-    id: string
-  ): Observable<IApiBaseResponse<MeetingDetailResponse>> {
-    return this.apiHandlerService.Get('meeting/' + id);
+  getMeetingDetails(id: string,UserId:string): Observable<IApiBaseResponse<MeetingDetailResponse>> {
+    return this.apiHandlerService.Get(`meeting/${id}?UserId=${UserId}`);
   }
 
   addMeeting(

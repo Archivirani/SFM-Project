@@ -45,11 +45,11 @@
         <tr>
           <td scope="row">
             <strong>Check In Date:</strong> 
-            {{ meetingResponse?.checkInDateTime | date : "dd/MM/yyyy" }}
+            {{ meetingResponse?.meetingDate}}{{' ' + meetingResponse?.checkIn }}
           </td>
           <td>
             <strong>Check Out Date:</strong>
-            {{ meetingResponse?.checkOutDateTime | date : "dd/MM/yyyy" }}
+            {{ meetingResponse?.meetingDate}}{{' ' + meetingResponse?.checkOut }}
           </td>
         </tr>
         <tr>
