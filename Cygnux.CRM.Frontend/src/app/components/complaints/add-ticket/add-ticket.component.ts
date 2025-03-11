@@ -356,7 +356,7 @@ export class AddTicketComponent {
     if (this.complaint === 'Update') {
       const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,customerEmail,document,documentNo,priority,assignedToId,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
       update.documentNo=this.ticketForm.value.docketNo,
-      update.AssignedTo = this.ticketForm.value.assignedToId.join(','),
+      update.assignedToId = this.ticketForm.value.assignedToId.join(','),
       update.CustomerEmail = this.emails.join(';'),
       update.updateDate =  this.datePipe.transform(this.ticketForm.value.updateDate, 'dd/MM/yyyy') || '';  
       update.document = 'docket',

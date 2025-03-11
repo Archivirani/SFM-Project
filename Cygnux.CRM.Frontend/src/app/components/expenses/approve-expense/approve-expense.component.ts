@@ -33,7 +33,10 @@ export class ApproveExpenseComponent {
         checkOutLocation:this.expenseResponse.checkedInLocation,
         expenseCode:this.expenseResponse.expenseId,
         requestDate:this.expenseResponse.requestDate === '01/01/1900 00:00:00' ? '' : '',
-      })
+        distanceInKm:this.expenseResponse.distanceTravelled,
+        expenseRate:(Number(this.expenseResponse.amount) || 0) / (Number(this.expenseResponse.distanceTravelled) || 1),
+
+      });
     }else{
       this.approveForm?.reset();
     }

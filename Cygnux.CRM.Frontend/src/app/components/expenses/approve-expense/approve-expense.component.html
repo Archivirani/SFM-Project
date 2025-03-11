@@ -50,14 +50,14 @@
             <div>
               <label class="control-label">Transport Mode*</label>
               <ng-select [items]="transportModes" bindLabel="codeDesc" bindValue="codeId" formControlName="transportModeId"
-            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true">
+            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true" readonly>
           </ng-select>
             </div>
         </div>
         <div class="col-lg-6">
             <div>
               <label class="control-label">Supporting Document:</label>
-              <input class="form-control" type="file" formControlName="document" />
+              <input class="form-control" type="file" formControlName="document" style="pointer-events: none; background-color: #f8f9fa;" />
             </div>
         </div>
         <div class="col-lg-6">
@@ -65,9 +65,9 @@
               <label class="control-label">Expense Date</label>
               <div class="input-group">
                 <input class="form-control" placeholder="dd/mm/yyyy" formControlName="expenseDate" ngbDatepicker
-                  #d2="ngbDatepicker"/>
-                <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()"
-                  type="button"></button>
+                  #d2="ngbDatepicker" readonly/>
+                <button class="btn btn-sm btn-outline-secondary ri-calendar-line" 
+                  type="button" readonly></button>
               </div>
             </div>
         </div>

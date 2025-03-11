@@ -161,7 +161,7 @@ export class ExpenseApprovalListComponent implements OnInit {
   getExpense(data: any) {
     this.commonService.updateLoader(true);
     const filter={
-      id:data.meetingId,
+      id:data.expenseCode,
       userId:this.identifyService.getLoggedUserId(),
     }
     this.expenseService.getExpenseDetails(filter.id,filter.userId).subscribe({
