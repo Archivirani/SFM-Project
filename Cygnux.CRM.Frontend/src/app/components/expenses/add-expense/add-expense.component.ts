@@ -25,6 +25,7 @@ import { ExternalService } from '../../../shared/services/external.service';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { ExpenseGeneralService } from '../../../shared/services/expense-general.service';
 import { GeneralMasterResponseList } from '../../../shared/models/expenseGeneral.model';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-add-expense',
   standalone: false,
@@ -43,11 +44,13 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   selectedFile: File | null = null;
   fileError: string | null = null; // For error handling
   imagePreview: string | null = null; // For image preview
+  fileUrl: SafeResourceUrl | null = null;
   @Input() expenseResponse: ExpenseDetailResponse | null = null;
   @Input() typeData: string = '';
   @Input() addMeetingResponse: string | null = null;
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
-
+  isImage: boolean = false;
+  isPdf: boolean = false;
   constructor(
     private expenseService: ExpenseService,
     private externalService: ExternalService,
@@ -56,33 +59,35 @@ export class AddExpenseComponent implements OnInit, OnChanges {
     private toasterService: ToastrService,
     private identityService: IdentityService,
     private expenseGeneralService:ExpenseGeneralService,
+    private sanitizer: DomSanitizer
   ) {
     this.expenseForm = new FormGroup({});
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['expenseResponse'] && this.expenseResponse) {
-      this.expenseId = this.expenseResponse.expenseId
+      this.expenseId = this.expenseResponse.expenseId;
       this.expenseForm.patchValue({
-        checkedOutLocation:this.expenseResponse.checkedInLocation,
-        expenseCode:this.expenseResponse.expenseId,
-        customerName:this.expenseResponse.companyName,
-        MeetingDate:this.expenseResponse.expenseDate,
-        TransportModeId:this.expenseResponse.transportModeId ? this.expenseResponse.transportModeId:null,
-        ExpenseDate:this.expenseResponse.expenseDate,
-        checkedInLocation:this.expenseResponse.checkedInLocation,
-        DistanceInKm:this.expenseResponse.distanceTravelled,
-        expRate:this.expenseResponse.expenseRate,
-        Amount:this.expenseResponse.amount,
-        remarks:this.expenseResponse.remarks,
-        // SupportingDocument:this.expenseResponse.supportingDocument,
-        // expenseCreated:this.expenseResponse.remarks
-      })
-      this.OntransportModeChange(this.expenseResponse.transportModeId)
+        checkedOutLocation: this.expenseResponse.checkedInLocation,
+        expenseCode: this.expenseResponse.expenseId,
+        customerName: this.expenseResponse.companyName,
+        MeetingDate: this.expenseResponse.expenseDate,
+        TransportModeId: this.expenseResponse.transportModeId || null,
+        ExpenseDate: this.expenseResponse.expenseDate,
+        checkedInLocation: this.expenseResponse.checkedInLocation,
+        DistanceInKm: this.expenseResponse.distanceTravelled,
+        expRate: this.expenseResponse.expenseRate,
+        Amount: this.expenseResponse.amount,
+        remarks: this.expenseResponse.remarks,
+        // supportingDocument: this.expenseResponse.supportingDocument.replace("https://localhost:44320/", "") 
+      });
+     this.setFileUrl(this.expenseResponse.supportingDocument);
+      this.OntransportModeChange(this.expenseResponse.transportModeId);
     } else {
       this.expenseForm.reset();
       this.expenseId = '';
+      this.fileUrl = '';
     }
-
+  
     if (changes['addMeetingResponse'] && this.addMeetingResponse) {
       this.expenseForm.patchValue({ meetingId: this.addMeetingResponse });
     }
@@ -119,33 +124,27 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       CreatedBy:new FormControl(assignedTo)
     });
   }
-    onFileChange(event: any) {
-    const file = event.target.files[0];
 
-    if (file) {
-      const validImageTypes = [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/jpg',
-      ];
-      if (validImageTypes.includes(file.type)) {
-        this.selectedFile = file;
-        this.fileError = null;
-        // Preview the image
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.imagePreview = reader.result as string; // Set the base64 string for preview
-        };
-        reader.readAsDataURL(file);
-      } else {
-        this.fileError =
-          'Please upload a valid image file (JPEG, PNG, or GIF).';
-        this.selectedFile = null;
-        this.imagePreview = null; // Clear preview if invalid file
-      }
+  setFileUrl(filePath: string) {
+    if (filePath.startsWith('http') || filePath.startsWith('https')) {
+      this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filePath);
+    } else {
+      this.fileUrl = null;
     }
+    this.isImage = /\.(jpg|jpeg|png|gif)$/i.test(filePath);
+    this.isPdf = /\.pdf$/i.test(filePath);
   }
+
+  handleInputChange(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+    this.selectedFile = file;
+    const fileUrl = URL.createObjectURL(file);
+    this.fileUrl = this.sanitizer.bypassSecurityTrustUrl(fileUrl);
+    this.isImage = file.type.startsWith('image');
+    this.isPdf = file.type === 'application/pdf';
+  } 
+  
   onSubmitExpense(form: FormGroup): void {
     if (form.valid) {
       var formData = new FormData();
@@ -155,13 +154,15 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       formData.append("UserId", this.identityService.getLoggedUserId());
       formData.append("PunchedInLocation", form.value.punchedInLocation);
       formData.append("TransportModeId",form.value.TransportModeId);
-      formData.append("SupportingDocument",form.value.SupportingDocument ? form.value.SupportingDocument.split('\\').pop() :form.value.SupportingDocument);
       formData.append("Remarks", form.value.remarks);
       formData.append("MeetingId", this.expenseResponse?.meetingId ?? '');
       formData.append("Amount", form.value.Amount);
-      formData.append("file", "");
       formData.append("DistanceInKm",form.value.DistanceInKm);
       formData.append("CreatedBy", this.identityService.getLoggedUserId());
+      if (this.selectedFile) {
+        formData.append("SupportingDocument",this.selectedFile?.name);
+        formData.append("file", this.selectedFile);
+      }
       this.typeData === 'AddExpense' ? this.addExpense(formData) : this.updateExpense(formData);
     }else{
       this.expenseForm.markAllAsTouched()
@@ -180,7 +181,6 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
-
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {

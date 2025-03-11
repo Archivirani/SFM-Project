@@ -12,7 +12,6 @@ import { EmailRegex, MultipleEmailRegex } from '../../../shared/constants/common
 import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
-
 @Component({
   selector: 'app-add-ticket',
   standalone: false,
@@ -60,7 +59,7 @@ export class AddTicketComponent {
         type:ComplaintResponse.type.toString(),
         customerEmail:[customerEmail],
         subType:ComplaintResponse.subType.toString(),
-        updateDate: this.formatDate(ComplaintResponse?.updateDate),
+        // updateDate: this.formatDate(ComplaintResponse?.updateDate),
         updateRemarks:ComplaintResponse.updateRemark,
         assignedToId:assignedTo,
         remarks:ComplaintResponse.remarks,
@@ -145,7 +144,7 @@ export class AddTicketComponent {
       customerEmail: new FormControl('', []),
       subType: new FormControl('', [Validators.required]),
       browse: new FormControl(''),
-      updateDate: new FormControl(''),
+      updateDate: new FormControl(new Date()),
       updateRemarks: new FormControl(''),
       assignedToId: new FormControl(''),
       complaintId: new FormControl(''),

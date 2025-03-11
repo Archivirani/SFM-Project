@@ -132,20 +132,33 @@
 
       <div class="col-lg-6">
         <div>
-          <label class="control-label">Supporting Document</label>
-          <input id="file" type="file" (change)="onFileChange($event)" accept="image/*" formControlName="SupportingDocument"  [class.disabled]="typeData === 'EditExpense' ? true:false"/>
-          <div *ngIf="fileError" class="text-danger">
-            {{ fileError }}
-          </div>
-          <div *ngIf="
-              expenseForm.controls['SupportingDocument'].invalid &&
-              expenseForm.controls['SupportingDocument']?.touched
-            " class="text-danger">
+          <label for="file-input" class="file-curser"> Upload</label>
+        <input
+          type="file"
+          (change)="handleInputChange($event)"
+          id="file-input"
+          accept="image/png, image/gif, image/jpeg, application/pdf"
+          class="opacity-0"
+        />
+        <!-- <img
+        src="D:/SFM/Cygnux.CRM.Backend/Cygnux.CRM.Api/Uploads/Expense/MT00000013_9.png"
+        class="d-inline-block auth-logo"
+        alt=""
+        height="100"
+      /> -->
+                  <!-- Show Image -->
+            <img *ngIf="isImage" [src]="fileUrl" alt="Preview" width="100%" height="auto" />
+
+            <!-- Show PDF -->
+            <object *ngIf="isPdf" [attr.data]="fileUrl" type="application/pdf" width="100%" height="500px">
+              <p>PDF preview not supported. <a [href]="fileUrl" target="_blank">Download it here</a>.</p>
+            </object>
+
+          <div *ngIf=" expenseForm.controls['SupportingDocument'].invalid && expenseForm.controls['SupportingDocument']?.touched" class="text-danger">
             <small *ngIf="expenseForm.controls['SupportingDocument'].errors?.['required']">SupportingDocument is required.</small>
           </div>
         </div>
       </div>
-
       <div class="col-lg-6">
         <div>
           <label class="control-label">Remarks</label>

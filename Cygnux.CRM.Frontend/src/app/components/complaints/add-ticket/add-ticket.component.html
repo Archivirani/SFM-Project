@@ -271,20 +271,24 @@
                 formControlName="updateDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
               <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="datepickerMDY.toggle()"
                 [attr.aria-expanded]="datepickerMDY.isOpen" type="button"></button> -->
-                <input
+                  <!-- <input
                 width="100%"
-                class="form-control"
-                placeholder="dd/mm/yyyy"
-                formControlName="updateDate"
-                ngbDatepicker
-                #d3="ngbDatepicker"
+                    class="form-control"
+                    placeholder="dd/mm/yyyy"
+                    formControlName="updateDate"
+                    ngbDatepicker
+                    #d3="ngbDatepicker"
                 [markDisabled]="commonService.isDateDisabled"/>
-              <button
-                class="btn btn-sm btn-outline-secondary ri-calendar-line"
-                (click)="d3.toggle()"
-                type="button"
-              ></button>
-            </div>
+                  <button
+                    class="btn btn-sm btn-outline-secondary ri-calendar-line"
+                    (click)="d3.toggle()"
+                    type="button"
+                  ></button> -->
+                  <input class="form-control" placeholder="dd/mm/yyyy" #datepickerMDY="bsDatepicker" bsDatepicker required
+                  formControlName="updateDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="true" [class.disabled]="true">
+                <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="datepickerMDY.toggle()"
+                  [attr.aria-expanded]="datepickerMDY.isOpen" type="button" [disabled]="true"></button>
+              </div>
           </div>
         </div>
         <div class="col-3 mt-2" *ngIf="complaint === 'Update'">
