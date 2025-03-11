@@ -36,6 +36,7 @@ closeDate: any;
   IsActive:string;
   ticketAddressTo:string;
   isUpdated:boolean;
+  assignToId:string;
 }
 
 export interface ComplaintDetailResponse extends ComplaintResponse {

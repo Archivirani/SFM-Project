@@ -134,13 +134,14 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       meetingTypeId: new FormControl(null, [Validators.required]),
       meetingLocation: new FormControl(null, [Validators.required]),
       isAllDayEvent: new FormControl(false),
-      attendeeIDs: new FormControl([], [Validators.required]),
+      attendeeIDs: new FormControl([]),
       meetingMOM: new FormControl([]),
       geoLocation: new FormControl(null),
       latitude: new FormControl(null),
       longitude: new FormControl(null),
       checkInDateTime:new FormControl(null),
-      checkOutDateTime:new FormControl(null)
+      checkOutDateTime:new FormControl(null),
+      remarks:new FormControl(null)
     },
   );
   // this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
