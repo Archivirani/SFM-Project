@@ -12,6 +12,7 @@ export interface ExpenseResponse {
   companyName:string;
   expenseRate:number;
   expenseCreated:boolean;
+  contactName:string;
 }
 
 export interface ExpenseDetailResponse extends ExpenseResponse {

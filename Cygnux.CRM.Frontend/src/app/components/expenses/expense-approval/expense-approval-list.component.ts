@@ -28,6 +28,7 @@ export class ExpenseApprovalListComponent implements OnInit {
   totalItems = 0; // Total number of items
   filters: { [key: string]: string } = {}; // Dynamic filter object
    cardList:string = 'Expenses'
+   
   @Output() edit = new EventEmitter<ExpenseResponse>();
 
   constructor(
@@ -88,7 +89,7 @@ export class ExpenseApprovalListComponent implements OnInit {
       PageSize: this.pageSize,
       userId:this.identifyService.getLoggedUserId()
     };
-    this.expenseService.getExpenseList(filters).subscribe({
+    this.expenseService.getExpenseApprovalList(filters).subscribe({
       next: (response) => {
         if (response) {
           this.expenses = response.data;

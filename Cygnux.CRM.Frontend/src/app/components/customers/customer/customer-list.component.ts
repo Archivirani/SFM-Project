@@ -107,6 +107,7 @@ export class CustomerListComponent implements OnInit {
         // startdate:this.startDate,
         // enddate:this.endDate
       }
+      this.commonService.updateLoader(true);
      this.customerService.getLeadCustomerfilters(filters).subscribe({
       next:(response) =>{
         this.getCustomerfilter = response.data;

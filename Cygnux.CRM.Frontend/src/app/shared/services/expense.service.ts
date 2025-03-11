@@ -27,6 +27,13 @@ export class ExpenseService {
   ): Observable<IApiBaseResponse<ExpenseResponse[]>> {
     return this.apiHandlerService.Get('expense', filters);
   }
+
+  getExpenseApprovalList(
+    filters: any
+  ): Observable<IApiBaseResponse<ExpenseResponse[]>> {
+    return this.apiHandlerService.Get('Expense/ApprovalList', filters);
+  }
+  
   exportExpense(filters: any): Observable<IApiBaseResponse<any[]>> {
     return this.apiHandlerService.Get(`expense/ExportExcel`,filters);
   }
