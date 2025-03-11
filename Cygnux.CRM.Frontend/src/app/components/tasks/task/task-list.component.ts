@@ -67,7 +67,8 @@ export class TaskListComponent implements OnInit {
     private taskService: TaskService,
     private commonService: CommonService,
     private toasterService: ToastrService,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private identityService:IdentityService
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +84,7 @@ export class TaskListComponent implements OnInit {
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
+      UserID:this.identityService.getLoggedUserId(),
     };
     this.taskService.getTaskList(filters).subscribe({
       next: (response) => {
