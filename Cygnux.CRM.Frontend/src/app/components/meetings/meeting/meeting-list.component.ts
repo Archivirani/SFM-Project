@@ -203,7 +203,7 @@ onCheckOut(meeting: any, i: number): void {
         if (response) {
           this.meetings = response.data;
           this.totalItems = response.totalCount;
-        }
+        } 
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {

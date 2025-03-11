@@ -259,7 +259,7 @@
           <div>
             <label class="control-label">Assigned To</label>
             <ng-select formControlName="assignedToId" [items]="assignToList" bindLabel="userName" bindValue="userId"
-              [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true">
+              [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
             </ng-select>
           </div>
         </div>
@@ -295,14 +295,6 @@
             </div>
           </div>
         </div>
-        <div class="col-3 mt-2" *ngIf="complaint === 'Update'">
-          <div>
-            <label>Remarks</label>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" formControlName="remarks">
-            </div>
-          </div>
-        </div>
         <div class="col-3 mt-2" *ngIf="complaint === 'Close'">
           <div>
             <label>Close Remarks</label>
@@ -327,14 +319,6 @@
             <label>Closed By:</label>
             <div class="input-group mb-3">
               <input type="text" class="form-control" formControlName="closeBy" readonly>
-            </div>
-          </div>
-        </div>
-        <div class="col-3 mt-2" *ngIf="complaint === 'Close'">
-          <div>
-            <label>Remarks:</label>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" formControlName="remarks">
             </div>
           </div>
         </div>
@@ -403,7 +387,10 @@
     <div class="row">
       <div class="col-3">
         <label>Assigned To</label>
-        <input type="text" class="form-control mb-3" formControlName="assigned" readonly>
+        <!-- <input type="text" class="form-control mb-3" formControlName="assigned" [multiple]="true" readonly> -->
+        <ng-select formControlName="assigned" [items]="assignToList" bindLabel="userName" bindValue="userId"
+        [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
+      </ng-select>
         <div *ngIf="
           escalationForm.controls['assigned'].invalid &&
           escalationForm.controls['assigned']?.touched

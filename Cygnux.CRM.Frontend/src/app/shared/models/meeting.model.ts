@@ -24,6 +24,7 @@ export interface MeetingResponse {
   longitude?: any;
   companyName?:string;
   customerCode:string;
+  createdBy?:string;
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;
@@ -33,7 +34,6 @@ export interface MeetingDetailResponse extends MeetingResponse {
   email: string;
   isAllDayEvent: boolean;
   meetingType: string;
-  createdBy: string;
   modifiedBy: string;
   checkInLocation: string;
   checkOutLocation: string;
