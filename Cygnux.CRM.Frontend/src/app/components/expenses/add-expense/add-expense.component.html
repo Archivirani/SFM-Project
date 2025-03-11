@@ -132,14 +132,17 @@
 
       <div class="col-lg-6">
         <div>
-          <label for="file-input" class="file-curser"> Upload</label>
+          <label class="control-label">Supporting Document</label>
+          <input id="file" type="file" (change)="handleInputChange($event)" accept="image/*" formControlName="SupportingDocument"  [class.disabled]="typeData === 'EditExpense' ? true:false"/>
+
+          <!-- <label for="file-input" class="file-curser"> Upload</label>
         <input
           type="file"
           (change)="handleInputChange($event)"
           id="file-input"
           accept="image/png, image/gif, image/jpeg, application/pdf"
           class="opacity-0"
-        />
+        /> -->
         <!-- <img
         src="D:/SFM/Cygnux.CRM.Backend/Cygnux.CRM.Api/Uploads/Expense/MT00000013_9.png"
         class="d-inline-block auth-logo"

@@ -357,6 +357,7 @@ export class AddTicketComponent {
       update.documentNo=this.ticketForm.value.docketNo,
       update.AssignedTo = this.ticketForm.value.assignedToId.join(','),
       update.CustomerEmail = this.emails.join(';'),
+      update.updateDate =  this.datePipe.transform(this.ticketForm.value.updateDate, 'dd/MM/yyyy') || '';  
       update.document = 'docket',
       this.updateTicket(update)
     } else if (this.complaint === 'Add') {
