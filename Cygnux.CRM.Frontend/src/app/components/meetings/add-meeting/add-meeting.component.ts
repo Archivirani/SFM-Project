@@ -36,6 +36,7 @@ import { CalendarResponse } from '../../../shared/models/calendar.model';
 import {Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { timeRangeValidator } from '../../../shared/validators/time-range.validatior';
 
 @Component({
   selector: 'app-add-meeting',
@@ -127,7 +128,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
         Validators.pattern(EmailRegex),
       ]),
       meetingPurpose: new FormControl(null, [Validators.required]),
-      meetingDate: new FormControl(todayDate, [Validators.required,this.futureDateValidator.bind(this)]),
+      meetingDate: new FormControl(null, [Validators.required]),
       address: new FormControl(null),
       startTime: new FormControl(null, [Validators.required]),
       endTime: new FormControl(null, [Validators.required]),
@@ -143,6 +144,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       checkOutDateTime:new FormControl(null),
       remarks:new FormControl(null)
     },
+    { validators: timeRangeValidator  }
   );
   // this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
   }
@@ -227,26 +229,6 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
         this.commonService.updateLoader(false);
       },
     });
-  }
-
-  futureDateValidator(control: AbstractControl) {
-    if((this.checkOutValue =='-' && !this.meetingId)|| (this.checkOutValue =='-' && this.meetingId) ){
-    const value: string | null = control.value;
-    if (value) {
-      const parts = value.split('/');
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JavaScript (0 for January)
-      const year = parseInt(parts[2], 10);
-
-      const selectedDate = new Date(year, month, day);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (selectedDate < today) {
-        return { notFutureDate: true };
-      }
-    }
-  }
-    return null;
   }
 
   formatDate(dateString: any): string {

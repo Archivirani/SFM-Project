@@ -99,7 +99,6 @@ export class AddTicketComponent {
 
   ngOnInit() {
     this.buildForm();
-    this.getTicketSubTypes();
     this.getTicketTypes();
     this.getticketSources()
     this.getPriorities();
@@ -491,9 +490,13 @@ export class AddTicketComponent {
       },
     });
   }
-  getTicketSubTypes(searchText: string | null = null) {
+
+  getTicketSubTypes(event: any ) {
+    this.ticketForm.patchValue({
+      subType:null
+    })
     this.commonService.updateLoader(true);
-    this.externalService.getGeneralMaster(searchText, 'CMPLNSBTYP').subscribe({
+    this.complaintService.getTicketSubType(event).subscribe({
       next: (response) => {
         if (response) {
           this.ticketSubTypes = response.data;

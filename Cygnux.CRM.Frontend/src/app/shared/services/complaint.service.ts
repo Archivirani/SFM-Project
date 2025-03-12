@@ -15,6 +15,7 @@ import {
   UpdateHistory,
 } from '../models/complaint.model';
 import { ApiHandlerService } from './api-handler.service';
+import { GeneralMasterResponse } from '../models/external.model';
 
 @Injectable({
   providedIn: 'root',
@@ -112,5 +113,9 @@ export class ComplaintService {
 
       getEscalatedHistory(Id:string):Observable<IApiBaseResponse<EscalatedHistory>>{
         return this.apiHandlerService.Get(`Complaint/EscalatedHistory?Id=${Id}`);
+      }
+
+      getTicketSubType( codeId: string ): Observable<IApiBaseResponse<GeneralMasterResponse[]>> {
+          return this.apiHandlerService.Get(`external/CodeSubType?codeId=${codeId}`);
       }
 }

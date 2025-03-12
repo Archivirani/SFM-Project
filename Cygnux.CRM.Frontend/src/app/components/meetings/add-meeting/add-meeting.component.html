@@ -138,9 +138,7 @@
             meetingForm.get('meetingDate')?.invalid &&
             meetingForm.get('meetingDate')?.touched
           " class="text-danger">
-            <small *ngIf="meetingForm.get('meetingDate')?.errors?.['required']">Meeting date is required.</small>
-            <small *ngIf="meetingForm.get('meetingDate')?.errors?.['notFutureDate']">Meeting date must be in the
-              future.</small>
+              <small *ngIf="meetingForm.get('meetingDate')?.errors?.['required']">Meeting date is required.</small>
           </div>
         </div>
         <!-- </div> -->
@@ -148,18 +146,14 @@
       <div class="col-lg-4">
         <div>
           <label for="startTime" class="form-label">Start Time*</label>
-          <input type="time" class="form-control" formControlName="startTime"
-             required [readonly]="checkOutValue !== '-' || isChecked "  
-           />
+          <input type="time" class="form-control" formControlName="startTime" required [readonly]="checkOutValue !== '-' || isChecked " />
           @if(this.router.url !== '/my-calendar'){
           <div *ngIf="meetingForm.invalid && meetingForm.touched" class="text-danger">
-            <small *ngIf="meetingForm.errors?.['startTimeAfterCurrentTime']">
-              Start time must be after the current time.
-            </small>
-            <!-- <div *ngIf="meetingForm.hasError('duplicateMeeting')">
-              <small>Meeting with the same start or end time exists on this day.</small>
-            </div> -->
+            <small *ngIf="meetingForm.errors?.['startTimeAfterCurrentTime']">Start time must be after the current time.</small>
           </div>
+           <div *ngIf="meetingForm.controls['startTime'].invalid && meetingForm.controls['startTime']?.touched" class="text-danger">
+            <small *ngIf="meetingForm.get('startTime')?.errors?.['required']">Start Time is required.</small>
+           </div>
           }
         </div>
       </div>
@@ -172,13 +166,11 @@
              />
           @if(this.router.url !== '/my-calendar'){
           <div *ngIf="meetingForm.invalid && meetingForm.touched" class="text-danger">
-            <small *ngIf="meetingForm.errors?.['timeRangeValidator']">
-              End time must be after the start time.
-            </small>
-            <!-- <div *ngIf="meetingForm.hasError('duplicateMeeting') ">
-              <small>Meeting with the same start or end time exists on this day.</small>
-            </div> -->
+            <small *ngIf="meetingForm.errors?.['timeRangeValidator']">End time must be after the start time.</small>
           </div>
+          <div *ngIf="meetingForm.controls['endTime'].invalid && meetingForm.controls['endTime']?.touched" class="text-danger">
+            <small *ngIf="meetingForm.get('endTime')?.errors?.['required']">End Time is required.</small>
+           </div>
           }
         </div>
       </div>

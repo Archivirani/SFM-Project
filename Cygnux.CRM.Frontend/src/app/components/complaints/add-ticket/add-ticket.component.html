@@ -187,7 +187,7 @@
               </option>
             </select> -->
             <ng-select [items]="ticketTypes" bindLabel="codeDesc" bindValue="codeId" placeholder="Search Ticket Type"
-              formControlName="type" [readonly]="complaint !== 'Add'">
+              formControlName="type" [readonly]="complaint !== 'Add'" (change)="getTicketSubTypes($event.codeId)">
             </ng-select>
             <div *ngIf="
               ticketForm.controls['type'].invalid &&
