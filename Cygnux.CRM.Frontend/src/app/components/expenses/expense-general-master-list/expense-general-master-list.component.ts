@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Modal } from 'bootstrap';
-import { ExpenseDetailResponse } from '../../../shared/models/expense.model';
 import { ExpenseGeneralService } from '../../../shared/services/expense-general.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { GeneralMasterResponseList } from '../../../shared/models/expenseGeneral.model';
 import { ExportService } from '../../../shared/services/export.service';
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 @Component({
   selector: 'app-expense-general-master-list',
   standalone: false,
@@ -28,7 +29,7 @@ export class ExpenseGeneralMasterListComponent {
     public commonService:CommonService,
     public toasterService:ToastrService,
     private exportService: ExportService,
-  ){}
+  ){defineElement(lottie.loadAnimation);}
 
 
   ngOnInit() {

@@ -22,8 +22,8 @@ export class TaskService {
     return this.apiHandlerService.Get('task', filters);
   }
 
-  getTaskDetails(id: string): Observable<IApiBaseResponse<TaskResponse>> {
-    return this.apiHandlerService.Get('task/' + id);
+  getTaskDetails(id: string,UserId:string): Observable<IApiBaseResponse<TaskResponse>> {
+    return this.apiHandlerService.Get(`task/${id}?UserId=${UserId}`);
   }
 
   addTask(

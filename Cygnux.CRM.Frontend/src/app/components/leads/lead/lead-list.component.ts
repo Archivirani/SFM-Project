@@ -13,7 +13,8 @@ import { environment } from '../../../../environments/environment';
 import { ImportService } from '../../../shared/services/import.service';
 import { Subscription } from 'rxjs';
 import { IdentityService } from '../../../shared/services/identity.service';
-
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 @Component({
   selector: 'app-lead',
   standalone: false,
@@ -46,6 +47,7 @@ export class LeadListComponent implements OnDestroy{
     public importService:ImportService,
     private identityService:IdentityService
   ) {
+    defineElement(lottie.loadAnimation);
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
       if(res){
         this.getLeads()

@@ -10,7 +10,8 @@ import { ComplaintService } from '../../../shared/services/complaint.service';
 import { ExportService } from '../../../shared/services/export.service';
 import { ImportService } from '../../../shared/services/import.service';
 import { finalize, take } from 'rxjs';
-
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 @Component({
   selector: 'app-complaint',
   standalone: false,
@@ -42,7 +43,7 @@ export class ComplaintListComponent implements OnInit {
     private toasterService: ToastrService,
     private exportService: ExportService,
      public importService:ImportService
-  ) {}
+  ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getComplaints();

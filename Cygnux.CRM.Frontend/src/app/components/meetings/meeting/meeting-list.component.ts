@@ -10,7 +10,8 @@ import { ExportService } from '../../../shared/services/export.service';
 import { MeetingService } from '../../../shared/services/meeting.service';
 import { ConfirmationService } from '../../../shared/services/confirmation.service';
 import { IdentityService } from '../../../shared/services/identity.service';
-
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 @Component({
   selector: 'app-meeting',
   standalone: false,
@@ -39,7 +40,7 @@ export class MeetingListComponent implements OnInit {
     public exportService: ExportService,
     public confirmationService: ConfirmationService,
     public identityService:IdentityService
-  ) {}
+  ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getMeetings();

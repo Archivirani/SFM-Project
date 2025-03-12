@@ -7,6 +7,8 @@ import { CustomerService } from '../../../shared/services/customer.service';
 import { ExportService } from '../../../shared/services/export.service';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { MeetingService } from '../../../shared/services/meeting.service';
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 interface IRange {
   value: Date[];
   label: string;
@@ -84,7 +86,7 @@ export class CustomerListComponent implements OnInit {
     private exportService: ExportService,
     private identityService: IdentityService,
     private meetingService: MeetingService,
-  ) {}
+  ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.dateRange = [

@@ -4,9 +4,10 @@ import { CommonService } from '../../../shared/services/common.service';
 import { TaskResponse } from '../../../shared/models/task.model';
 import { ToastrService } from 'ngx-toastr';
 import { Modal } from 'bootstrap';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ExportService } from '../../../shared/services/export.service';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 interface IRange {
   value: Date[];
   label: string;
@@ -69,7 +70,7 @@ export class TaskListComponent implements OnInit {
     private toasterService: ToastrService,
     private exportService: ExportService,
     private identityService:IdentityService
-  ) {}
+  ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getTasks();
@@ -146,7 +147,7 @@ export class TaskListComponent implements OnInit {
   }
   getTask(taskId: string) {
     this.commonService.updateLoader(true);
-    this.taskService.getTaskDetails(taskId).subscribe({
+    this.taskService.getTaskDetails(taskId,this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedTask = response.data;

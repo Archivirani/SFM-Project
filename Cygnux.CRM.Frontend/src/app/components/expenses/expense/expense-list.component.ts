@@ -10,6 +10,8 @@ import { CommonService } from '../../../shared/services/common.service';
 import { ExpenseService } from '../../../shared/services/expense.service';
 import { ExportService } from '../../../shared/services/export.service';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 
 @Component({
   selector: 'app-expense',
@@ -36,7 +38,7 @@ export class ExpenseListComponent implements OnInit {
     private toasterService: ToastrService,
     private exportService: ExportService,
     public identifyService :IdentityService,
-  ) {}
+  ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getExpenses();

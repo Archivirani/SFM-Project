@@ -11,6 +11,8 @@ import { ExpenseService } from '../../../shared/services/expense.service';
 import { ExportService } from '../../../shared/services/export.service';
 import { ConfirmationService } from '../../../shared/services/confirmation.service';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { defineElement } from 'lord-icon-element';
+import lottie from 'lottie-web';
 
 @Component({
   selector: 'app-expense-approval',
@@ -38,7 +40,7 @@ export class ExpenseApprovalListComponent implements OnInit {
     private exportService: ExportService,
     private confirmationService: ConfirmationService,
     public identifyService :IdentityService,
-  ) {}
+  ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getExpenses();
