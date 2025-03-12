@@ -144,7 +144,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       checkOutDateTime:new FormControl(null),
       remarks:new FormControl(null)
     },
-    { validators: timeRangeValidator  }
+    // { validators: timeRangeValidator  }
   );
   // this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
   }
