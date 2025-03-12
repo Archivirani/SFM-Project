@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExpenseDetailResponse, ExpenseResponse } from '../../../shared/models/expense.model';
 import { CommonService } from '../../../shared/services/common.service';
 import { ExternalService } from '../../../shared/services/external.service';
@@ -35,7 +35,7 @@ export class ApproveExpenseComponent {
         requestDate:this.expenseResponse.requestDate === '01/01/1900 00:00:00' ? '' : '',
         distanceInKm:this.expenseResponse.distanceTravelled,
         expenseRate:(Number(this.expenseResponse.amount) || 0) / (Number(this.expenseResponse.distanceTravelled) || 1),
-
+        transportModeId:this.expenseResponse.transportModeId === '0' ? null :this.expenseResponse.transportModeId,
       });
     }else{
       this.approveForm?.reset();
@@ -51,12 +51,12 @@ export class ApproveExpenseComponent {
       expenseRate: new FormControl(null),
       meetingDate: new FormControl(null),
       amount: new FormControl(null),
-      transportModeId: new FormControl(null),
+      transportModeId: new FormControl(null,Validators.required),
       document: new FormControl(null),
       expenseDate: new FormControl(null),
       remarks: new FormControl(null),
       checkedInLocation: new FormControl(null),
-      auditorRemark: new FormControl(null),
+      auditorRemark: new FormControl(null,Validators.required),
       checkOutLocation:new FormControl(null),
       expenseId:new FormControl(''),
       meetingId:new FormControl('')
@@ -90,21 +90,25 @@ export class ApproveExpenseComponent {
         approvedBy:  this.identifyService.getLoggedUserId(),
         reasonRemark:this.approveForm.value.auditorRemark,
     };
-    this.expenseService.expenseApproval(data).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.toasterService.success(response.data.message);
-          this.onClose.emit()
-        } else {
-          this.toasterService.error(response.error?.message );
-        }
-        this.commonService.updateLoader(false);
-      },
-      error: (response: any) => {
-        this.toasterService.error(response.error?.message);
-        this.commonService.updateLoader(false);
-      },
-    });
+    if(this.approveForm.valid){ 
+      this.expenseService.expenseApproval(data).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.toasterService.success(response.data.message);
+            this.onClose.emit()
+          } else {
+            this.toasterService.error(response.error?.message );
+          }
+          this.commonService.updateLoader(false);
+        },
+        error: (response: any) => {
+          this.toasterService.error(response.error?.message);
+          this.commonService.updateLoader(false);
+        },
+      });
+    }else {
+      this.approveForm.markAllAsTouched()
+    }
   }
   
   onApprove() {

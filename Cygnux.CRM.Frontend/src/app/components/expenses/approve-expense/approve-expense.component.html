@@ -50,8 +50,12 @@
             <div>
               <label class="control-label">Transport Mode*</label>
               <ng-select [items]="transportModes" bindLabel="codeDesc" bindValue="codeId" formControlName="transportModeId"
-            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true" readonly>
+            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true" readonly
+            [ngClass]="{'border-danger': approveForm.controls['transportModeId'].invalid && approveForm.controls['transportModeId'].touched}">
           </ng-select>
+          <div *ngIf="approveForm.controls['transportModeId'].invalid && approveForm.controls['transportModeId']?.touched" class="text-danger">
+            <small *ngIf="approveForm.controls['transportModeId'].errors?.['required']">Transport mode is required.</small>
+          </div>
             </div>
         </div>
         <div class="col-lg-6">
@@ -86,7 +90,11 @@
         <div class="col-lg-6">
           <div>
             <label class="control-label">Auditor Remarks</label>
-            <input class="form-control" type="text" formControlName="auditorRemark"/>
+            <input class="form-control" type="text" formControlName="auditorRemark" 
+            [ngClass]="{'border-danger': approveForm.controls['auditorRemark'].invalid && approveForm.controls['auditorRemark'].touched}"/>
+            <div *ngIf="approveForm.controls['auditorRemark'].invalid && approveForm.controls['auditorRemark']?.touched" class="text-danger">
+              <small *ngIf="approveForm.controls['auditorRemark'].errors?.['required']">Auditor Remarks is required.</small>
+            </div>
           </div>
         </div>
         <div class="col-lg-6">
@@ -106,7 +114,7 @@
            (click)="onApprove()" >
             Approve
         </button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onReject()" >
+        <button type="button" class="btn btn-danger" (click)="onReject()" >
             Reject
         </button>
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onCloseEvent()">

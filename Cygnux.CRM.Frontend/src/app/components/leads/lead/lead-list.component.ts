@@ -33,7 +33,7 @@ export class LeadListComponent implements OnDestroy{
   filters: { [key: string]: string } = {}; // Dynamic filter object
   cardList:string = 'Leads';
   isReadonly = false;
-  typeSubjectSubscription:Subscription;
+  typeSubjectSubscription: Subscription | null = null;
   selectedCustomerName: LeadDetailResponse | null = null;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
@@ -48,6 +48,7 @@ export class LeadListComponent implements OnDestroy{
     private identityService:IdentityService
   ) {
     defineElement(lottie.loadAnimation);
+    if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe()}
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
       if(res){
         this.getLeads()
