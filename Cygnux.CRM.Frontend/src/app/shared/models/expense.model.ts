@@ -67,8 +67,8 @@ export interface AddExpenseApprovalRequest {
 
 export interface ApprovalRequest {
     expenseId: string;
-    approved: boolean;
+    meetingId: string;
+    isApproved: boolean;
     approvedBy: string;
-    auditApproved: boolean;
-    auditBy: string;
+    reasonRemark: string;
 }

@@ -203,4 +203,16 @@ export class ExpenseApprovalListComponent implements OnInit {
       this.getExpense(expense);
     }
   }
+
+  closeEditModal() {
+    const modalElement: any = document.getElementById('showApproveExpense');
+    const modalInstance = Modal.getInstance(modalElement); // Get the modal instance
+    if (modalInstance) {
+      modalInstance.hide(); // Hide the modal
+      document.querySelectorAll('.modal-backdrop').forEach((backdrop) => {
+        backdrop.remove();
+      });
+      this.getExpenses();
+    }
+  }
 }

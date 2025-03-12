@@ -58,7 +58,8 @@ export class ApproveExpenseComponent {
       checkedInLocation: new FormControl(null),
       auditorRemark: new FormControl(null),
       checkOutLocation:new FormControl(null),
-      expenseId:new FormControl('')
+      expenseId:new FormControl(''),
+      meetingId:new FormControl('')
     });
   }
   onCloseEvent(){
@@ -83,13 +84,12 @@ export class ApproveExpenseComponent {
   handleApproval(isApproved: boolean) {
     this.commonService.updateLoader(true);
     const data = {
-      expenseId: this.approveForm.value.expenseId,
-      approved: isApproved,
-      approvedBy: this.identifyService.getLoggedUserId(),
-      auditApproved: isApproved,
-      auditBy: this.identifyService.getLoggedUserId(),
+        expenseId: this.approveForm.value.expenseId,
+        meetingId: this.approveForm.value.meetingId,
+        isApproved: isApproved,
+        approvedBy:  this.identifyService.getLoggedUserId(),
+        reasonRemark:this.approveForm.value.auditorRemark,
     };
-  
     this.expenseService.expenseApproval(data).subscribe({
       next: (response) => {
         if (response.success) {
