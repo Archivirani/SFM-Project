@@ -15,6 +15,7 @@ export interface ExpenseResponse {
   contactName:string;
   adminApproved:boolean;
   managerApproved:boolean;
+  isEdit:string;
 }
 
 export interface ExpenseDetailResponse extends ExpenseResponse {

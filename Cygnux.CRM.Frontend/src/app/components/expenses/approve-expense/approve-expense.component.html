@@ -111,10 +111,10 @@
             type="submit"
             class="btn btn-success"
             id="add-btn"
-           (click)="onApprove()" >
+           (click)="onApprove()" [disabled]="(expenseResponse?.isEdit==='Y')">
             Approve
         </button>
-        <button type="button" class="btn btn-danger" (click)="onReject()" [disabled]="(expenseResponse?.managerApproved || expenseResponse ?.adminApproved)">
+        <button type="button" class="btn btn-danger" (click)="onReject()" [disabled]="(expenseResponse?.isEdit==='Y')">
             Reject
         </button>
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onCloseEvent()">
