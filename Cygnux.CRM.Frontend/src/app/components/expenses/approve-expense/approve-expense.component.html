@@ -114,7 +114,7 @@
            (click)="onApprove()" >
             Approve
         </button>
-        <button type="button" class="btn btn-danger" (click)="onReject()" >
+        <button type="button" class="btn btn-danger" (click)="onReject()" [disabled]="(expenseResponse?.managerApproved || expenseResponse ?.adminApproved)">
             Reject
         </button>
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onCloseEvent()">

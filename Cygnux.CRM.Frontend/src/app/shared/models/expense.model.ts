@@ -13,6 +13,8 @@ export interface ExpenseResponse {
   expenseRate:number;
   expenseCreated:boolean;
   contactName:string;
+  adminApproved:boolean;
+  managerApproved:boolean;
 }
 
 export interface ExpenseDetailResponse extends ExpenseResponse {
