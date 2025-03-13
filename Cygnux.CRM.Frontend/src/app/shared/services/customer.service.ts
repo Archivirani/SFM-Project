@@ -16,10 +16,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   providedIn: 'root',
 })
 export class CustomerService {
+  public customersList: CustomersListResponse[] = [];
+
   constructor(
     @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService
   ) {}
- public customersList: CustomersListResponse[] = [];
+  
   getCustomerList(
     filters: any
   ): Observable<IApiBaseResponse<CustomerResponse[]>> {

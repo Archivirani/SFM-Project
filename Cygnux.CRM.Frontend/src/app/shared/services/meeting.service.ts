@@ -21,11 +21,13 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class MeetingService {
+  public meetingResponseSubject=new Subject<any>();
+  public resetLocationSearch=new Subject<boolean>();
+
   constructor(
     @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService
   ) {}
-public meetingResponseSubject=new Subject<any>()
-public resetLocationSearch=new Subject<boolean>()
+  
   getMeetingList(
     filters: any
   ): Observable<IApiBaseResponse<MeetingResponse[]>> {
