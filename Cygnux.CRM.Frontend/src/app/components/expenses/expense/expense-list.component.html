@@ -152,13 +152,13 @@
                             title="Add Expense">
                             <a class="edit-item-btn" (click)="editModal($event, expense,'AddExpense')">+</a>
                           </li>
-                          <li *ngIf="(!expense.expenseCreated || expense.adminApproved === true||expense.managerApproved===true)"
+                          <li *ngIf="!expense.expenseCreated || expense.status ==='APPROVED BY MANAGER'||expense.status === 'PENDING FOR MANAGER APPROVAL' ||expense.status === 'AUDITED & APPROVED' || expense.status ==='EXPENSE NOT CRAETED'"
                             class="list-inline-item disabled-icon bg-color d-flex justify-content-center align-items-center"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
                             title="Edit Expense">
                             <a class="edit-item-btn "><i class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li>
-                          <li *ngIf="(expense.adminApproved === false||expense.managerApproved===false)"
+                          <li *ngIf="(expense.status === 'REJECTED BY MANAGER' || expense.status === 'AUDITED & REJECTED' )"
                             class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
                             title="Edit Expense">
