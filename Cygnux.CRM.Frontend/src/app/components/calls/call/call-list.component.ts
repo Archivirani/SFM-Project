@@ -29,7 +29,7 @@ export class CallListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
   @Output() edit = new EventEmitter<CallResponse>();
   getfilter:GetFilter[]=[];
-  typeSubjectSubscription:Subscription;
+  typeSubjectSubscription:Subscription | null = null;;
   cardList: string = 'Call'
   constructor(
     private callService: CallService,
@@ -40,6 +40,7 @@ export class CallListComponent implements OnInit {
     private identityService:IdentityService
   ) {
     defineElement(lottie.loadAnimation);
+    if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe(); this.typeSubjectSubscription = null;}
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
       if(res){
         this.getCalls()

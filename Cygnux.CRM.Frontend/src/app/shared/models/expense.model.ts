@@ -16,6 +16,10 @@ export interface ExpenseResponse {
   adminApproved:boolean;
   managerApproved:boolean;
   isEdit:string;
+  isManagerApproved:boolean;
+  isAuditApproved:boolean;
+  isManager_AuditApproved:boolean;
+  reqId:string;
 }
 
 export interface ExpenseDetailResponse extends ExpenseResponse {
@@ -45,6 +49,15 @@ export interface ExpenseDetailResponse extends ExpenseResponse {
   expenseAddedTime:string;
   expenseModifiedDate:string;
   expenseModifiedBy:string;
+  auditRemark:string;
+  expenseAddedBy:string;
+  managerRemark:string;
+  approveByManagerName:string;
+  approvedManagerDate:string;
+  approvedByAuditorName:string;
+  approvedByAuditDate:string;
+  expensEditDate:string;
+  expenseEditedBy:string;
 }
 
 export interface AddExpenseRequest {

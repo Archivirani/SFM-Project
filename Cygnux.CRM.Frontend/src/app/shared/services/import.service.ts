@@ -20,44 +20,53 @@ triggerFileInput(event: Event): void {
 }
 
 onFileChange(event: any, type: string): void {
-  const file = event.target.files[0];
+  const fileInput = event.target as HTMLInputElement;
+  if (fileInput.files && fileInput.files.length > 0) {
+    const file = fileInput.files[0];
 
-  if (file) {
-    const validExcelTypes = [
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // XLSX
-      'application/vnd.ms-excel', // XLS
-      'text/csv', // CSV
-      'application/vnd.ms-excel.sheet.binary.macroEnabled.12', // XLSB
-      'application/vnd.ms-excel.sheet.macroEnabled.12', // XLSM
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.template', // XLTX
-      'application/vnd.ms-excel.template.macroEnabled.12', // XLTM
-    ];
-    if (validExcelTypes.includes(file.type)) {
-      if (file.size > 10485760) { // Limit file size to 10MB (example)
-        this.toasterService.error('File size exceeds the 10MB limit.');
-        return;
-      }
+    if (file) {
+      const validExcelTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel',
+        'text/csv',
+        'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+        'application/vnd.ms-excel.sheet.macroEnabled.12',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+        'application/vnd.ms-excel.template.macroEnabled.12',
+      ];
 
-      this.selectedFile = file;
-      const formData = new FormData();
-      formData.append('file', file);
+      if (validExcelTypes.includes(file.type)) {
+        if (file.size > 10485760) {
+          this.toasterService.error('File size exceeds the 10MB limit.');
+          return;
+        }
 
-      if (type === 'lead') {
-        this.importData(formData, this.leadService.importLead.bind(this.leadService),type);
-      } else if (type === 'call') {
-        this.importData(formData, this.callService.importCall.bind(this.callService),type);
-      }else if (type === 'complaints') {
-        this.importData(formData, this.complaintService.importComplaint.bind(this.complaintService),type);
+        this.selectedFile = file;
+        const formData = new FormData();
+        formData.append('file', file);
+
+        if (type === 'lead') {
+          this.importData(formData, this.leadService.importLead.bind(this.leadService), type);
+        } else if (type === 'call') {
+          this.importData(formData, this.callService.importCall.bind(this.callService), type);
+        } else if (type === 'complaints') {
+          this.importData(formData, this.complaintService.importComplaint.bind(this.complaintService), type);
+        } else {
+          this.toasterService.error('Invalid type specified for file import.');
+        }
+
+        // **Important: Reset the file input value after a short delay**
+        setTimeout(() => {
+          fileInput.value = '';
+        }, 100);
       } else {
-        this.toasterService.error('Invalid type specified for file import.');
+        this.toasterService.error('Please upload a valid excel file (XLSX, XLS, or CSV).');
+        this.selectedFile = null;
       }
-    
-    } else {
-      this.toasterService.error('Please upload a valid excel file (XLSX, XLS, or CSV).');
-      this.selectedFile = null;
     }
   }
 }
+
 
 private importData(dataToSubmit: any, importFunction: (data: any) => any,type:string): void {
   this.commonService.updateLoader(true);

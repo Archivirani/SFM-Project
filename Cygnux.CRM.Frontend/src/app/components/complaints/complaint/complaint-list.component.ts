@@ -12,6 +12,7 @@ import { ImportService } from '../../../shared/services/import.service';
 import { finalize, take } from 'rxjs';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
+import { IdentityService } from '../../../shared/services/identity.service';
 @Component({
   selector: 'app-complaint',
   standalone: false,
@@ -42,7 +43,8 @@ export class ComplaintListComponent implements OnInit {
     private commonService: CommonService,
     private toasterService: ToastrService,
     private exportService: ExportService,
-     public importService:ImportService
+    public importService:ImportService,
+    public identifyService :IdentityService
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
@@ -66,6 +68,7 @@ private getComplaints(page: number = 1) {
     Page: page,
     PageSize: this.pageSize,
     export: false,
+    UserID:this.identifyService.getLoggedUserId()
   };
   this.complaintService.getComplaintList(filters).pipe(take(1), finalize(() => this.commonService.updateLoader(false))).subscribe({
     next: (response: any) => {
@@ -85,7 +88,8 @@ private getComplaints(page: number = 1) {
     event.preventDefault();
     const filters: any = {
       ...this.filters,
-      export:true
+      export:true,
+      UserID:this.identifyService.getLoggedUserId()
     }
     this.commonService.updateLoader(true);
     this.complaintService.getComplaintListexport(filters).subscribe({
@@ -106,7 +110,8 @@ private getComplaints(page: number = 1) {
     event.preventDefault();
     const filters: any = {
       ...this.filters,
-      export:true
+      export:true,
+      UserID:this.identifyService.getLoggedUserId()
     }
     this.commonService.updateLoader(true);
     this.complaintService.getComplaintListexport(filters).subscribe({
@@ -186,7 +191,7 @@ private getComplaints(page: number = 1) {
 
   getComplaint(id: string) {
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintDetails(id).subscribe({
+    this.complaintService.getComplaintDetails(id,this.identifyService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedComplaint = response.data;

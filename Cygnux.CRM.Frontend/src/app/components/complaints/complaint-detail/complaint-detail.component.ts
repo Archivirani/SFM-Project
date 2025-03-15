@@ -21,6 +21,7 @@ export class ComplaintDetailComponent implements OnDestroy{
     private complaintService: ComplaintService,
     public commonService: CommonService,
   ){
+    if(this.complaintViewModalSubscription){this.complaintViewModalSubscription.unsubscribe()}
     this.complaintViewModalSubscription = this.commonService.complaintViewModal.subscribe((res)=>{
       if(res){
         this.updateHistory(res?.complaintID)

@@ -71,7 +71,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         expenseCode: this.expenseResponse.expenseId,
         customerName: this.expenseResponse.companyName,
         MeetingDate: this.expenseResponse.expenseDate,
-        TransportModeId: this.expenseResponse.transportModeId || null,
+        TransportModeId: this.expenseResponse.transportModeId === "0" ? '' : this.expenseResponse.transportModeId|| null,
         ExpenseDate: this.expenseResponse.expenseDate,
         checkedInLocation: this.expenseResponse.checkedInLocation,
         DistanceInKm: this.expenseResponse.distanceTravelled,

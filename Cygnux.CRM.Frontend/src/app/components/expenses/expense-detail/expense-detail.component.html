@@ -31,24 +31,27 @@
           <td><strong class="me-2">Remarks:</strong> {{ expenseResponse?.remarks }}
         </tr>
         <tr>
-          <td><strong class="me-2">Expense Added By:</strong> {{ expenseResponse?.createdBy }}</td>
-          <td><strong class="me-2">Expense Added Date:</strong> {{ expenseResponse?.expenseAddedDate | date : "dd/MM/yyyy"}}</td>
+          <td><strong class="me-2">Expense Added By:</strong> {{ expenseResponse?.expenseAddedBy }}</td>
+          <td><strong class="me-2">Expense Added Date:</strong> {{ expenseResponse?.expenseAddedDate}}</td>
         </tr>
         <tr>
-          <td><strong class="me-2">Expense Edited By:</strong> {{ expenseResponse?.expenseModifiedBy }}</td>
-          <td><strong class="me-2">Expense Edited Date</strong> {{ expenseResponse?.expenseModifiedDate | date : "dd/MM/yyyy" }}</td>
+          <td><strong class="me-2">Expense Edited By:</strong> {{ expenseResponse?.expenseEditedBy }}</td>
+          <td><strong class="me-2">Expense Edited Date</strong> {{ expenseResponse?.expensEditDate}}</td>
         </tr>
         <tr>
-          <td><strong class="me-2">Approved By Manager:</strong> {{ expenseResponse?.approvedBy }}</td>
-          <td><strong class="me-2">Manager Approved Date: </strong> {{ expenseResponse?.approvedDate | date : "dd/MM/yyyy" }}</td>
+          <td><strong class="me-2">Approved By Manager:</strong> {{ expenseResponse?.approveByManagerName }}</td>
+          <td><strong class="me-2">Manager Approved Date: </strong> {{ expenseResponse?.approvedManagerDate }}</td>
         </tr>
         <tr>
-          <td><strong class="me-2">Approved By Auditor:</strong>{{ expenseResponse?.auditedBy }} </td>
-          <td><strong class="me-2">Auditor Approved Date:</strong>{{ expenseResponse?.auditDate }}</td>
+          <td><strong class="me-2">Approved By Auditor:</strong>{{ expenseResponse?.approvedByAuditorName }} </td>
+          <td><strong class="me-2">Auditor Approved Date:</strong>{{ expenseResponse?.approvedByAuditDate }}</td>
+        </tr>
+        <tr>
+          <td><strong class="me-2">Auditor Remarks:</strong>{{ expenseResponse?.auditRemark }}</td>
+          <td><strong class="me-2">Manager Remarks:</strong>{{ expenseResponse?.managerRemark }}</td>
         </tr>
         <tr>
           <td><strong class="me-2">Status:</strong> {{ expenseResponse?.status }}</td>
-          <td><strong class="me-2">Auditor Remarks:</strong>{{ expenseResponse?.auditRemarks }}</td>
         </tr>
       </tbody>
     </table>

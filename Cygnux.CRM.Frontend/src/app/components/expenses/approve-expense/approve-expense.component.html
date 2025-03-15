@@ -89,7 +89,7 @@
         </div>
         <div class="col-lg-6">
           <div>
-            <label class="control-label">Auditor Remarks</label>
+            <label class="control-label">Auditor/Manager Remarks</label>
             <input class="form-control" type="text" formControlName="auditorRemark" 
             [ngClass]="{'border-danger': approveForm.controls['auditorRemark'].invalid && approveForm.controls['auditorRemark'].touched}"/>
             <div *ngIf="approveForm.controls['auditorRemark'].invalid && approveForm.controls['auditorRemark']?.touched" class="text-danger">
@@ -97,6 +97,16 @@
             </div>
           </div>
         </div>
+        <!-- <div class="col-lg-6">
+          <div>
+            <label class="control-label">Manager Remarks</label>
+            <input class="form-control" type="text" formControlName="managerRemark" 
+            [ngClass]="{'border-danger': approveForm.controls['managerRemark'].invalid && approveForm.controls['managerRemark'].touched}"/>
+            <div *ngIf="approveForm.controls['managerRemark'].invalid && approveForm.controls['managerRemark']?.touched" class="text-danger">
+              <small *ngIf="approveForm.controls['managerRemark'].errors?.['required']">Auditor Remarks is required.</small>
+            </div>
+          </div>
+        </div> -->
         <div class="col-lg-6">
             <div>
               <label class="control-label">Checked Out Location</label>

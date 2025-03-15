@@ -59,9 +59,9 @@
                       <li>
                         <a class="dropdown-item" href="#" (click)="exportComplaints($event)">Export To Excel</a>
                       </li>
-                      <li>
+                      <!-- <li>
                         <a class="dropdown-item" href="#" (click)="exportCSVComplaints($event)">Export to CSV</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </span>
                 </div>
@@ -183,10 +183,10 @@
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
                           <li class="buttoncss" [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" >
-                            <img src="assets/images/pngtree.png" 
+                            <img src="assets/images/closed.png"  title="Closed" class="me-2"
                             (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Close', complaint.complaintID)" 
-                            height="22" />                            
-                            <img src="assets/images/easy.jpg"  (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Escalation',complaint.complaintID)" height="22" />
+                            height="26" />    
+                            <img src="assets/images/escalation.png" title="Escalation" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Escalation',complaint.complaintID)" height="26" />
                           </li>
                         </ul>
                       </td>

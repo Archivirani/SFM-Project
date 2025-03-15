@@ -36,6 +36,7 @@ export class ApproveExpenseComponent {
         distanceInKm:this.expenseResponse.distanceTravelled,
         expenseRate:(Number(this.expenseResponse.amount) || 0) / (Number(this.expenseResponse.distanceTravelled) || 1),
         transportModeId:this.expenseResponse.transportModeId === '0' ? null :this.expenseResponse.transportModeId,
+        auditorRemark:this.expenseResponse.auditRemark
       });
     }else{
       this.approveForm?.reset();
@@ -56,10 +57,11 @@ export class ApproveExpenseComponent {
       expenseDate: new FormControl(null),
       remarks: new FormControl(null),
       checkedInLocation: new FormControl(null),
-      auditorRemark: new FormControl(null,Validators.required),
+      auditorRemark: new FormControl(null),
       checkOutLocation:new FormControl(null),
       expenseId:new FormControl(''),
-      meetingId:new FormControl('')
+      meetingId:new FormControl(''),
+      // managerRemark:new FormControl('')
     });
   }
   onCloseEvent(){

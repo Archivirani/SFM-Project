@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { CommonService } from '../../../shared/services/common.service';
@@ -11,6 +11,7 @@ import { LocationResponse, UserResponse } from '../../../shared/models/meeting.m
 import { EmailRegex, MultipleEmailRegex } from '../../../shared/constants/common';
 import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-ticket',
@@ -42,6 +43,7 @@ export class AddTicketComponent {
   @Input() complaint:string='';
   datepickerMDY: any;
   @Input() set complaintResponse(ComplaintResponse: ComplaintResponse | null) {
+    this.getComplaintGetUser();
     if (ComplaintResponse) {
      const assignedTo = this.users.filter(d=>d.name === ComplaintResponse.assignedTo)
      if(ComplaintResponse.documentNo){
@@ -61,7 +63,7 @@ export class AddTicketComponent {
         subType:ComplaintResponse.subType.toString(),
         complaintDate:this.minDate,
         updateDate: new Date(),
-        updateRemarks:ComplaintResponse.updateRemark,
+        updateRemarks:ComplaintResponse.updateRemark === '-' ? '':ComplaintResponse.updateRemark,
         assignedToId:ComplaintResponse?.assignToId ? ComplaintResponse.assignToId.split(',') : [],
         remarks:ComplaintResponse.remarks,
         ticketAddressTo:ComplaintResponse.ticketAddressTo,
@@ -72,7 +74,6 @@ export class AddTicketComponent {
     } else {
       this.buildForm();
     }
-    this.getComplaintGetUser();
   }
   constructor(
     public identityService: IdentityService,
@@ -112,6 +113,12 @@ export class AddTicketComponent {
     this.ticketForm.reset();
     this.buildForm();
     this.emails=[];
+    this.ticketForm.patchValue({
+      managerName:this.userList.complaintManagerName,
+      managerId:this.userList.complaintManagerID,
+      userName:this.userList.userName,
+      userID:this.userList.userId,
+    });
   }
   onEscalationClose(){
     this.escalationForm.reset();
@@ -170,12 +177,25 @@ export class AddTicketComponent {
       priority: new FormControl(data?.priority.toString()),
       escalatedTo: new FormControl(data?.escalationTo ? data.escalationTo.split(',') : [], [Validators.required]),
       escalatedEmail: new FormControl(existingEmails.join(';')),
-      escalatedDate: new FormControl('', [Validators.required]),
+      escalatedDate: new FormControl(this.convertToFormattedDate(data?.escalationDate), [Validators.required]),
       escalatedRemarks: new FormControl('', [Validators.required]),
       documents: new FormControl(''),
       userID: new FormControl(assignedTo),
     });
     this.escEmail = [...existingEmails];
+  }
+
+  convertToFormattedDate(dateStr: string): string | null {
+    if (!dateStr) return null;
+    let dateParts = dateStr.split(" ")[0].split("/");
+    if (dateParts.length !== 3) return null;
+    let month = Number(dateParts[0]); // MM
+    let day = Number(dateParts[1]);   // DD
+    let year = Number(dateParts[2]);  // YYYY
+    return `${this.padZero(day)}/${this.padZero(month)}/${year}`;
+  }
+  padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
   }
 
   onKeyUp(event: KeyboardEvent) {

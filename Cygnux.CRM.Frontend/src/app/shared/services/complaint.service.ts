@@ -41,10 +41,8 @@ export class ComplaintService {
     return this.apiHandlerService.Post('Complaint/ImportComplaints', formData);
   }
 
-  getComplaintDetails(
-    id: string
-  ): Observable<IApiBaseResponse<ComplaintDetailResponse>> {
-    return this.apiHandlerService.Get('complaint/GetDetail/' + id);
+  getComplaintDetails( id: string,UserId:string): Observable<IApiBaseResponse<ComplaintDetailResponse>> {
+    return this.apiHandlerService.Get(`complaint/GetDetail/${id}?UserId=${UserId}`);
   }
 
   addComplaint(

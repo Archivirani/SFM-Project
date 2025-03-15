@@ -27,9 +27,9 @@
                       <li>
                         <a class="dropdown-item" href="#" (click)="exportExpenses($event)">Export To Excel</a>
                       </li>
-                      <li>
+                      <!-- <li>
                         <a class="dropdown-item" href="#" (click)="exportCSVExpenses($event)">Export to CSV</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </span>
                 </div>
@@ -108,17 +108,17 @@
                       <td class="text-center">{{ expense.expenseDate ? expense.expenseDate :'--'}}</td>
                       <td class="text-center">{{ expense.amount ? expense.amount:'--' }}</td>
                       <td class="text-center">{{ expense.status ? expense.status:'--' }}</td>
-                      <td class="text-center">{{ expense.requestDate ? expense.requestDate :'--'}}</td>
+                      <td class="text-center">{{ expense.reqId && expense.requestDate ? expense.reqId + '/' + expense.requestDate : (expense.reqId || expense.requestDate || '--') }}</td>                      
                       <td class="text-center">{{ expense.expenseRate}}</td>
                       <td>
                         <ul class="list-inline justify-content-center hstack gap-2 mb-0">
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="View" (click)="viewModal($event, expense)">
-                            <a href="#"><i class="ri-eye-fill align-bottom text-muted"></i></a>
+                            <a><i class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
-                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Approved" (click)="approveModal($event, expense)">
-                            <a href="#"><i class="bi bi-check2-circle"></i></a>
+                          <li [ngClass]="{'disabled-image': expense.isManager_AuditApproved}"  class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                            data-bs-placement="top" title="Approved" (click)="expense.isManager_AuditApproved ? null : approveModal($event, expense)">
+                            <a><i class="bi bi-check2-circle"></i></a>
                           </li>
                         </ul>
                       </td>
