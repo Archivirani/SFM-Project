@@ -183,10 +183,10 @@
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
                           <li class="buttoncss" [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" >
-                            <img src="assets/images/closed.png"  title="Closed" class="me-2"
+                            <img src="assets/images/closed-icon.png"  title="Closed" class="me-2"
                             (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Close', complaint.complaintID)" 
-                            height="26" />    
-                            <img src="assets/images/escalation.png" title="Escalation" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Escalation',complaint.complaintID)" height="26" />
+                            height="23" />    
+                            <img src="assets/images/escalation-icon.jpg" title="Escalation" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Escalation',complaint.complaintID)" height="24" />
                           </li>
                         </ul>
                       </td>
