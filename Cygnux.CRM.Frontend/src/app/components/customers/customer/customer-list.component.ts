@@ -94,15 +94,15 @@ export class CustomerListComponent implements OnInit {
       new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)
     ];
 
-    this.startDate = this.dateRange[0].toUTCString();
-    this.endDate = this.dateRange[1].toUTCString();
+    this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB")
+    this.endDate =  this.dateRange?.[1]?.toLocaleDateString("en-GB")
     this.getCustomerfilters(this.dateRange);
   }
   
 
   getCustomerfilters(event:any){
-    this.startDate = event[0].toUTCString();
-    this.endDate = event[1].toUTCString();
+    this.startDate= event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
+    this.endDate = event?.[1]  ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     if(event?.length){
       const filters = {
         userid:this.identityService.getLoggedUserId(),
