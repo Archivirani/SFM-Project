@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
-import { Chart, LogarithmicScale } from 'chart.js/auto';
+import { ChangeDetectorRef, Component, Input} from '@angular/core';
+import { Chart} from 'chart.js/auto';
 import { LeadService } from '../../../shared/services/lead.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,6 @@ import { ExternalService } from '../../../shared/services/external.service';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexPlotOptions, ApexResponsive, ApexXAxis, ApexLegend, ApexFill} from "ng-apexcharts";
 import { Subscription } from 'rxjs';
 import { ExportService } from '../../../shared/services/export.service';
-import { CanvasJS } from '@canvasjs/angular-charts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries | [];  

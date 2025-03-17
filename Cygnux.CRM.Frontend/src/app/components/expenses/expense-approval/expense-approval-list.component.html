@@ -77,10 +77,10 @@
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d4" #c2="ngModel"
-                            [(ngModel)]="filters['ExpenseDate']" ngbDatepicker (ngModelChange)="getExpenses()"
+                            [(ngModel)]="filters['MeetingDate']" ngbDatepicker (ngModelChange)="getExpenses()"
                             #d4="ngbDatepicker" readonly />
                           <span role="button" (click)="clearmeetingDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper"
-                            title="Clear date" *ngIf="filters['ExpenseDate']">
+                            title="Clear date" *ngIf="filters['MeetingDate']">
                             <span aria-hidden="true" class="ng-clear clear">×</span>
                           </span>
                           <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d4.toggle()"

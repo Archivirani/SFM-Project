@@ -111,7 +111,7 @@ export class ExpenseApprovalListComponent implements OnInit {
     this.getExpenses();
   } 
   clearmeetingDate(){
-    this.filters['ExpenseDate'] = '';
+    this.filters['MeetingDate'] = '';
     this.getExpenses();
   }
 

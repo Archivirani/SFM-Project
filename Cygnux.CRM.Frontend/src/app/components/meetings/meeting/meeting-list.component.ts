@@ -47,9 +47,13 @@ export class MeetingListComponent implements OnInit {
   }
 
   exportMeetings(event: any) {
+    const filters: any = {
+      ...this.filters,
+      userid:this.identityService.getLoggedUserId(),
+    };
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.meetingService.exportMeeting(this.filters).subscribe({
+    this.meetingService.exportMeeting(filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
