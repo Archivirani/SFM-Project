@@ -11,9 +11,9 @@ export class SidebarComponent implements OnInit {
   constructor(private scriptLoader: ScriptLoaderService) {}
 
   ngOnInit(): void {
-    // this.scriptLoader
-    //   .loadScript('assets/js/app.js')
-    //   .then(() => {})
-    //   .catch((error) => console.error(error));
+    this.scriptLoader
+      .loadScript('assets/js/app.js')
+      .then(() => {})
+      .catch((error) => console.error(error));
   }
 }
