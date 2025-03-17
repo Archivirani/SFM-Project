@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
-import { Chart } from 'chart.js/auto';
+import { Chart, LogarithmicScale } from 'chart.js/auto';
 import { LeadService } from '../../../shared/services/lead.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
@@ -624,9 +624,7 @@ export class UserChartComponent {
       this.complaintService.getTicketDaywiseData(filters).subscribe({
         next: (response) => {
           if (response) {
-            if(response.data.length){
               this.complainTicketDayWise(response.data);
-            }
           }
           this.commonService.updateLoader(false);
         },
@@ -715,6 +713,7 @@ export class UserChartComponent {
     const categories = data.map((item) => item.complaintDay);
     const pendingCounts = data.map((item) => item.pendingCount);
     const completedCounts = data.map((item) => item.completedCount);
+    
     this.complaintColumnOption = {
       series: [
         {
