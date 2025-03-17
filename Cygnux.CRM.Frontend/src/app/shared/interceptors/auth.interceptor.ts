@@ -43,7 +43,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             catchError((err) => {
               // Logout user if refresh token fails
               identityService.clearToken();
-              router.navigateByUrl('/login');
+              router.navigateByUrl('/login');       
               return throwError(() => new Error(err));
             })
           );
