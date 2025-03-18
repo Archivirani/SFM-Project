@@ -76,7 +76,7 @@ export class ExpenseListComponent implements OnInit {
     this.commonService.updateLoader(true);
     const filters: any = {
       UserId:this.identifyService.getLoggedUserId(),
-      export:false
+      export:true
     }
     this.expenseService.exportExpense(filters).subscribe({
       next: (response) => {

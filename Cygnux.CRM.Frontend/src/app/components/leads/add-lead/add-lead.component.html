@@ -23,13 +23,23 @@
       <div class="col-lg-6">
         <div>
           <label class="control-label">Lead Category*</label>
-          <select class="form-control" formControlName="leadCategoryId"  
+          <!-- <select class="form-control" formControlName="leadCategoryId" placeholder="Search Branch"
           [ngClass]="{ 'border-danger': leadForm.controls['leadCategoryId'].invalid && leadForm.controls['leadCategoryId'].touched}">
-            <option value="" disabled selected>Select Category</option>
+            <option value="Select Category"  selected>Select Category</option>
             <option *ngFor="let item of leadCategories" [value]="item.codeId">
               {{ item.codeDesc }}
             </option>
-          </select>
+          </select> -->
+          <ng-select
+            [items]="leadCategories"
+            bindLabel="codeDesc"
+            bindValue="codeId"
+            formControlName="leadCategoryId"
+            placeholder="Search Lead Category"
+            [searchable]="true"
+            [ngClass]="{ 'border-danger': leadForm.controls['leadCategoryId'].invalid && leadForm.controls['leadCategoryId'].touched}"
+          >
+          </ng-select>
           <div
             *ngIf="
               leadForm.controls['leadCategoryId'].invalid &&
