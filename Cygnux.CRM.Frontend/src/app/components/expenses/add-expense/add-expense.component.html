@@ -58,7 +58,7 @@
         <div>
           <label class="control-label">Transport Mode</label>
           <ng-select [items]="transportModes" bindLabel="codeDesc" bindValue="codeId" formControlName="TransportModeId"
-            placeholder="Search Transport Mode" [searchable]="true" [clearable]="true"  (change)="OntransportModeChange($event.codeId)"
+            [placeholder]="'Search Transport Mode'" [searchable]="true" [clearable]="true"  (change)="OntransportModeChange($event.codeId)"
             [ngClass]="{'border-danger': expenseForm.controls['TransportModeId'].invalid && expenseForm.controls['TransportModeId'].touched}">
           </ng-select>
           <div *ngIf="expenseForm.controls['TransportModeId'].invalid && expenseForm.controls['TransportModeId']?.touched" class="text-danger">

@@ -175,7 +175,13 @@
                           <a class="edit-item-btn"  (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Edit',complaint.complaintID)"><i
                               class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li> -->
-                          <li [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}" ><a><img src="assets/images/update-icon.svg" title="Update" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Update',complaint.complaintID)" height="17" /></a></li>
+                          <li [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed'}">
+                            <a
+                            class="edit-item-btn"
+                            title="Update" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Update',complaint.complaintID)"><i class="ri-pencil-fill align-bottom text-muted" ></i
+                          ></a>
+                            <!-- <a><img src="assets/images/update-icon.svg" title="Update" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Update',complaint.complaintID)" height="17" /></a> -->
+                          </li>
                           <li *ngIf="complaint.complaintStatus === 'Closed'" class="pe-3"> </li>
                           <li class="list-inline-item text-center" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="View">

@@ -37,6 +37,7 @@ closeDate: any;
   ticketAddressTo:string;
   isUpdated:boolean;
   assignToId:string;
+  escEmailId:any;
 }
 
 export interface ComplaintDetailResponse extends ComplaintResponse {
@@ -124,6 +125,11 @@ export interface ComplaintCountDayWise {
 export interface AssignToList {
   userId: string;
   userName: string;
+}
+
+export interface TicketAddressToResponse{
+  locCode: string,
+ locName:string
 }
 
 export interface UpdateHistory {

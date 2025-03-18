@@ -23,7 +23,7 @@
           </div>
           <div>
             <label>Docket No</label>
-            <input type="text" class="form-control mb-3" formControlName="docketNo" (input)="onDocketNoChange($event)">
+            <input type="text" class="form-control mb-3" formControlName="docketNo" (input)="onDocketNoChange($event)" [readonly]="complaint === 'Close' ? true:false">
             <div *ngIf="
             ticketForm.controls['docketNo'].invalid &&
             ticketForm.controls['docketNo']?.touched
@@ -44,7 +44,7 @@
               ticketForm.controls['userName'].invalid &&
               ticketForm.controls['userName']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['userName'].errors?.['required']">userName is required.</small>
+              <small *ngIf="ticketForm.controls['userName'].errors?.['required']">Username is required.</small>
             </div>
           </div>
           <div>
@@ -64,7 +64,7 @@
               ticketForm.controls['managerId'].invalid &&
               ticketForm.controls['managerId']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['managerId'].errors?.['required']">managerId is required.</small>
+              <small *ngIf="ticketForm.controls['managerId'].errors?.['required']">Manager ID is required.</small>
             </div>
           </div>
           <div>
@@ -85,7 +85,7 @@
               ticketForm.controls['managerName'].invalid &&
               ticketForm.controls['managerName']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['managerName'].errors?.['required']">managerName is required.</small>
+              <small *ngIf="ticketForm.controls['managerName'].errors?.['required']">Manager Name is required.</small>
             </div>
           </div>
           <div>
@@ -96,13 +96,13 @@
             <label>Ticket Address To</label>
             <!-- <input type="text" class="form-control" formControlName="ticketAddressTo" readonly> -->
             <ng-select [items]="locations" bindLabel="locName" bindValue="locCode" formControlName="ticketAddressTo"
-            placeholder="Search Location" [searchable]="true" [clearable]="true">
+            placeholder="Search Ticket Address To" [searchable]="true" [clearable]="true">
           </ng-select>
           <div *ngIf="
           ticketForm.controls['ticketAddressTo'].invalid &&
           ticketForm.controls['ticketAddressTo']?.touched
         " class="text-danger">
-          <small *ngIf="ticketForm.controls['ticketAddressTo'].errors?.['required']">ticketAddressTo is required.</small>
+          <small *ngIf="ticketForm.controls['ticketAddressTo'].errors?.['required']">Ticket Address To is required.</small>
         </div>
           </div>
         </div>
@@ -122,14 +122,14 @@
           <div>
             <label>Ticket Source*</label>
             <ng-select formControlName="source" [items]="ticketSources" bindLabel="codeDesc" bindValue="codeId"
-              [placeholder]="'Search Lead Source'" [clearable]="true" [searchable]="true"
+              [placeholder]="'Search Ticket Source'" [clearable]="true" [searchable]="true"
               [readonly]="complaint !== 'Add'">
             </ng-select>
             <div *ngIf="
               ticketForm.controls['source'].invalid &&
               ticketForm.controls['source']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['source'].errors?.['required']">ticketSource is required.</small>
+              <small *ngIf="ticketForm.controls['source'].errors?.['required']">Ticket Source is required.</small>
             </div>
           </div>
           <br>
@@ -142,7 +142,7 @@
               ticketForm.controls['priority'].invalid &&
               ticketForm.controls['priority']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['priority'].errors?.['required']">ticketPriority is required.</small>
+              <small *ngIf="ticketForm.controls['priority'].errors?.['required']">Ticket Priority is required.</small>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@
               ticketForm.controls['complaintDate'].invalid &&
               ticketForm.controls['complaintDate']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['complaintDate'].errors?.['required']">ticketDate is required.</small>
+              <small *ngIf="ticketForm.controls['complaintDate'].errors?.['required']">Ticket Date is required.</small>
             </div>
           </div>
   
@@ -172,7 +172,7 @@
             ticketForm.controls['description'].invalid &&
             ticketForm.controls['description']?.touched
           " class="text-danger">
-              <small *ngIf="ticketForm.controls['description'].errors?.['required']">description is required.</small>
+              <small *ngIf="ticketForm.controls['description'].errors?.['required']">Description is required.</small>
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@
               ticketForm.controls['type'].invalid &&
               ticketForm.controls['type']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['type'].errors?.['required']">ticketType is required.</small>
+              <small *ngIf="ticketForm.controls['type'].errors?.['required']">Ticket Type is required.</small>
             </div>
           </div>
           <br>
@@ -239,14 +239,14 @@
                 {{ item.codeDesc }}
               </option>
             </select> -->
-            <ng-select [items]="ticketSubTypes" bindLabel="codeDesc" bindValue="codeId" placeholder="Search Ticket Type"
+            <ng-select [items]="ticketSubTypes" bindLabel="codeDesc" bindValue="codeId" placeholder="Search Ticket Sub Type"
               formControlName="subType" [readonly]="complaint !== 'Add'">
             </ng-select>
             <div *ngIf="
               ticketForm.controls['subType'].invalid &&
               ticketForm.controls['subType']?.touched
             " class="text-danger">
-              <small *ngIf="ticketForm.controls['subType'].errors?.['required']">ticketSubType is required.</small>
+              <small *ngIf="ticketForm.controls['subType'].errors?.['required']">Ticket Sub Type is required.</small>
             </div>
           </div>
           <br>

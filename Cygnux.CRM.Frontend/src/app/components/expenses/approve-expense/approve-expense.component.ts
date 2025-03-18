@@ -57,7 +57,7 @@ export class ApproveExpenseComponent {
       expenseDate: new FormControl(null),
       remarks: new FormControl(null),
       checkedInLocation: new FormControl(null),
-      auditorRemark: new FormControl(null),
+      auditorRemark: new FormControl(null,Validators.required),
       checkOutLocation:new FormControl(null),
       expenseId:new FormControl(''),
       meetingId:new FormControl(''),

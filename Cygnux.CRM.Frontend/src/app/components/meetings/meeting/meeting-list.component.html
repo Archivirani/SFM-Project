@@ -59,7 +59,7 @@
                       <th class="text-center">Check In <br>Time in Hrs</th>
                       <th class="text-center">Check Out <br> Time in Hrs</th>
                       <th class="text-center">Meeting TAT<br> in Minutes</th>
-                      <th class="text-center">Check In-Check Out</th>
+                      <!-- <th class="text-center">Check In-Check Out</th> -->
                       <th class="text-center">Meeting Status</th>
                       <th class="text-center">Action</th>
                     </tr>
@@ -103,7 +103,7 @@
                         (input)="getMeetings()"
                         class="form-control"
                       /> </th>
-                      <th></th>
+                      <!-- <th></th> -->
                       <th>
                         <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings()"
                           class="form-control" />
@@ -129,12 +129,12 @@
                       <td class="text-center">{{ meeting.checkIn? meeting.checkIn:'--'}}</td>
                       <td class="text-center">{{ meeting.checkOut ? meeting.checkOut:'--'}}</td>
                       <td class="text-center">{{meeting.meetingTimeInMins ? meeting.meetingTimeInMins:'--'}} </td>
-                      <td class="text-center">
+                      <!-- <td class="text-center">
                       <div class="d-flex">
                         <span [title]="meeting.checkInReason"><button class="btn btn-danger me-1 fontsize" (click)="onCheckIn(meeting,i)"  [disabled]="!meeting.isCheckInEnabled || meeting.checkIn !== '-'">Check In</button></span>
                         <span [title]="meeting.checkOutReason"><button class="btn btn-secondary fontsize" (click)="onCheckOut(meeting,i)"  [disabled]="!meeting.isCheckOutEnabled">Check Out</button></span>
                       </div>
-                      </td> 
+                      </td>  -->
                       <!-- <td>{{ meeting.taTinHrs }}</td> -->
                       <td class="text-center">{{ meeting.meetingStatus ? meeting.meetingStatus:'--'}}</td>
                       <td class="text-center">
