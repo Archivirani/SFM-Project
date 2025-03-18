@@ -61,6 +61,7 @@ export interface LeadDetailResponse extends LeadResponse {
   region?: string;
   serviceInterestedNames?: string;
   assignedToId?: string;
+  callStatusId:string;
 }
 
 export interface LeadCategoryResponse {
