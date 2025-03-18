@@ -38,7 +38,7 @@ export interface ExpenseDetailResponse extends ExpenseResponse {
   modifiedDate: string;
   expenseCreated:boolean;
   transportModeId:string;
-  requestID:number;
+  requestID:string;
   auditRemarks:string;
   expenseRate:number;
   auditedBy:string;

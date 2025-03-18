@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdentityService } from '../../../shared/services/identity.service';
+declare function G(): void;
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,10 @@ export class HeaderComponent implements OnInit {
     this.userName = identityService.getUserName();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (typeof G === 'function') {G();}
+
+  }
 
   signout(event: any): void {
     event.preventDefault();

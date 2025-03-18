@@ -32,7 +32,7 @@ export class ApproveExpenseComponent {
       this.approveForm.patchValue({
         checkOutLocation:this.expenseResponse.checkedInLocation,
         expenseCode:this.expenseResponse.expenseId,
-        requestDate:this.expenseResponse.requestDate === '01/01/1900 00:00:00' ? '' : '',
+        requestId:this.expenseResponse.requestID ==='Not Generated'?'0':this.expenseResponse.requestID,
         distanceInKm:this.expenseResponse.distanceTravelled,
         expenseRate:(Number(this.expenseResponse.amount) || 0) / (Number(this.expenseResponse.distanceTravelled) || 1),
         transportModeId:this.expenseResponse.transportModeId === '0' ? null :this.expenseResponse.transportModeId,
@@ -48,7 +48,7 @@ export class ApproveExpenseComponent {
       expenseCode: new FormControl(null),
       distanceInKm: new FormControl(null),
       companyName: new FormControl(null),
-      requestDate: new FormControl(null),
+      requestId: new FormControl(null),
       expenseRate: new FormControl(null),
       meetingDate: new FormControl(null),
       amount: new FormControl(null),
