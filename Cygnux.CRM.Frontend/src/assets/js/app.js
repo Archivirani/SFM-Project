@@ -352,7 +352,7 @@
           ? document.body.classList.remove("twocolumn-panel")
           : document.body.classList.add("twocolumn-panel"));
   }
-  function G() {
+  window.G = function() {
     document.addEventListener("DOMContentLoaded", function () {
       var e = document.getElementsByClassName("code-switcher");
       Array.from(e).forEach(function (a) {

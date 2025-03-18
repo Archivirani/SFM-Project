@@ -62,7 +62,7 @@ export class AddTicketComponent {
         type:ComplaintResponse.type.toString(),
         // customerEmail:[customerEmail],
         subType:ComplaintResponse.subType.toString(),
-        complaintDate:this.minDate,
+        complaintDate:ComplaintResponse.compalaintDate?ComplaintResponse.compalaintDate:this.minDate,
         updateDate: new Date(),
         updateRemarks:ComplaintResponse.updateRemark === '-' ? '':ComplaintResponse.updateRemark,
         assignedToId:ComplaintResponse?.assignToId ? ComplaintResponse.assignToId.split(',') : [],

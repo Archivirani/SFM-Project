@@ -109,7 +109,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
     if (changes['leadResponse'] && this.leadResponse) {
       this.isEdit=true;
       this.leadForm.patchValue({
-        leadCategoryId: this.leadResponse.leadCategoryId,
+        leadCategoryId: this.leadResponse.leadCategoryId?.toString(),
         LeadDate: this.leadResponse.leadDate,
         companyName: this.leadResponse.companyName,
         contactName: this.leadResponse.contactName,

@@ -1,7 +1,7 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export function timeRangeValidator(control: AbstractControl): ValidationErrors | null {
-  const date = (control.get('callDate')?.value|| control.get('meetingDate')?.value);
+  const date = control.get('callDate')?.value;
   const startTime = control.get('startTime')?.value;
   const endTime = control.get('endTime')?.value;
   const today = new Date();

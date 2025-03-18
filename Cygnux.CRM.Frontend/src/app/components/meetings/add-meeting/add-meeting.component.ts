@@ -93,7 +93,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       this.center.lng = this.meetingResponse.longitude;
       this.meetingId = this.meetingResponse.meetingId;
       this.meetingForm.patchValue(this.meetingResponse);
-      
+      this.checkOutValue = this.meetingResponse.checkOut;
     } else {
       this.meetingForm.reset();
       this.meetingId = '';
@@ -146,7 +146,26 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     },
     // { validators: timeRangeValidator  }
   );
-  // this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
+  this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
+  }
+
+  checkDuplicateMeetingTimes(_control?: AbstractControl): ValidationErrors | null {
+    if((this.checkOutValue =='-' && !this.meetingId)|| (this.checkOutValue =='-' && this.meetingId) ){
+    const meetingDate = this.meetingForm.get('meetingDate')?.value;
+    const startTime = this.meetingForm.get('startTime')?.value;
+    const endTime = this.meetingForm.get('endTime')?.value;
+    const today = new Date();
+    const dateParts = meetingDate?.split('/');
+    const formattedDate = `${dateParts?.[2]}-${dateParts?.[1]}-${dateParts?.[0]}`;
+    const startDateTime = new Date(`${formattedDate}T${startTime}`);
+    const endDateTime = new Date(`${formattedDate}T${endTime}`);
+    if(startDateTime <= today){
+      return { startTimeAfterCurrentTime: true }; // Custom error key
+    }else if(endDateTime <= startDateTime){
+      return { timeRangeValidator: true }; // Custom error key
+    }
+    }
+    return null;
   }
 
   isDateDisabled = (date: { year: number; month: number; day: number }): boolean => {

@@ -15,13 +15,24 @@
       <div class="col-lg-6">
         <div>
           <label class="control-label">Call Purpose</label>
-          <select class="form-control" formControlName="callPurpose" 
+          <!-- <select class="form-control" formControlName="callPurpose" placeholder="Search Call Purpose"
           [ngClass]="{ 'border-danger': callForm.controls['callPurpose'].invalid && callForm.controls['callPurpose'].touched}">
             <option value="" disabled selected>Select Purpose</option>
             <option *ngFor="let item of callPurposes" [value]="item.codeId">
               {{ item.codeDesc }}
             </option>
-          </select>
+          </select> -->
+
+          <ng-select
+            [items]="callPurposes"
+            bindLabel="codeDesc"
+            bindValue="codeId"
+            formControlName="callPurpose"
+            placeholder="Search Call Purpose"
+            [searchable]="true"
+            [ngClass]="{ 'border-danger': callForm.controls['callPurpose'].invalid && callForm.controls['callPurpose'].touched}"
+          >
+          </ng-select>
           <span
             *ngIf="
               callForm.controls['callPurpose'].invalid &&
@@ -38,7 +49,7 @@
       <div class="col-lg-6">
         <div>
           <label class="control-label">Call Category</label>
-          <select
+          <!-- <select
             id="dropdown"
             class="form-control"
             formControlName="callCategoryId"
@@ -47,8 +58,17 @@
             <option *ngFor="let item of callCategories" [value]="item.codeId">
               {{ item.codeDesc }}
             </option>
-          </select>
-
+          </select> -->
+          <ng-select
+          [items]="callCategories"
+          bindLabel="codeDesc"
+          bindValue="codeId"
+          formControlName="callCategoryId"
+          placeholder="Search Call Purpose"
+          [searchable]="true"
+          [ngClass]="{ 'border-danger': callForm.controls['callCategoryId'].invalid && callForm.controls['callCategoryId'].touched}"
+        >
+        </ng-select>
           <span
             *ngIf="
               callForm.controls['callCategoryId'].invalid &&
@@ -156,7 +176,7 @@
       <div class="col-lg-6">
         <div>
           <label class="control-label">Call Status</label>
-          <select
+          <!-- <select
             id="dropdown"
             class="form-control"
             formControlName="callStatusId"
@@ -165,7 +185,18 @@
             <option *ngFor="let item of callStatuses" [value]="item.codeId">
               {{ item.codeDesc }}
             </option>
-          </select>
+          </select> -->
+
+          <ng-select
+          [items]="callStatuses"
+          bindLabel="codeDesc"
+          bindValue="codeId"
+          formControlName="callStatusId"
+          placeholder="Search Call Status"
+          [searchable]="true"
+          [ngClass]="{ 'border-danger': callForm.controls['callStatusId'].invalid && callForm.controls['callStatusId'].touched}"
+        >
+        </ng-select>
         </div>
       </div>
       <div class="col-lg-6">

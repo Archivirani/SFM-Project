@@ -150,12 +150,15 @@
           <div>
             <label>Ticket Date:*</label>
             <div class="input-group mb-3">
-              <input class="form-control" placeholder="dd/mm/yyyy" #datepickerMDY="bsDatepicker" bsDatepicker required
+              <!-- <input class="form-control" placeholder="dd/mm/yyyy" #datepickerMDY="bsDatepicker" bsDatepicker required
                 formControlName="complaintDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' ,minDate: minDate}"
-                [readonly]="complaint !== 'Add'" >
+                [readonly]="complaint !== 'Add'?true:false" [disabled]="complaint !== 'Add'? true:false">
                 <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="datepickerMDY.toggle()"
-                [attr.aria-expanded]="datepickerMDY.isOpen" type="button" [class.disabled]="complaint !== 'Add'"></button>
-  
+                [attr.aria-expanded]="datepickerMDY.isOpen" type="button" [class.disabled]="complaint !== 'Add'"></button> -->
+                <input class="form-control" placeholder="dd/mm/yyyy" #datepickerMDY="bsDatepicker" bsDatepicker required
+                formControlName="complaintDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="complaint !== 'Add'?true:false" [class.disabled]="complaint !== 'Add'?true:false">
+              <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="datepickerMDY.toggle()"
+                [attr.aria-expanded]="datepickerMDY.isOpen" type="button" [disabled]="true"></button>
             </div>
             <div *ngIf="
               ticketForm.controls['complaintDate'].invalid &&
