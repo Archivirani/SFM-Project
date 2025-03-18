@@ -49,7 +49,11 @@ export class AddCallComponent implements OnInit, OnChanges {
     } 
     if (changes['callResponse'] && this.callResponse) {
       this.callForm.patchValue(this.callResponse);
-      this.callForm.patchValue({companyName:this.callResponse.customerName || this.callResponse.companyName});
+      this.callForm.patchValue({
+        companyName:this.callResponse.customerName || this.callResponse.companyName,
+        callCategoryId:this.callResponse.callCategoryId?.toString(),
+        callStatusId:this.callResponse.callStatusId?.toString()
+      });
     } else {
       this.callForm.reset();
     }

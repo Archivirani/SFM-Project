@@ -12,6 +12,7 @@ export interface CallResponse {
   customerCode?:string;
   companyName?:string;
   callId?: any;
+  callStatusId:string;
 }
 
 export interface CallDetailResponse extends CallResponse {

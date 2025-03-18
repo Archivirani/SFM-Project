@@ -93,7 +93,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       this.center.lng = this.meetingResponse.longitude;
       this.meetingId = this.meetingResponse.meetingId;
       this.meetingForm.patchValue(this.meetingResponse);
-      this.checkOutValue = this.meetingResponse.checkOut;
+      // this.checkOutValue = this.meetingResponse.checkOut;
     } else {
       this.meetingForm.reset();
       this.meetingId = '';
