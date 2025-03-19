@@ -49,13 +49,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           );
 
           // You might trigger a re-authentication flow or redirect the user here
-        } else if (err.status === 0) {
-          //Temporary implementation untill it API use/return 401 status
+        } 
+        // else if (err.status === 0) {
+        //   //Temporary implementation untill it API use/return 401 status
 
-          console.error('Unauthorized request:', err);
-          identityService.clearToken();
-          router.navigateByUrl('/login');
-        } else {
+        //   console.error('Unauthorized request:', err);
+        //   identityService.clearToken();
+        //   router.navigateByUrl('/login');
+        // } 
+        else {
           // Handle other HTTP error codes
           console.error('HTTP error:', err);
         }
