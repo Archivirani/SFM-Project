@@ -42,17 +42,17 @@ export class AddCallComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const callStatusId = this.callStatuses.find((d)=>d.codeId.toString() === '2')?.codeId
-    if(callStatusId){
-      this.callForm.patchValue({
-        callStatusId:callStatusId
-      });
-    } 
+    // if(callStatusId){
+    //   this.callForm.patchValue({
+    //     callStatusId:callStatusId
+    //   });
+    // } 
     if (changes['callResponse'] && this.callResponse) {
       this.callForm.patchValue(this.callResponse);
       this.callForm.patchValue({
         companyName:this.callResponse.customerName || this.callResponse.companyName,
         callCategoryId:this.callResponse.callCategoryId?.toString(),
-        callStatusId:this.callResponse.callStatusId?.toString()
+        callStatusId:this.callResponse.callStatusId?.toString() ? this.callResponse.callStatusId?.toString():callStatusId
       });
     } else {
       this.callForm.reset();
