@@ -87,7 +87,7 @@
             <input class="form-control" type="text" formControlName="checkedInLocation" readonly/>
           </div>
         </div>
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <div>
             <label class="control-label">Auditor/Manager Remarks</label>
             <input class="form-control" type="text" formControlName="auditorRemark" 
@@ -96,7 +96,7 @@
               <small *ngIf="approveForm.controls['auditorRemark'].errors?.['required']">Auditor Remarks is required.</small>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- <div class="col-lg-6">
           <div>
             <label class="control-label">Manager Remarks</label>
@@ -121,10 +121,10 @@
             type="submit"
             class="btn btn-success"
             id="add-btn"
-           (click)="onApprove()" [disabled]="(expenseResponse?.isEdit==='Y')">
+           (click)="onReject('Approve')" [disabled]="(expenseResponse?.isEdit==='Y')">
             Approve
         </button>
-        <button type="button" class="btn btn-danger" (click)="onReject()" [disabled]="(expenseResponse?.isEdit==='Y')">
+        <button type="button" class="btn btn-danger" (click)="onReject('Reject')" [disabled]="(expenseResponse?.isEdit==='Y')">
             Reject
         </button>
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onCloseEvent()">
@@ -133,3 +133,28 @@
         </div>
       </div>
 </form>
+
+<div class="modal fade" id="rejectTemplate"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog custom-top-modal">
+    <div class="modal-content">
+      <h5 class="p-2 m-0 bg-color">Are you want to {{typeEvent}}</h5>
+     <div class="p-3 pt-2">
+      <div>
+        <label>Remarks</label>
+        <textarea type="text" [(ngModel)]="isDefaultComment" class="w-100 form-control" #remarksInput="ngModel" required>
+          </textarea>
+        <div *ngIf="remarksInput.invalid && remarksInput.touched" class="text-danger">
+          <small>Remarks are required.</small>
+        </div>
+      </div>
+      <div class="button-group gap-2  d-flex justify-content-end p-3">
+        <button [disabled]="remarksInput.invalid" (click)="updateAdditionalInfo(isDefaultComment)"
+          class="btn btn-success d-flex align-items-center mr-2">
+          Submit
+        </button>
+      <button type="button" data-bs-dismiss="modal" class="btn btn-light d-flex align-items-center" (click)="onCancel()">Cancel</button>
+      </div>
+     </div>
+    </div>
+  </div>
+</div>

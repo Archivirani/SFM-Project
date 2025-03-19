@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 import { ExpenseDetailResponse, ExpenseResponse } from '../../../shared/models/expense.model';
 import { CommonService } from '../../../shared/services/common.service';
 import { ExternalService } from '../../../shared/services/external.service';
@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { GeneralMasterResponse } from '../../../shared/models/external.model';
 import { ExpenseService } from '../../../shared/services/expense.service';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Modal } from 'bootstrap';
+
 
 @Component({
   selector: 'app-approve-expense',
@@ -20,6 +23,9 @@ export class ApproveExpenseComponent {
   public transportModes: GeneralMasterResponse[] = []
   constructor(private commonService: CommonService,private externalService: ExternalService,private toasterService: ToastrService,private expenseService:ExpenseService,public identifyService :IdentityService){}
   @Output() onClose = new EventEmitter<ExpenseResponse>();
+  typeEvent:string='';
+  public isDefaultComment!: string;
+  @ViewChild('remarksInput') remarksInput!: NgModel; // Access the ngModel directive
 
   ngOnInit(){
     this.buildForm();
@@ -67,6 +73,7 @@ export class ApproveExpenseComponent {
   onCloseEvent(){
     this.approveForm.reset();
     this.buildForm();
+    this.isDefaultComment ='';
   }
   getTransportModes(searchText: string | null = null) {
     this.commonService.updateLoader(true);
@@ -98,6 +105,7 @@ export class ApproveExpenseComponent {
           if (response.success) {
             this.toasterService.success(response.data.message);
             this.onClose.emit()
+            this.onCancel()
           } else {
             this.toasterService.error(response.error?.message );
           }
@@ -109,16 +117,46 @@ export class ApproveExpenseComponent {
         },
       });
     }else {
+      this.onCancel();
       this.approveForm.markAllAsTouched()
     }
   }
   
-  onApprove() {
-    this.handleApproval(true);
-  }
+  // onApprove() {
+  //   this.handleApproval(true);
+  // }
   
-  onReject() {
-    this.handleApproval(false);
+  onReject(type:string) {
+    const modalElement = document.getElementById('rejectTemplate');
+    if (modalElement) {
+      const modal = new Modal(modalElement);
+      modal.show();
+      this.typeEvent=type;
+    }
   }
-  
+
+  updateAdditionalInfo(event:any){
+    this.approveForm.patchValue({
+      auditorRemark :event
+    });
+    if(this.typeEvent === 'Approve'){
+      this.handleApproval(true);
+    }else if(this.typeEvent === 'Reject'){
+      this.handleApproval(false)
+    }
+  }
+
+  onCancel() {
+    const modalElement = document.getElementById('rejectTemplate');
+    if (modalElement) {
+      const modal = Modal.getInstance(modalElement);
+      modal?.hide();
+      this.isDefaultComment ='';
+      if (this.remarksInput) {
+        this.remarksInput.control.markAsPristine();
+        this.remarksInput.control.markAsUntouched();
+        this.remarksInput.control.updateValueAndValidity();
+      }
+    }
+  }
 }
