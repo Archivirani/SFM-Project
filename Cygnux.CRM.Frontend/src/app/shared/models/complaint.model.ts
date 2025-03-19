@@ -30,6 +30,7 @@ closeDate: any;
   updateDate:string;
   updateRemark:string;
   assignedToId:string;
+  ticketAddressToId:string;
   remarks:string;
   customerID:string;
   UserID:string;

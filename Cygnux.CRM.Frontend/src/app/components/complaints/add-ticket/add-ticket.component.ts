@@ -67,7 +67,7 @@ export class AddTicketComponent {
         updateRemarks:ComplaintResponse.updateRemark === '-' ? '':ComplaintResponse.updateRemark,
         assignedToId:ComplaintResponse?.assignToId ? ComplaintResponse.assignToId.split(',') : [],
         remarks:ComplaintResponse.remarks,
-        ticketAddressTo:ComplaintResponse.ticketAddressTo,
+        ticketAddressTo:ComplaintResponse.ticketAddressToId,
         customerID: ComplaintResponse.customerID
       })
       this.emails = [...customerEmail];
@@ -155,7 +155,7 @@ export class AddTicketComponent {
       browse: new FormControl(''),
       updateDate: new FormControl(new Date()),
       updateRemarks: new FormControl(''),
-      assignedToId: new FormControl(''),
+      assignedToId: new FormControl([],[Validators.required]),
       complaintId: new FormControl(''),
       remarks: new FormControl(''),
       closeBy: new FormControl(assignedTo),
@@ -178,7 +178,7 @@ export class AddTicketComponent {
       status: new FormControl(data?.compaintStatus),
       priority: new FormControl(data?.priority.toString()),
       escalatedTo: new FormControl(data?.escalationTo ? data.escalationTo.split(',') : [], [Validators.required]),
-      escalatedEmail: new FormControl(existingEmails.join(';')),
+      escalatedEmail: new FormControl(),
       escalatedDate: new FormControl(this.convertToFormattedDate(data?.escalationDate), [Validators.required]),
       escalatedRemarks: new FormControl('', [Validators.required]),
       documents: new FormControl(''),
@@ -379,7 +379,7 @@ export class AddTicketComponent {
     if (this.complaint === 'Update') {
       const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,customerEmail,document,documentNo,priority,assignedToId,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
       update.documentNo=this.ticketForm.value.docketNo,
-      update.assignedToId = this.ticketForm.value.assignedToId.join(','),
+      update.assignedToId = this.ticketForm.value.assignedToId?.join(','),
       update.CustomerEmail = this.emails.join(';'),
       update.updateDate =  this.datePipe.transform(this.ticketForm.value.updateDate, 'dd/MM/yyyy') || '';  
       update.document = 'docket',
@@ -388,7 +388,7 @@ export class AddTicketComponent {
         const {customerID, closeDate, closeRemark,closureDate,userID,subType,type,docketNo,source,priority,description,customerEmail, closeBy,browse,assignedToId, remarks, complaintId, updateRemarks, updateDate, billingParty, destination, docDate, EDD, managerId, managerName, origin, userName, ...data } = this.ticketForm.value;
         data.DocumentNo = this.ticketForm.value.docketNo,
         data.Document = this.ticketForm.value.browse,
-        data.AssignedTo = this.ticketForm.value.assignedToId.join(','),
+        data.AssignedTo = this.ticketForm.value.assignedToId?.join(','),
         data.CustomerEmail = this.emails.join(';'),
         data.Description = this.ticketForm.value.description,
         data.Priority = this.ticketForm.value.priority,
