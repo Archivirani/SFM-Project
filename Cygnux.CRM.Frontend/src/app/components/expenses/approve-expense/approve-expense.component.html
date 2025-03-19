@@ -137,7 +137,7 @@
 <div class="modal fade" id="rejectTemplate"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog custom-top-modal">
     <div class="modal-content">
-      <h5 class="p-2 m-0 bg-color">Are you want to {{typeEvent}}</h5>
+      <h5 class="p-2 m-0 bg-color">Are you want to {{typeEvent}}?</h5>
      <div class="p-3 pt-2">
       <div>
         <label>Remarks</label>
@@ -150,9 +150,9 @@
       <div class="button-group gap-2  d-flex justify-content-end p-3">
         <button [disabled]="remarksInput.invalid" (click)="updateAdditionalInfo(isDefaultComment)"
           class="btn btn-success d-flex align-items-center mr-2">
-          Submit
+          Yes
         </button>
-      <button type="button" data-bs-dismiss="modal" class="btn btn-light d-flex align-items-center" (click)="onCancel()">Cancel</button>
+      <button type="button" data-bs-dismiss="modal" class="btn btn-light d-flex align-items-center" (click)="onCancel()">No</button>
       </div>
      </div>
     </div>
