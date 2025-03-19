@@ -20,6 +20,7 @@ export interface ExpenseResponse {
   isAuditApproved:boolean;
   isManager_AuditApproved:boolean;
   reqId:string;
+  meetingDate:string;
 }
 
 export interface ExpenseDetailResponse extends ExpenseResponse {
