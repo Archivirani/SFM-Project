@@ -472,7 +472,7 @@
             formControlName="escalatedEmail"
             (keyup)="onEscKeyUp($event)" 
             placeholder="Enter Escalated emails"
-          />
+          readonly/>
         </div>
         <div *ngIf="emailError" class="text-danger">
           <small>Email is invalid.</small>
@@ -481,13 +481,17 @@
       <div class="col-3">
         <label>Esc. Date:</label>
         <div class="input-group">
-          <input class="form-control"
+          <!-- <input class="form-control"
           ngbDatepicker
           #d2="ngbDatepicker"
           placeholder="dd/mm/yyyy"
           [markDisabled]="commonService.isDateDisabled"
           formControlName="escalatedDate">
-          <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()" type="button"></button>
+          <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()" type="button"></button> -->
+          <input class="form-control" placeholder="dd/mm/yyyy" #datepickerMDY="bsDatepicker" bsDatepicker required
+                  formControlName="escalatedDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="true" [class.disabled]="true">
+                <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="datepickerMDY.toggle()"
+                  [attr.aria-expanded]="datepickerMDY.isOpen" type="button" [disabled]="true"></button>
         </div>
         <div *ngIf=" escalationForm.controls['escalatedDate'].invalid && escalationForm.controls['escalatedDate']?.touched" class="text-danger">
           <small *ngIf="escalationForm.controls['escalatedDate'].errors?.['required']">Esc. Date is required.</small>

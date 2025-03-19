@@ -27,7 +27,7 @@
                 <label class="col-form-label">Search By User</label>
             </div>
             <div class="col-5">
-                <ng-select [items]="users" bindLabel="name" bindValue="name" [(ngModel)]="userIdData" 
+                <ng-select [items]="users" bindLabel="name" bindValue="userId" [(ngModel)]="userIdData" 
                 (change)="getCustomerfilters(dateRange,userIdData) "  placeholder="Search Attendees" [clearable]="true" [searchable]="true">
                 </ng-select>
             </div>

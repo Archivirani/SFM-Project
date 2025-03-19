@@ -169,7 +169,10 @@ constructor(
     this.externalService.getUserMaster().subscribe({
       next: (response) => {
         if (response) {
-          this.users = response.data;
+          this.users= response.data.map((user: any) => ({
+            userId: user.userId,
+            name: `${user.userId } : ${user.name}`,
+          }));
         }
         this.commonService.updateLoader(false);
       },

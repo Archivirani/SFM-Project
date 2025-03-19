@@ -179,7 +179,7 @@ export class AddTicketComponent {
       priority: new FormControl(data?.priority.toString()),
       escalatedTo: new FormControl(data?.escalationTo ? data.escalationTo.split(',') : [], [Validators.required]),
       escalatedEmail: new FormControl(),
-      escalatedDate: new FormControl(this.convertToFormattedDate(data?.escalationDate), [Validators.required]),
+      escalatedDate: new FormControl(new Date(), [Validators.required]),
       escalatedRemarks: new FormControl('', [Validators.required]),
       documents: new FormControl(''),
       userID: new FormControl(assignedTo),
@@ -487,6 +487,7 @@ export class AddTicketComponent {
     const { priority, status, assigned, description, type, docketNo, ...data } = this.escalationForm.value;
     data.escalatedEmail =  this.escEmail.join(';')
     data.escalatedTo = this.escalationForm.value.escalatedTo.map((user: any) => user).join(',');
+    data.escalatedDate = this.datePipe.transform(this.escalationForm.value.escalatedDate, 'dd/MM/yyyy') || '';  
     this.commonService.updateLoader(true);
     this.complaintService.AddEscTktComplaint(data).subscribe({
       next: (response) => {

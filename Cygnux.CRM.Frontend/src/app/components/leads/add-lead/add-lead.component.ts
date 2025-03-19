@@ -175,7 +175,10 @@ export class AddLeadComponent implements OnInit, OnChanges {
     this.externalService.getCities().subscribe({
       next: (response) => {
         if (response) {
-          this.cities = response.data;
+          this.cities = response.data.map((user: any) => ({
+            city_code: user.city_code,
+            location: `${user.city_code } : ${user.location}`,
+          }));
         }
         this.commonService.updateLoader(false);
       },
@@ -239,7 +242,11 @@ export class AddLeadComponent implements OnInit, OnChanges {
       .subscribe({
         next: (response) => {
           if (response) {
-            this.leadSources = response.data;
+            this.leadSources = response.data.map((user: any) => ({
+              codeId: user.codeId,
+              codeDesc: `${user.codeId } : ${user.codeDesc}`,
+              codeType:  user.codeType
+            }));
           }
           this.commonService.updateLoader(false);
         },
@@ -288,8 +295,14 @@ export class AddLeadComponent implements OnInit, OnChanges {
     this.externalService.getLocationMaster().subscribe({
       next: (response) => {
         if (response) {
-          this.branches = response.data;
-          this.regions = response.data;
+          this.branches = response.data.map((user: any) => ({
+            locCode: user.locCode,
+            locName: `${user.locCode } : ${user.locName}`,
+          }));
+          this.regions = response.data.map((user: any) => ({
+            locCode: user.locCode,
+            locName: `${user.locCode } : ${user.locName}`,
+          }));
         }
         this.commonService.updateLoader(false);
       },
