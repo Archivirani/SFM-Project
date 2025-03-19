@@ -64,7 +64,7 @@ export class AddTicketComponent {
         subType:ComplaintResponse.subType.toString(),
         complaintDate:ComplaintResponse.compalaintDate?ComplaintResponse.compalaintDate:this.minDate,
         updateDate: new Date(),
-        updateRemarks:ComplaintResponse.updateRemark === '-' ? '':ComplaintResponse.updateRemark,
+        // updateRemarks:ComplaintResponse.updateRemark === '-' ? '':ComplaintResponse.updateRemark,
         assignedToId:ComplaintResponse?.assignToId ,
         remarks:ComplaintResponse.remarks,
         ticketAddressTo:ComplaintResponse.ticketAddressToId,
@@ -320,7 +320,10 @@ export class AddTicketComponent {
     this.complaintService.getTicketAddressTo().subscribe({
       next: (response) => {
         if (response) {
-          this.locations = response.data;
+          this.locations = response.data.map((user: any) => ({
+            locCode: user.locCode,
+            locName: `${user.locCode}: ${user.locName}`,
+          }));
         }
         this.commonService.updateLoader(false);
       },

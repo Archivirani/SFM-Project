@@ -23,7 +23,7 @@
           </div>
           <div>
             <label>Docket No</label>
-            <input type="text" class="form-control mb-3" formControlName="docketNo" (input)="onDocketNoChange($event)" [readonly]="complaint === 'Close' ? true:false">
+            <input type="text" class="form-control mb-3" formControlName="docketNo" (input)="onDocketNoChange($event)" [readonly]="complaint !== 'Add'">
             <div *ngIf="
             ticketForm.controls['docketNo'].invalid &&
             ticketForm.controls['docketNo']?.touched
@@ -170,7 +170,7 @@
   
           <div>
             <label>Description*</label>
-            <textarea rows="1" class="form-control" formControlName="description"></textarea>
+            <textarea rows="1" class="form-control" formControlName="description" [readonly]="complaint !== 'Add'"></textarea>
             <div *ngIf="
             ticketForm.controls['description'].invalid &&
             ticketForm.controls['description']?.touched
@@ -268,7 +268,7 @@
             [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true">
           </ng-select>
             <div *ngIf="ticketForm.controls['assignedToId'].invalid && ticketForm.controls['assignedToId']?.touched " class="text-danger">
-             <small *ngIf="ticketForm.controls['assignedToId'].errors?.['required']">Ticket Address To is required.</small>
+             <small *ngIf="ticketForm.controls['assignedToId'].errors?.['required']">Assigned To is required.</small>
             </div>
           </div>
         </div>
