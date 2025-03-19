@@ -142,7 +142,9 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       longitude: new FormControl(null),
       checkInDateTime:new FormControl(null),
       checkOutDateTime:new FormControl(null),
-      remarks:new FormControl(null)
+      remarks:new FormControl(null),
+      CreateBy:new FormControl(this.identityService.getLoggedUserId()),
+      ModifiedBy:new FormControl(null)
     },
     // { validators: timeRangeValidator  }
   );
@@ -276,9 +278,11 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
         attendeeIDs: form.value.attendeeIDs?.join(','),
         meetingMOM:form.value.meetingMOM?.join(','),
         meetingDate:this.formatDate(form.value.meetingDate),
-        customerCode:form.value.customerCode ? form.value.customerCode : customerCode
+        customerCode:form.value.customerCode ? form.value.customerCode : customerCode,
         // leadId:leadId ?leadId :'',
         // isAllDayEvent:false
+        CreateBy:this.identityService.getLoggedUserId(),
+        ModifiedBy:this.isMeetingList === 'Update' ? this.identityService.getLoggedUserId():''
       };
       !this.meetingId
         ? this.addMeeting(dataToSubmit)
