@@ -65,7 +65,7 @@ export class AddTicketComponent {
         complaintDate:ComplaintResponse.compalaintDate?ComplaintResponse.compalaintDate:this.minDate,
         updateDate: new Date(),
         updateRemarks:ComplaintResponse.updateRemark === '-' ? '':ComplaintResponse.updateRemark,
-        assignedToId:ComplaintResponse?.assignToId ? ComplaintResponse.assignToId.split(',') : [],
+        assignedToId:ComplaintResponse?.assignToId ,
         remarks:ComplaintResponse.remarks,
         ticketAddressTo:ComplaintResponse.ticketAddressToId,
         customerID: ComplaintResponse.customerID
@@ -379,7 +379,7 @@ export class AddTicketComponent {
     if (this.complaint === 'Update') {
       const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,customerEmail,document,documentNo,priority,assignedToId,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
       update.documentNo=this.ticketForm.value.docketNo,
-      update.assignedToId = this.ticketForm.value.assignedToId?.join(','),
+      update.assignedToId = this.ticketForm.value.assignedToId,
       update.CustomerEmail = this.emails.join(';'),
       update.updateDate =  this.datePipe.transform(this.ticketForm.value.updateDate, 'dd/MM/yyyy') || '';  
       update.document = 'docket',
@@ -388,7 +388,7 @@ export class AddTicketComponent {
         const {customerID, closeDate, closeRemark,closureDate,userID,subType,type,docketNo,source,priority,description,customerEmail, closeBy,browse,assignedToId, remarks, complaintId, updateRemarks, updateDate, billingParty, destination, docDate, EDD, managerId, managerName, origin, userName, ...data } = this.ticketForm.value;
         data.DocumentNo = this.ticketForm.value.docketNo,
         data.Document = this.ticketForm.value.browse,
-        data.AssignedTo = this.ticketForm.value.assignedToId?.join(','),
+        data.AssignedTo = this.ticketForm.value.assignedToId,
         data.CustomerEmail = this.emails.join(';'),
         data.Description = this.ticketForm.value.description,
         data.Priority = this.ticketForm.value.priority,
@@ -396,6 +396,7 @@ export class AddTicketComponent {
         data.SubType = this.ticketForm.value.subType,
         data.Type = this.ticketForm.value.type,
         data.UserID = this.ticketForm.value.userID,
+        // data.complaintDate =  this.datePipe.transform(this.ticketForm.value.complaintDate, 'dd/MM/yyyy') || '';  
         this.addTicket(data);
     } else if (this.complaint === 'Close') {
       const close = {

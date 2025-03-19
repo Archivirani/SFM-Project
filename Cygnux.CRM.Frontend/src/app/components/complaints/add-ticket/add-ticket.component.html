@@ -261,9 +261,12 @@
         <div class="col-3 mt-2">
           <div>
             <label class="control-label">Assigned To</label>
-            <ng-select formControlName="assignedToId" [items]="assignToList" bindLabel="userName" bindValue="userId"
+            <!-- <ng-select formControlName="assignedToId" [items]="assignToList" bindLabel="userName" bindValue="userId"
               [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
-            </ng-select>
+            </ng-select> -->
+            <ng-select formControlName="assignedToId" [items]="assignToList" bindLabel="userName" bindValue="userId"
+            [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true">
+          </ng-select>
             <div *ngIf="ticketForm.controls['assignedToId'].invalid && ticketForm.controls['assignedToId']?.touched " class="text-danger">
              <small *ngIf="ticketForm.controls['assignedToId'].errors?.['required']">Ticket Address To is required.</small>
             </div>
