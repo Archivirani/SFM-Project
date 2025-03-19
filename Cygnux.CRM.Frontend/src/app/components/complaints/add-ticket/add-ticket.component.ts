@@ -424,7 +424,7 @@ export class AddTicketComponent {
         if (response.success) {
           this.toasterService.success(response.data.message);
           this.dataEmitter.emit();
-          this.ticketForm.reset();
+          this.onClose();
         } else {
           this.toasterService.error(response.error.message);
         }
@@ -444,7 +444,7 @@ export class AddTicketComponent {
         if (response.success) {
           this.toasterService.success(response.data.message);
           this.dataEmitter.emit();
-          this.ticketForm.reset();
+          this.onClose();
         } else {
           this.toasterService.error(response.error.message);
         }
@@ -466,8 +466,7 @@ export class AddTicketComponent {
           if (response.success) {
             this.toasterService.success(response.data.message);
             this.dataEmitter.emit();
-            this.ticketForm.reset();
-            this.emails = [];
+            this.onClose();
           } else {
             this.toasterService.error(response.error.message);
           }
@@ -490,7 +489,7 @@ export class AddTicketComponent {
         if (response.success) {
           this.toasterService.success(response.data.message);
           this.dataEmitter.emit();
-          this.escalationForm.reset();
+          this.onEscalationClose()
         } else {
           this.toasterService.error(response.error.message);
         }
