@@ -162,12 +162,12 @@
                               <i class="ri-map-pin-user-fill fs-16"></i>
                             </a>
                           </li> -->
-                          <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" [attr.title]="'CheckIn: ' + meeting.checkIn + ' & Checkout: ' + meeting.checkOut">
-                            <a  
-                               class="text-muted d-inline-block">
+                          <li class="list-inline-item edit">
+                            <div [popover]="hourPopover" [popoverContext]="{index: meeting}" triggers="hover" placement="left" [popoverTitle]="'CheckIn/Out Time'"  [outsideClick]="true" container="body">
+                              <a class="text-muted d-inline-block">
                               <i class="ri-map-pin-user-fill fs-16"></i>
                             </a>
+                            </div>
                           </li>
                           <!-- <li
                             class="list-inline-item edit"
@@ -185,10 +185,11 @@
                             </a>
                           </li> -->
 
-                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" [title]="meeting.geoLocation">
+                          <li class="list-inline-item">
+                            <div [popover]="meeting.geoLocation" placement="left" [popoverTitle]="'Location Details'" triggers="hover" [outsideClick]="true" container="body">
                             <a class="edit-item-btn" href="#" (click)="preventClick($event)"><i
                                 class="ri-map-pin-2-fill align-bottom text-muted"></i></a>
+                          </div>
                           </li>
                         </ul>
                       </td>
@@ -295,3 +296,10 @@
     </div>
   </div>
 </div>
+
+<ng-template #hourPopover let-index="index" class="p-1">
+  <div>
+    <div class="mb-1"><strong>CheckIn: </strong> {{ index.checkIn }}</div>
+    <div><strong>Checkout: </strong> {{ index.checkOut }}</div>
+  </div>
+</ng-template>

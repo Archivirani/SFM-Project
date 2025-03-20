@@ -16,6 +16,7 @@ import { ExpenseGeneralMasterListComponent } from './expense-general-master-list
 import { ExpenseGeneralDetailComponent } from './expense-general-detail/expense-general-detail.component';
 import { AddExpenseGeneralMasterComponent } from './add-expense-general-master/add-expense-general-master.component';
 import { ApproveExpenseComponent } from './approve-expense/approve-expense.component';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ApproveExpenseComponent } from './approve-expense/approve-expense.compo
     RouterModule.forChild(ExpenseRoutes),
     NgSelectModule,
     NgbPaginationModule,
-    LayoutModule
+    LayoutModule,
+    PopoverModule
   ],
   exports: [AddExpenseComponent, OnlyNumberDirective],
   providers: [DatePipe],

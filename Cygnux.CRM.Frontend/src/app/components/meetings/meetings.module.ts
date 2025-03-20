@@ -14,6 +14,7 @@ import { LocationSearchComponent } from '../shared/location-search/location-sear
 import { MeetingDetailComponent } from './meeting-detail/meeting-detail.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LayoutModule } from '../layouts/layout.module';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LayoutModule } from '../layouts/layout.module';
     NgbPaginationModule,
     ExpenseModule,
     GoogleMapsModule,
-    LayoutModule
+    LayoutModule,
+    PopoverModule
   ],
   exports: [AddMeetingComponent, OnlyNumberDirective],
   providers: [DatePipe],
