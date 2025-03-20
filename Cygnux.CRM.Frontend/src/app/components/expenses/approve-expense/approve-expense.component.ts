@@ -42,7 +42,8 @@ export class ApproveExpenseComponent {
         distanceInKm:this.expenseResponse.distanceTravelled,
         expenseRate:(Number(this.expenseResponse.amount) || 0) / (Number(this.expenseResponse.distanceTravelled) || 1),
         transportModeId:this.expenseResponse.transportModeId === '0' ? null :this.expenseResponse.transportModeId,
-        auditorRemark:this.expenseResponse.auditRemark
+        auditorRemark:this.expenseResponse.auditRemark,
+        AttendeeCode: this.expenseResponse.attendeeCode
       });
     }else{
       this.approveForm?.reset();
@@ -67,6 +68,7 @@ export class ApproveExpenseComponent {
       checkOutLocation:new FormControl(null),
       expenseId:new FormControl(''),
       meetingId:new FormControl(''),
+      AttendeeCode:new FormControl('')
       // managerRemark:new FormControl('')
     });
   }
@@ -95,6 +97,7 @@ export class ApproveExpenseComponent {
     const data = {
         expenseId: this.approveForm.value.expenseId,
         meetingId: this.approveForm.value.meetingId,
+        attendeeCode: this.approveForm.value.AttendeeCode,
         isApproved: isApproved,
         approvedBy:  this.identifyService.getLoggedUserId(),
         reasonRemark:this.approveForm.value.auditorRemark,

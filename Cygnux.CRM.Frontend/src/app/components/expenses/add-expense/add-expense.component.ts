@@ -78,6 +78,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         expRate: this.expenseResponse.expenseRate,
         Amount: this.expenseResponse.amount,
         remarks: this.expenseResponse.remarks,
+        AttendeeCode: this.expenseResponse.attendeeCode
         // supportingDocument: this.expenseResponse.supportingDocument.replace("https://localhost:44320/", "") 
       });
      this.setFileUrl(this.expenseResponse.supportingDocument);
@@ -121,7 +122,8 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       expRate:new FormControl(),
       expenseCode:new FormControl(),
       SupportingDocument:new FormControl(''),
-      CreatedBy:new FormControl(assignedTo)
+      CreatedBy:new FormControl(assignedTo),
+      AttendeeCode:new FormControl('')
     });
   }
 
@@ -158,6 +160,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
       formData.append("MeetingId", this.expenseResponse?.meetingId ?? '');
       formData.append("Amount", form.value.Amount);
       formData.append("DistanceInKm",form.value.DistanceInKm);
+      formData.append("AttendeeCode",form.value.AttendeeCode)
       formData.append("CreatedBy", this.identityService.getLoggedUserId());
       if (this.selectedFile) {
         formData.append("SupportingDocument",this.selectedFile?.name);

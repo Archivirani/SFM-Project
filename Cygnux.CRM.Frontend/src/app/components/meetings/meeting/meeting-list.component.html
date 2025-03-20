@@ -114,7 +114,7 @@
                   <tbody class="list form-check-all">
                     <tr *ngFor="let meeting of meetings; let i = index">
                       <td class="text-center">
-                        <a *ngIf="!meeting.meetingMOM" href="#" (click)="expenseModal($event, meeting.meetingId)">
+                        <a *ngIf="!meeting.meetingMOM">
                           {{ meeting.customerName ? meeting.customerName:'--'}}</a>
                         <p *ngIf="
                             meeting.meetingMOM  ||
@@ -140,14 +140,14 @@
                       <td class="text-center">
                         <ul class="list-inline hstack gap-2 mb-0">
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Edit" [class.disabled]="meeting.createdBy !== identityService.getLoggedUserId()?true:false">
+                            data-bs-placement="top" title="Edit">
                             <a class="edit-item-btn"
-                            (click)="(meeting.createdBy !== identityService.getLoggedUserId()) ? $event.preventDefault() : editModal($event, meeting.meetingId, meeting.checkOut)"><i
+                            (click)="editModal($event, meeting.attendeeCode, meeting.checkOut)"><i
                                 class="ri-pencil-fill align-bottom text-muted" ></i></a>
                           </li>
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="View">
-                            <a href="#" (click)="viewModal($event, meeting.meetingId)"><i
+                            <a href="#" (click)="viewModal($event, meeting.attendeeCode)"><i
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
                           <!-- <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"

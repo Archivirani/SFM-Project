@@ -47,11 +47,13 @@ import { timeRangeValidator } from '../../../shared/validators/time-range.valida
 export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
   public meetingForm!: FormGroup;
   public meetingId: string = '';
+  public attendeeId :string ='';
   public meetingTypes: GeneralMasterResponse[] = [];
   public users: UserResponse[] = [];
   public customers: LeadCustomerResponse[] = [];
   public leadContacts: LeadContactResponse[] = [];
   public locations: LocationResponse[] = [];
+  meetingRole:boolean = false;
   public meetingMom:MeetingMoMResponse[]=[];
   public isChecked:boolean=false;
   meetingSubscription:Subscription
@@ -87,12 +89,16 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
  
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['meetingResponse'] && this.meetingResponse) {
-      if(this.meetingResponse.attendees){this.meetingResponse.attendeeIDs = this.meetingResponse?.attendees.split(',')}
+      if(this.meetingResponse.attendees){
+        this.meetingResponse.attendeeIDs = this.meetingResponse?.attendees.split(',');
+      }
       this.meetingResponse.meetingMOM=this.meetingResponse.meetingMOM ? this.meetingResponse.meetingMOM.toString().split(','):[];
       this.center.lat = this.meetingResponse.latitude;
       this.center.lng = this.meetingResponse.longitude;
       this.meetingId = this.meetingResponse.meetingId;
+      this.attendeeId = this.meetingResponse.attendeeCode;
       this.meetingForm.patchValue(this.meetingResponse);
+      this.meetingRole = this.meetingResponse.meetingRole === 'A' ? true:false;
       // this.checkOutValue = this.meetingResponse.checkOut;
     } else {
       this.meetingForm.reset();
@@ -315,7 +321,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
 
   updateMeeting(dataToSubmit: any): void {
     this.commonService.updateLoader(true);
-    this.meetingService.updateMeeting(this.meetingId, dataToSubmit).subscribe({
+    this.meetingService.updateMeeting(this.attendeeId, dataToSubmit).subscribe({
       next: (response) => {
         if (response.success) {
           this.dataEmitter.emit();
@@ -359,8 +365,8 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     this.externalService.getUserMaster().subscribe({
       next: (response) => {
         if (response) {
-          const data = response.data.filter((d)=>d.userId.toString() !== this.identityService.getLoggedUserId());
-          this.users = data.map((user: any) => ({
+          // const data = response.data.filter((d)=>d.userId.toString() !== this.identityService.getLoggedUserId());
+          this.users = response.data.map((user: any) => ({
             userId: user.userId,
             name: `${user.userId}: ${user.name}`,
           }));

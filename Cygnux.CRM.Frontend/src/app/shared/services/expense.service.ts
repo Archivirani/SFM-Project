@@ -64,6 +64,10 @@ export class ExpenseService {
     return this.apiHandlerService.Post('expense/' + id, addExpenseRequest);
   }
 
+  exportexport(filters: any): Observable<IApiBaseResponse<any[]>> {
+    return this.apiHandlerService.Get(`Expense/export`,filters);
+  }
+
   deleteExpense(id: string): Observable<IApiBaseResponse<CommonResponse>> {
     return this.apiHandlerService.Patch('expense/' + id, null);
   }

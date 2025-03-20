@@ -59,6 +59,7 @@ export interface ExpenseDetailResponse extends ExpenseResponse {
   approvedByAuditDate:string;
   expensEditDate:string;
   expenseEditedBy:string;
+  attendeeCode:any;
 }
 
 export interface AddExpenseRequest {

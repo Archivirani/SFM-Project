@@ -25,6 +25,8 @@ export interface MeetingResponse {
   companyName?:string;
   customerCode:string;
   createdBy?:string;
+  attendeeCode?:any;
+  meetingRole?:any;
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;

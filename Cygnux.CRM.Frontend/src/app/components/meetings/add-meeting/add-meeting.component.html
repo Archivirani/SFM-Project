@@ -46,7 +46,7 @@
         <div>
           <label class="control-label">Contact Name</label>
           <input class="form-control" maxlength="255" formControlName="contactName" type="text"
-            [readOnly]="checkOutValue !== '-'"  [ngClass]="{ 'border-danger': meetingForm.controls['contactName'].invalid && meetingForm.controls['contactName'].touched}"/>
+            [readOnly]="checkOutValue !== '-' || meetingRole || meetingRole"  [ngClass]="{ 'border-danger': meetingForm.controls['contactName'].invalid && meetingForm.controls['contactName'].touched}"/>
           <div *ngIf="
               meetingForm.controls['contactName'].invalid &&
               meetingForm.controls['contactName']?.touched
@@ -60,7 +60,7 @@
         <div>
           <label class="control-label">Address</label>
           <input class="form-control" maxlength="500" formControlName="address" type="text"
-            [readOnly]="checkOutValue !== '-'" />
+            [readOnly]="checkOutValue !== '-' || meetingRole" />
           <div *ngIf="
               meetingForm.controls['address'].invalid &&
               meetingForm.controls['address']?.touched
@@ -73,7 +73,7 @@
         <div>
           <label class="control-label">Contact No*</label>
           <input class="form-control" maxlength="10" formControlName="contactNo" type="text" appOnlyNumber required
-            [readOnly]="checkOutValue !== '-'"  />
+            [readOnly]="checkOutValue !== '-' || meetingRole"  />
           <div *ngIf="
               meetingForm.controls['contactNo'].invalid &&
               meetingForm.controls['contactNo']?.touched
@@ -88,7 +88,7 @@
         <div>
           <label class="control-label">Email*</label>
           <input class="form-control" maxlength="255" formControlName="email" type="text" required
-            [readOnly]="checkOutValue !== '-'"  />
+            [readOnly]="checkOutValue !== '-' || meetingRole"  />
           <div *ngIf="
               meetingForm.controls['email'].invalid &&
               meetingForm.controls['email']?.touched
@@ -102,7 +102,7 @@
         <div>
           <label class="control-label">Meeting Purpose*</label>
           <input class="form-control" maxlength="500" formControlName="meetingPurpose" type="text" required
-            [readOnly]="checkOutValue !== '-'" />
+            [readOnly]="checkOutValue !== '-' || meetingRole" />
           <div *ngIf="
               meetingForm.controls['meetingPurpose'].invalid &&
               meetingForm.controls['meetingPurpose']?.touched
@@ -125,12 +125,12 @@
                 ngbDatepicker 
                 #d2="ngbDatepicker"  
                 [markDisabled]="isDateDisabled"
-                [readonly]="meetingId !== '' || checkOutValue !== '-'" 
-                [class.disabled]="checkOutValue !== '-'" 
+                [readonly]="meetingId !== '' || checkOutValue !== '-' || meetingRole" 
+                [class.disabled]="checkOutValue !== '-' || meetingRole" 
                 required
                 
               />
-            <button [class.disabled]="checkOutValue !== '-'" class="btn btn-sm btn-outline-secondary ri-calendar-line"
+            <button [class.disabled]="checkOutValue !== '-' || meetingRole" class="btn btn-sm btn-outline-secondary ri-calendar-line"
               (click)="d2.toggle()" type="button"></button>
           </div>
           <!-- <div *ngIf="!checkOutValue"> -->
@@ -146,7 +146,7 @@
       <div class="col-lg-4">
         <div>
           <label for="startTime" class="form-label">Start Time*</label>
-          <input type="time" class="form-control" formControlName="startTime" required [readonly]="checkOutValue !== '-' || isChecked " />
+          <input type="time" class="form-control" formControlName="startTime" required [readonly]="checkOutValue !== '-' || meetingRole || isChecked " />
           @if(this.router.url !== '/my-calendar'){
           <div *ngIf="meetingForm.invalid && meetingForm.touched" class="text-danger">
             <small *ngIf="meetingForm.errors?.['startTimeAfterCurrentTime']">Start time must be after the current time.</small>
@@ -162,7 +162,7 @@
         <div>
           <label for="endTime" class="form-label">End Time*</label>
           <input type="time" class="form-control" id="endTime" formControlName="endTime"
-             required [readonly]="checkOutValue !== '-' || isChecked"
+             required [readonly]="checkOutValue !== '-' || meetingRole || isChecked"
              />
           @if(this.router.url !== '/my-calendar'){
           <div *ngIf="meetingForm.invalid && meetingForm.touched" class="text-danger">
@@ -179,7 +179,7 @@
         <div>
           <label class="control-label">Meeting Type*</label>
           <div>
-            <select id="dropdown" class="form-control" formControlName="meetingTypeId"  [class.disabled]="checkOutValue !== '-'">
+            <select id="dropdown" class="form-control" formControlName="meetingTypeId"  [class.disabled]="checkOutValue !== '-' || meetingRole">
               <option value="" disabled selected>--Select--</option>
               <option *ngFor="let item of meetingTypes" [value]="item.codeId">
                 {{ item.codeDesc }}
@@ -199,7 +199,7 @@
           <label class="control-label">Add Attendees*</label>
           <ng-select [items]="users" bindLabel="name" bindValue="userId" formControlName="attendeeIDs"
             placeholder="Search Attendees" [multiple]="true" [clearable]="true" [searchable]="true"
-            [disabled]="checkOutValue !== '-'?true:false" [readonly]="checkOutValue !== '-'?true:false" 
+            [disabled]="checkOutValue !== '-' || meetingRole?true:false" [readonly]="checkOutValue !== '-' || meetingRole?true:false" 
            >
           </ng-select>
         </div>
@@ -209,13 +209,13 @@
         <div>
           <label class="control-label">Meeting Location*</label>
           <ng-select [items]="locations" bindLabel="locName" bindValue="locCode" formControlName="meetingLocation"
-            placeholder="Search Location" [searchable]="true" [clearable]="true" [disabled]="checkOutValue !== '-'?true:false"
-            [readonly]="checkOutValue !== '-'?true:false" required>
+            placeholder="Search Location" [searchable]="true" [clearable]="true" [disabled]="checkOutValue !== '-' || meetingRole?true:false"
+            [readonly]="checkOutValue !== '-' || meetingRole?true:false" required>
           </ng-select>
 
           &nbsp;
           <div>
-            <app-location-search [class.disabled]="checkOutValue !== '-'" (mapDataEmitter)="onLocationSearch($event)" 
+            <app-location-search [class.disabled]="checkOutValue !== '-' || meetingRole" (mapDataEmitter)="onLocationSearch($event)" 
               [meetingResponse]="this.meetingResponse?.geoLocation"></app-location-search>
           </div>
           
@@ -253,7 +253,7 @@
       <div class="col-lg-4">
         <div class="d-flex">
           <input id="dafault-checkbox" type="checkbox" class="me-3" (change)="onAllDayEventChange($event)"
-            formControlName="isAllDayEvent" [class.disabled]="checkOutValue !== '-'" />
+            formControlName="isAllDayEvent" [class.disabled]="checkOutValue !== '-' || meetingRole" />
           <label class="mb-0" for="dafault-checkbox">All Day Event</label>
         </div>
       </div>
