@@ -53,8 +53,8 @@ export class MyCalendarComponent implements OnInit {
         positionClass: 'toast-top-center'
       });
     }
-    if (info.event.extendedProps.meetingId && info.event.extendedProps.isAllDayEvent===false) {
-      this.editMeetingModal(info.event.extendedProps.meetingId);
+    if (info.event.extendedProps.attendeeCode && info.event.extendedProps.isAllDayEvent===false) {
+      this.editMeetingModal(info.event.extendedProps.attendeeCode);
     }
     if (info.event.extendedProps.callId) {
       this.editCallModal(info.event.extendedProps.callId);
