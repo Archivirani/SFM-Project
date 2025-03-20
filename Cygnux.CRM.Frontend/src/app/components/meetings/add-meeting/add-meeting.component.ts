@@ -359,7 +359,8 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     this.externalService.getUserMaster().subscribe({
       next: (response) => {
         if (response) {
-          this.users = response.data.map((user: any) => ({
+          const data = response.data.filter((d)=>d.userId.toString() !== this.identityService.getLoggedUserId());
+          this.users = data.map((user: any) => ({
             userId: user.userId,
             name: `${user.userId}: ${user.name}`,
           }));
