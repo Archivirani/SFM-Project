@@ -7,8 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { GeneralMasterResponse } from '../../../shared/models/external.model';
 import { ExpenseService } from '../../../shared/services/expense.service';
 import { IdentityService } from '../../../shared/services/identity.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Modal } from 'bootstrap';
+import { ExpenseGeneralService } from '../../../shared/services/expense-general.service';
+import { GeneralMasterResponseList } from '../../../shared/models/expenseGeneral.model';
 
 
 @Component({
@@ -21,15 +22,16 @@ export class ApproveExpenseComponent {
   approveForm!:FormGroup;
   @Input() expenseResponse:ExpenseDetailResponse | null = null;
   public transportModes: GeneralMasterResponse[] = []
-  constructor(private commonService: CommonService,private externalService: ExternalService,private toasterService: ToastrService,private expenseService:ExpenseService,public identifyService :IdentityService){}
+  constructor(private commonService: CommonService,private externalService: ExternalService,private expenseGeneralService:ExpenseGeneralService,private toasterService: ToastrService,private expenseService:ExpenseService,public identifyService :IdentityService){}
   @Output() onClose = new EventEmitter<ExpenseResponse>();
   typeEvent:string='';
   public isDefaultComment!: string;
   @ViewChild('remarksInput') remarksInput!: NgModel; // Access the ngModel directive
-
+  public getGeneralmaster:GeneralMasterResponseList[] = [];
   ngOnInit(){
     this.buildForm();
     this.getTransportModes(); 
+    this.getGeneralmasterList();
   }
 
   ngOnChanges(changes: any): void {
@@ -45,9 +47,42 @@ export class ApproveExpenseComponent {
         auditorRemark:this.expenseResponse.auditRemark,
         AttendeeCode: this.expenseResponse.attendeeCode
       });
+      this.OntransportModeChange(this.expenseResponse.transportModeId);
     }else{
       this.approveForm?.reset();
     }
+  }
+
+  OntransportModeChange(data:any){
+    let storedUser = localStorage.getItem('loginUser');
+    let parsedUser = JSON.parse(storedUser || '');
+    const ratePerKM = this.getGeneralmaster.find((d)=>d.designationId.toString() === parsedUser.designationId && d.transportModeId.toString() === data);
+    const expRate = ratePerKM?.ratePerKM ?? 0;
+    const amount = expRate * (this.approveForm.value.distanceInKm || 0);
+    this.approveForm.patchValue({
+      expenseRate:ratePerKM?.ratePerKM || 0,
+      amount:amount
+    });
+  }
+
+  getGeneralmasterList(){
+    const filters: any = {
+      Page: 1,
+      PageSize: 5000,
+      export:false
+    };
+   this.expenseGeneralService.getGeneralmasterList(filters).subscribe({
+    next: (response) => {
+      if (response) {
+              this.getGeneralmaster = response.data;
+            }
+            this.commonService.updateLoader(false);
+          },
+          error: (response: any) => {
+            this.toasterService.error(response);
+            this.commonService.updateLoader(false);
+          },
+   })
   }
 
   buildForm(){
