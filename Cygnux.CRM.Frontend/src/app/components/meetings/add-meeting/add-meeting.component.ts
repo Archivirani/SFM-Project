@@ -98,6 +98,9 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       this.meetingId = this.meetingResponse.meetingId;
       this.attendeeId = this.meetingResponse.attendeeCode;
       this.meetingForm.patchValue(this.meetingResponse);
+      this.meetingForm.patchValue({
+        meetingTypeId:this.meetingResponse.meetingTypeId.toString()
+      })
       this.meetingRole = this.meetingResponse.meetingRole === 'A' ? true:false;
       // this.checkOutValue = this.meetingResponse.checkOut;
     } else {

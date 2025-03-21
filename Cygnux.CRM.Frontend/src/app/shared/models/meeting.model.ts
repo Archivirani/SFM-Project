@@ -27,6 +27,7 @@ export interface MeetingResponse {
   createdBy?:string;
   attendeeCode?:any;
   meetingRole?:any;
+  meetingTypeId?:any;
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;

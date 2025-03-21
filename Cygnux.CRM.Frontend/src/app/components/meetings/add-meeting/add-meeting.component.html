@@ -179,12 +179,15 @@
         <div>
           <label class="control-label">Meeting Type*</label>
           <div>
-            <select id="dropdown" class="form-control" formControlName="meetingTypeId"  [class.disabled]="checkOutValue !== '-' || meetingRole">
+            <!-- <select id="dropdown" class="form-control" formControlName="meetingTypeId"  [class.disabled]="checkOutValue !== '-' || meetingRole">
               <option value="" disabled selected>--Select--</option>
               <option *ngFor="let item of meetingTypes" [value]="item.codeId">
                 {{ item.codeDesc }}
               </option>
-            </select>
+            </select> -->
+            <ng-select [items]="meetingTypes" bindLabel="codeDesc" bindValue="codeId" formControlName="meetingTypeId"
+            placeholder="Search Meeting Type" [searchable]="true" [clearable]="true"  [class.disabled]="checkOutValue !== '-' || meetingRole" required>
+          </ng-select>
           </div>
           <div *ngIf="
               meetingForm.controls['meetingTypeId'].invalid &&

@@ -121,10 +121,10 @@
             type="submit"
             class="btn btn-success"
             id="add-btn"
-           (click)="onReject('Approve')" [disabled]="(expenseResponse?.isEdit==='Y')">
+           (click)="onReject('Approve')" [disabled]="(expenseResponse?.isEdit === 'Y')">
             Approve
         </button>
-        <button type="button" class="btn btn-danger" (click)="onReject('Reject')" [disabled]="(expenseResponse?.isEdit==='Y')">
+        <button type="button" class="btn btn-danger" (click)="onReject('Reject')" [disabled]="(expenseResponse?.isEdit === 'Y')">
             Reject
         </button>
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onCloseEvent()">
@@ -141,10 +141,11 @@
      <div class="p-3 pt-2">
       <div>
         <label>Remarks</label>
-        <textarea type="text" [(ngModel)]="isDefaultComment" class="w-100 form-control" #remarksInput="ngModel" required>
+        <textarea type="text" [(ngModel)]="isDefaultComment" class="w-100 form-control" #remarksInput="ngModel"  minlength="5" required>
           </textarea>
         <div *ngIf="remarksInput.invalid && remarksInput.touched" class="text-danger">
-          <small>Remarks are required.</small>
+          <small *ngIf="remarksInput.errors?.['required']">Remarks are required.</small>
+          <small *ngIf="remarksInput.errors?.['minlength']">Remarks must be at least 5 characters long.</small>
         </div>
       </div>
       <div class="button-group gap-2  d-flex justify-content-end p-3">
