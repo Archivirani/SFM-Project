@@ -268,7 +268,7 @@
             [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true">
           </ng-select>
             <div *ngIf="ticketForm.controls['assignedToId'].invalid && ticketForm.controls['assignedToId']?.touched " class="text-danger">
-             <small *ngIf="ticketForm.controls['assignedToId'].errors?.['required']">Assigned To is required.</small>
+             <small *ngIf="ticketForm.controls['assignedToId'].errors?.['required']">There is no data against this branch code.</small>
             </div>
           </div>
         </div>

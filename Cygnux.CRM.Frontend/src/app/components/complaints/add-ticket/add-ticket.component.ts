@@ -50,7 +50,8 @@ export class AddTicketComponent {
       this.onDocketNo(ComplaintResponse.documentNo);
     }
     let customerEmail = ComplaintResponse.customerEmail ? ComplaintResponse.customerEmail.split(';').map((email: string) => email.trim()) : [];
-    this.getTicketSubTypes(ComplaintResponse.type)
+    this.getTicketSubTypes(ComplaintResponse.type);
+    this.getAssignTo(ComplaintResponse?.ticketAddressToId)
       this.ticketForm.patchValue({
         userID:ComplaintResponse.userID,
         docketNo:ComplaintResponse.documentNo,
@@ -335,6 +336,9 @@ export class AddTicketComponent {
   }
 
   getAssignTo(locCode:string) {
+    this.ticketForm.patchValue({
+      assignedToId:null
+    })
     this.commonService.updateLoader(true);
     this.complaintService.getAssignTo(locCode).subscribe({
       next: (response) => {
