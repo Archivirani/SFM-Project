@@ -96,7 +96,7 @@
             <label>Ticket Address To</label>
             <!-- <input type="text" class="form-control" formControlName="ticketAddressTo" readonly> -->
             <ng-select [items]="locations" bindLabel="locName" bindValue="locCode" formControlName="ticketAddressTo"
-            placeholder="Search Ticket Address To" [searchable]="true" [clearable]="true">
+            placeholder="Search Ticket Address To" [searchable]="true" [clearable]="true" (change)="getAssignTo($event.locCode)">
           </ng-select>
           <div *ngIf="
           ticketForm.controls['ticketAddressTo'].invalid &&

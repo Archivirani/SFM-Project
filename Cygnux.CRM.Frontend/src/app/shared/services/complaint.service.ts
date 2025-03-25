@@ -106,8 +106,8 @@ export class ComplaintService {
         return this.apiHandlerService.Get('Dashboard/ComplaintByStatus', filters);
       }
 
-      getAssignTo():Observable<IApiBaseResponse<any>>{
-        return this.apiHandlerService.Get('Complaint/AssignTo');
+      getAssignTo(locCode:string):Observable<IApiBaseResponse<any>>{
+        return this.apiHandlerService.Get(`Complaint/AssignTo?BranchCode=${locCode}`);
       }
 
       getupdateHistory(Id:string):Observable<IApiBaseResponse<UpdateHistory>>{

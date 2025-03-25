@@ -1,5 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ApiHandlerService } from './api-handler.service';
+import { IApiBaseResponse } from '../interfaces/api-base-action-response';
+import { IdentityService } from './identity.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,6 +14,9 @@ export class CommonService {
   updateLoader(isLoading: boolean) {
     this.loading.next(isLoading);
   }
+    constructor(
+      @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService,public identifyService :IdentityService
+    ) {}
 
   isDateDisabled = (date: { year: number; month: number; day: number }) => {
     const today = new Date();
@@ -56,6 +62,10 @@ export class CommonService {
       label: 'Last Month',
     },
   ];
+
+  getMenu(): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Get(`External/Menu?userid=${this.identifyService.getLoggedUserId()}`);
+  }
 }
 
 interface IRange {

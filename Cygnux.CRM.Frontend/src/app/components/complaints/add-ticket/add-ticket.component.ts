@@ -107,7 +107,7 @@ export class AddTicketComponent {
     this.getUsers();
     this.createEscalationForm();
     this.getLocations();
-    this.getAssignTo();
+    // this.getAssignTo();
   }
 
   onClose(){
@@ -334,9 +334,9 @@ export class AddTicketComponent {
     });
   }
 
-  getAssignTo() {
+  getAssignTo(locCode:string) {
     this.commonService.updateLoader(true);
-    this.complaintService.getAssignTo().subscribe({
+    this.complaintService.getAssignTo(locCode).subscribe({
       next: (response) => {
         if (response) {
           // this.assignToList = response.data;
