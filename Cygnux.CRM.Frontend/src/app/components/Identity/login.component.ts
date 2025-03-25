@@ -103,6 +103,7 @@ export class LoginComponent implements OnInit {
           this.toasterService.success('Login Successfully.');
           this.identityService.setToken(response.data.token);
           this.identityService.setBranchCode(response.data.branchCode);
+          this.commonService.getMenuList(); 
           this.identityService.setLocation(response.data.multiLocation);
           this.identityService.setBranchName(response.data.branchName);
           this.identityService.setDesignation(response.data.designation);
@@ -111,7 +112,7 @@ export class LoginComponent implements OnInit {
           this.identityService.setRegionCode(response.data.reportingLoc);
           localStorage.setItem('loginUser', JSON.stringify(response.data));
           this.router.navigateByUrl('/customer');
-          this.identityService.setUserType()
+          this.identityService.setUserType()   
         } else {
           this.toasterService.error(response.errorMessage);
           this.commonService.updateLoader(false);

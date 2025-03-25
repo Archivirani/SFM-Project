@@ -7,6 +7,7 @@ import { IdentityService } from './identity.service';
   providedIn: 'root',
 })
 export class CommonService {
+  isSFMMaster = new Subject<any>();
   loading = new BehaviorSubject(false);
   isLoading = this.loading.asObservable();
   public userChart = new Subject<boolean>()
@@ -66,6 +67,14 @@ export class CommonService {
   getMenu(): Observable<IApiBaseResponse<any>> {
     return this.apiHandlerService.Get(`External/Menu?userid=${this.identifyService.getLoggedUserId()}`);
   }
+
+  getMenuList(){
+    this.getMenu().subscribe((res)=>{
+      localStorage.setItem('ISSFMMASTER', JSON.stringify(res.data[0]));
+      this.isSFMMaster.next(res.data[0])
+    })
+  }
+
 }
 
 interface IRange {
