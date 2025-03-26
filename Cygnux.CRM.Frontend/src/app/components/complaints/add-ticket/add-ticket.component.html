@@ -402,7 +402,7 @@
         <label>Assigned To</label>
         <!-- <input type="text" class="form-control mb-3" formControlName="assigned" [multiple]="true" readonly> -->
         <ng-select formControlName="assigned" [items]="assignToList" bindLabel="userName" bindValue="userId"
-        [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" [multiple]="true">
+        [placeholder]="'Search Assigned To'" [clearable]="true" [searchable]="true" readonly="true">
       </ng-select>
         <div *ngIf="
           escalationForm.controls['assigned'].invalid &&

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { CommonService } from '../../../shared/services/common.service';
@@ -7,11 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { GeneralMasterResponse } from '../../../shared/models/external.model';
 import { ComplaintService } from '../../../shared/services/complaint.service';
 import { AssignToList, ComplaintGetUser, ComplaintResponse, TicketAddressToResponse } from '../../../shared/models/complaint.model';
-import { LocationResponse, UserResponse } from '../../../shared/models/meeting.model';
-import { EmailRegex, MultipleEmailRegex } from '../../../shared/constants/common';
+import { UserResponse } from '../../../shared/models/meeting.model';
+import { MultipleEmailRegex } from '../../../shared/constants/common';
 import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-ticket',
@@ -50,8 +49,8 @@ export class AddTicketComponent {
       this.onDocketNo(ComplaintResponse.documentNo);
     }
     let customerEmail = ComplaintResponse.customerEmail ? ComplaintResponse.customerEmail.split(';').map((email: string) => email.trim()) : [];
+    if(this.complaint !== 'Escalation'){this.getAssignTo(ComplaintResponse?.ticketAddressToId)}else{this.getAssignTo('')}
     this.getTicketSubTypes(ComplaintResponse.type);
-    this.getAssignTo(ComplaintResponse?.ticketAddressToId)
       this.ticketForm.patchValue({
         userID:ComplaintResponse.userID,
         docketNo:ComplaintResponse.documentNo,
@@ -175,7 +174,7 @@ export class AddTicketComponent {
       docketNo: new FormControl(data?.documentNo),
       type: new FormControl(data?.type.toString()),
       description: new FormControl(data?.description),
-      assigned: new FormControl(data?.assignToId ? data.assignToId.split(',') : []),
+      assigned: new FormControl(data?.assignToId),
       status: new FormControl(data?.compaintStatus),
       priority: new FormControl(data?.priority.toString()),
       escalatedTo: new FormControl(data?.escalationTo ? data.escalationTo.split(',') : [], [Validators.required]),
