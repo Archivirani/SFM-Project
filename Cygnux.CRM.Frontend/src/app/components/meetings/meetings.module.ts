@@ -15,6 +15,7 @@ import { MeetingDetailComponent } from './meeting-detail/meeting-detail.componen
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LayoutModule } from '../layouts/layout.module';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     ExpenseModule,
     GoogleMapsModule,
     LayoutModule,
-    PopoverModule
+    PopoverModule,
+    BsDatepickerModule.forRoot(),
   ],
   exports: [AddMeetingComponent, OnlyNumberDirective],
   providers: [DatePipe],

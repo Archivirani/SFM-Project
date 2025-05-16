@@ -15,7 +15,6 @@ import { CommonService } from '../../../shared/services/common.service';
 import {
   EmailRegex,
   MobileRegex,
-  todayDate,
 } from '../../../shared/constants/common';
 import { ToastrService } from 'ngx-toastr';
 import {
@@ -36,7 +35,6 @@ import { CalendarResponse } from '../../../shared/models/calendar.model';
 import {Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IdentityService } from '../../../shared/services/identity.service';
-import { timeRangeValidator } from '../../../shared/validators/time-range.validatior';
 
 @Component({
   selector: 'app-add-meeting',

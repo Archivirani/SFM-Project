@@ -32,10 +32,11 @@ export class MeetingListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
 
   @Output() edit = new EventEmitter<MeetingResponse>();
-
+  dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
   constructor(
     private meetingService: MeetingService,
-    private commonService: CommonService,
+    public commonService: CommonService,
     private toasterService: ToastrService,
     public exportService: ExportService,
     public confirmationService: ConfirmationService,
@@ -192,7 +193,8 @@ onCheckOut(meeting: any, i: number): void {
   preventClick(event: Event): void {
     event.preventDefault();
   }
-  getMeetings(page: number = 1) {
+  getMeetings(event?:any,page: number = 1) {
+    debugger
     this.commonService.updateLoader(true);
     this.filters = Object.fromEntries(
       Object.entries(this.filters).filter(([key, value]) => value !== null)
@@ -202,6 +204,8 @@ onCheckOut(meeting: any, i: number): void {
       userid:this.identityService.getLoggedUserId(),
       Page: page,
       PageSize: this.pageSize,
+      startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
+      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     };
     this.meetingService.getMeetingList(filters).subscribe({
       next: (response) => {
@@ -365,6 +369,6 @@ onCheckOut(meeting: any, i: number): void {
   }
   onPageChange(page: number) {
     this.page = page;
-    this.getMeetings(this.page);
+    this.getMeetings(this.dateRange,this.page);
   }
 }

@@ -12,6 +12,22 @@
       </button>
     </div> -->
     <!-- <app-card-list [cardList]="cardList"></app-card-list> -->
+
+    <div class="row mb-3 d-flex">
+      <div class="col-1">
+          <label class="col-form-label">Date Range</label>   
+      </div>
+      <div class="col-5">
+          <div class="form-group mb-3">
+               <input type="text"
+                     placeholder="Daterangepicker"
+                     class="form-control"
+                     bsDaterangepicker  [(ngModel)]="dateRange" (bsValueChange)="getMeetings($event)"
+                     [bsConfig]="{rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
+                     'DD.MM.YYYY',ranges: commonService.ranges }">
+            </div>   
+      </div>
+    </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
