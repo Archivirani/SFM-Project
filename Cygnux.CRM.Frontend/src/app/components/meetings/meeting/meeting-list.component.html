@@ -157,8 +157,8 @@
                         <ul class="list-inline hstack gap-2 mb-0">
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="Edit">
-                            <a class="edit-item-btn"
-                            (click)="editModal($event, meeting.attendeeCode, meeting.checkOut)"><i
+                            <a class="edit-item-btn" [ngClass]="{'disabled-image': meeting.isExpired}"
+                            (click)="meeting.isExpired ? null : editModal($event, meeting.attendeeCode, meeting.checkOut)"><i
                                 class="ri-pencil-fill align-bottom text-muted" ></i></a>
                           </li>
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"

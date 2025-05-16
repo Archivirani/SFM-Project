@@ -194,7 +194,6 @@ onCheckOut(meeting: any, i: number): void {
     event.preventDefault();
   }
   getMeetings(event?:any,page: number = 1) {
-    debugger
     this.commonService.updateLoader(true);
     this.filters = Object.fromEntries(
       Object.entries(this.filters).filter(([key, value]) => value !== null)
@@ -204,8 +203,8 @@ onCheckOut(meeting: any, i: number): void {
       userid:this.identityService.getLoggedUserId(),
       Page: page,
       PageSize: this.pageSize,
-      startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
-      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
+      startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : '',
+      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : ''
     };
     this.meetingService.getMeetingList(filters).subscribe({
       next: (response) => {

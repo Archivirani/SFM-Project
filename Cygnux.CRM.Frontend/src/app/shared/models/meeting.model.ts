@@ -28,6 +28,7 @@ export interface MeetingResponse {
   attendeeCode?:any;
   meetingRole?:any;
   meetingTypeId?:any;
+  isExpired?:boolean;
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;
