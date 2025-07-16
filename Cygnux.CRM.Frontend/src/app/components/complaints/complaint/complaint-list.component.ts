@@ -13,6 +13,7 @@ import { finalize, take } from 'rxjs';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
 import { IdentityService } from '../../../shared/services/identity.service';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-complaint',
   standalone: false,
@@ -293,4 +294,11 @@ private getComplaints(page: number = 1) {
     this.page = page;
     this.getComplaints(this.page);
   }
+
+    downloadSampleImport(event: any) {
+      event.preventDefault();
+      let path =
+        environment.apiUrl.replace('/api/v1', '') + 'Uploads/Complaint_Import.xlsx';
+      window.open(path, '_blank');
+    }
 }

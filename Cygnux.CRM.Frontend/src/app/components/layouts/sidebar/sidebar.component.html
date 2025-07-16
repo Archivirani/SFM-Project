@@ -34,31 +34,31 @@
       <div id="two-column-menu"></div>
       <ul class="navbar-nav" id="navbar-nav">
         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./customer">
             <i class="ri-user-2-line"></i>
             <span data-key="t-customers">Customer</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./lead">
             <i class="ri-rocket-line"></i>
             <span data-key="t-lead">Lead</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./meeting/list">
             <i class="ri-map-pin-line"></i>
             <span data-key="t-calendar">Meeting</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./call/lists">
             <i class="ri-phone-line"></i>
             <span data-key="t-call">Call</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./expense/lists">
             <i class="ri-compasses-line"></i>
             <span data-key="t-expense">Expense</span>
@@ -70,7 +70,7 @@
             <span data-key="t-expense">Expense General Master</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a
             class="nav-link menu-link"
           
@@ -80,27 +80,27 @@
             <span data-key="t-expense">Expense Approval</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.COMPLAINT_MGNT==='Y'">
           <a class="nav-link menu-link" routerLink="./complaint/list">
             <i class="ri-stack-line"></i>
             <span data-key="t-complaint">Complaint</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./task">
             <i class="ri-pages-line"></i>
             <span data-key="t-notes">Task</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./my-calendar">
             <i class="ri-calendar-2-line"></i>
             <span data-key="t-calendar">My Calendar</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="isSFMMasters?.SFM==='Y'">
           <a class="nav-link menu-link" routerLink="./attendance">
-            <i class="ri-calendar-2-line"></i>
+            <i class="ri-calendar-check-line"></i>
             <span data-key="t-calendar">Attendance</span>
           </a>
         </li>

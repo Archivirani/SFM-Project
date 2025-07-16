@@ -36,6 +36,7 @@ export class ApproveExpenseComponent {
 
   ngOnChanges(changes: any): void {
     if (changes['expenseResponse'] && this.expenseResponse) {
+      this.OntransportModeChange(this.expenseResponse.transportModeId);
       this.approveForm.patchValue(this.expenseResponse);
       this.approveForm.patchValue({
         checkOutLocation:this.expenseResponse.checkedInLocation,
@@ -47,7 +48,6 @@ export class ApproveExpenseComponent {
         auditorRemark:this.expenseResponse.auditRemark,
         AttendeeCode: this.expenseResponse.attendeeCode
       });
-      this.OntransportModeChange(this.expenseResponse.transportModeId);
     }else{
       this.approveForm?.reset();
     }
