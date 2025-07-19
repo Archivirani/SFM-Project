@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
           this.identityService.setRegionCode(response.data.reportingLoc);
           localStorage.setItem('loginUser', JSON.stringify(response.data));
           this.commonService.getMenuList(); 
-          this.router.navigateByUrl('/customer');
+          this.router.navigateByUrl('/welcome');
           this.identityService.setUserType()   
         } else {
           this.toasterService.error(response.errorMessage);

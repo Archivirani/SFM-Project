@@ -16,8 +16,16 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/customer',
+        redirectTo: '/welcome',
         pathMatch: 'full',
+      },
+      {
+        path: 'welcome',
+        loadChildren: () =>
+          import('./components/welcome/welcome.modules').then(
+            (m) => m.WelcomeModule
+          ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'customer',
