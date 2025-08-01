@@ -7,7 +7,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Modal } from 'bootstrap';
 import { LeadService } from '../../../shared/services/lead.service';
-import { AddMeetingResponse} from '../../../shared/models/meeting.model';
+import { AddMeetingResponse } from '../../../shared/models/meeting.model';
 import { ExportService } from '../../../shared/services/export.service';
 import { environment } from '../../../../environments/environment';
 import { ImportService } from '../../../shared/services/import.service';
@@ -15,13 +15,16 @@ import { Subscription } from 'rxjs';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 @Component({
   selector: 'app-lead',
   standalone: false,
   templateUrl: './lead-list.component.html',
   styleUrls: ['./lead-list.component.scss'],
 })
-export class LeadListComponent implements OnDestroy{
+export class LeadListComponent implements OnDestroy {
   public leads: LeadResponse[] = [];
   selectedLead: LeadDetailResponse | null = null;
   leadId: string = '';
@@ -31,33 +34,34 @@ export class LeadListComponent implements OnDestroy{
   totalItems = 0; // Total number of items
   fileError: string | null = null; // For error handling
   filters: { [key: string]: string } = {}; // Dynamic filter object
-  cardList:string = 'Leads';
+  cardList: string = 'Leads';
   isReadonly = false;
   typeSubjectSubscription!: Subscription;
   selectedCustomerName: LeadDetailResponse | null = null;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-    new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
-  checkOutValue:string='';
+  new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
+  checkOutValue: string = '';
+  selectedFile: File | null = null;
 
   constructor(
     private leadService: LeadService,
     public commonService: CommonService,
     private toasterService: ToastrService,
     private exportService: ExportService,
-    public importService:ImportService,
-    private identityService:IdentityService
+    public importService: ImportService,
+    private identityService: IdentityService
   ) {
     defineElement(lottie.loadAnimation);
-    if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe();}
-    this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
-      if(res){
+    if (this.typeSubjectSubscription) { this.typeSubjectSubscription.unsubscribe(); }
+    this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res) => {
+      if (res) {
         this.getLeads();
       }
     });
   }
-  
 
-  getLeads(event?:any,page: number = 1) {
+
+  getLeads(event?: any, page: number = 1) {
     this.commonService.updateLoader(true);
     this.filters = Object.fromEntries(
       Object.entries(this.filters).filter(([key, value]) => value !== null)
@@ -66,9 +70,9 @@ export class LeadListComponent implements OnDestroy{
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
-      UserID:this.identityService.getLoggedUserId(),
+      UserID: this.identityService.getLoggedUserId(),
       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
-      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
+      endDate: event?.[1] ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     };
     this.leadService.getLeadList(filters).subscribe({
       next: (response) => {
@@ -85,7 +89,7 @@ export class LeadListComponent implements OnDestroy{
     });
   }
 
-  callModal(event: Event, leadData:any) {
+  callModal(event: Event, leadData: any) {
     event.preventDefault(); // Prevent default anchor behavior
     const modalElement = document.getElementById('showModalCall');
     if (modalElement) {
@@ -117,15 +121,29 @@ export class LeadListComponent implements OnDestroy{
 
   downloadSampleImport(event: any) {
     event.preventDefault();
-    let path =
-      environment.apiUrl.replace('/api/v1', '') + 'Uploads/Lead_Import.xlsx';
-    window.open(path, '_blank');
+    this.leadService.downloadSampleLeadUpload(this.identityService.getLoggedUserId()).subscribe({
+      next: (response: Blob) => {
+        const blob = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        });
+        const url = window.URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = 'LeadImport.xlsx';
+        anchor.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+        this.commonService.updateLoader(false);
+      },
+    });
   }
-  
+
   exportLeads(event: any) {
     const filters: any = {
       ...this.filters,
-      UserID:this.identityService.getLoggedUserId(),
+      UserID: this.identityService.getLoggedUserId(),
     };
     event.preventDefault();
     this.commonService.updateLoader(true);
@@ -146,7 +164,7 @@ export class LeadListComponent implements OnDestroy{
   exportCSVLeads(event: any) {
     const filters: any = {
       ...this.filters,
-      UserID:this.identityService.getLoggedUserId(),
+      UserID: this.identityService.getLoggedUserId(),
     };
     event.preventDefault();
     this.commonService.updateLoader(true);
@@ -198,7 +216,7 @@ export class LeadListComponent implements OnDestroy{
   }
   getLead(leadCode: string) {
     this.commonService.updateLoader(true);
-    this.leadService.getLeadDetails(leadCode,this.identityService.getLoggedUserId()).subscribe({
+    this.leadService.getLeadDetails(leadCode, this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedLead = response.data;
@@ -244,9 +262,9 @@ export class LeadListComponent implements OnDestroy{
         email: lead.email,
         address: lead.address,
         contactNo: lead.contactNo,
-        leadDate:lead.leadDate
+        leadDate: lead.leadDate
       };
-      this.checkOutValue='-';
+      this.checkOutValue = '-';
       modal.show();
     }
   }
@@ -274,9 +292,135 @@ export class LeadListComponent implements OnDestroy{
   }
   onPageChange(page: number) {
     this.page = page;
-    this.getLeads(this.dateRange,this.page);
+    this.getLeads(this.dateRange, this.page);
+  }
+
+  // saveImportData(){
+  //   const formData = new FormData();
+  //   formData.append('file', this.selectedFile);
+  //   this.leadService.importLead(this.identityService.getLoggedUserId(), formData).subscribe({
+  //     next: (response) => {
+  //       if (response && response.data) {
+  //         this.validateData = response.data;
+  //         const invalidData = this.validateData
+  //           .filter(item => item.errorCode)
+  //           .map(({ customer, ...rest }) => rest);
+
+  //         // if (invalidData.length > 0) {
+  //         //   this.docketService.importInvalidFile(invalidData, 'DocketUpload');
+  //         // }
+  //       }
+  //     },
+  //     error: (response: any) => {
+  //       this.toasterService.error(response.error.Message);
+  //     },
+  //   });
+  // }
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+
+
+    if (file) {
+      const validExcelTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // XLSX
+        'application/vnd.ms-excel', // XLS
+        'text/csv', // CSV
+        'application/vnd.ms-excel.sheet.binary.macroEnabled.12', // XLSB
+        'application/vnd.ms-excel.sheet.macroEnabled.12', // XLSM
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.template', // XLTX
+        'application/vnd.ms-excel.template.macroEnabled.12', // XLTM
+      ];
+      if (validExcelTypes.includes(file.type)) {
+        this.selectedFile = file;
+        const formData = new FormData();
+        formData.append('file', file);
+        this.importLead(formData);
+      } else {
+        this.toasterService.error(
+          'Please upload a valid excel file (XLSX, XLS, or CSV).'
+        );
+        this.selectedFile = null;
+      }
+    }
+  }
+  // importLead(dataToSubmit: any): void {
+
+  //   this.leadService.importLead(this.identityService.getLoggedUserId(),dataToSubmit).subscribe({
+  //     next: (response) => {
+  //       if (response.success) {
+  //         if(response.data[0].Message){
+  //         this.toasterService.success(response.data[0].Message);
+  //         }else{
+  //         this.toasterService.success('Lead Created Successfully');
+  //         }
+  //       } else {
+  //         this.toasterService.error(response.error?.message || 'Import failed.');
+  //       }
+  //       this.commonService.updateLoader(false);
+  //     },
+  //     error: (error: any) => {
+  //       this.toasterService.error(error.message || 'An error occurred during import.');
+  //       this.commonService.updateLoader(false);
+  //     },
+  //   });
+  // }
+  importLead(dataToSubmit: any): void {
+    this.commonService.updateLoader(true);
+
+    this.leadService.importLead(this.identityService.getLoggedUserId(), dataToSubmit).subscribe({
+      next: (response) => {
+        this.commonService.updateLoader(false);
+
+        if (response.success) {
+          const invalidLeads = response.data.filter((lead: any) => lead.IsValid===false);
+
+          if (invalidLeads.length > 0) {
+            this.toasterService.error(`Import completed with ${invalidLeads.length} invalid record(s). Downloading error file...`);
+            this.getLeads();
+            this.downloadInvalidLeadsExcel(invalidLeads);
+          } else {
+            this.toasterService.success(response.data[0]?.Message || 'Lead(s) Created Successfully');
+            this.getLeads();
+          }
+        } else {
+          this.toasterService.error(response.error?.message || 'Import failed.');
+        }
+      },
+      error: (error: any) => {
+        this.toasterService.error(error.message || 'An error occurred during import.');
+        this.commonService.updateLoader(false);
+      },
+    });
+  }
+  downloadInvalidLeadsExcel(invalidLeads: any[]): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(invalidLeads, {
+      skipHeader: false,
+    });
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'Invalid Leads': worksheet },
+      SheetNames: ['Invalid Leads'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    const blob: Blob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    FileSaver.saveAs(blob, `Invalid_Leads_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  }
+
+  triggerFileInput(event: Event, disappointed: void) {
+    event.preventDefault();
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
   }
   ngOnDestroy(): void {
-    if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe()}
+    if (this.typeSubjectSubscription) { this.typeSubjectSubscription.unsubscribe() }
   }
 }

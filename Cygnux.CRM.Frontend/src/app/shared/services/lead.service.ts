@@ -56,9 +56,9 @@ export class LeadService {
     return this.apiHandlerService.Post('lead', addLeadRequest);
   }
 
-  importLead(formData: any): Observable<IApiBaseResponse<CommonResponse>> {
-    return this.apiHandlerService.Post('lead/import', formData);
-  }
+  // importLead(formData: any): Observable<IApiBaseResponse<CommonResponse>> {
+  //   return this.apiHandlerService.Post('lead/import', formData);
+  // }
 
   updateLead(
     id: string,
@@ -69,6 +69,14 @@ export class LeadService {
 
   deleteLead(id: string): Observable<IApiBaseResponse<CommonResponse>> {
     return this.apiHandlerService.Patch('lead/' + id, null);
+  }
+
+   downloadSampleLeadUpload(userId: string): Observable<Blob> {
+    return this.apiHandlerService.DownloadFile(`Lead/DownloadSampleFileLead?userid=${userId}`);
+  }
+
+  importLead(userId:string,formData: any): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Post(`Lead/ImportExcelUploadLeads?userID=${userId}`, formData);
   }
 
 }

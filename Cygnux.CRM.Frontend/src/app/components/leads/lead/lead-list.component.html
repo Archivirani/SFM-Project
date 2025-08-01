@@ -56,10 +56,18 @@
 
                   <button
                   class="btn btn-info material-shadow-none"
-                  (click)="this.importService.triggerFileInput($event)"
+                  (click)="triggerFileInput($event)"
                   >
                   Import
                 </button>
+                   <div class="file-upload">
+                    <input
+                      type="file"
+                      id="fileInput"
+                      (change)="onFileChange($event)"
+                      class="file"
+                    />
+                  </div>
                 <button
                   type="button"
                   class="btn btn-success add-btn"
@@ -67,15 +75,6 @@
                 >
                   <i class="ri-add-line align-bottom me-1"></i> Add Lead
                 </button>
-                
-                  <div class="file-upload">
-                    <input
-                      type="file"
-                      id="fileInput"
-                      (change)="importService.onFileChange($event,'lead')"
-                      class="file"
-                    />
-                  </div>
 
                   <span class="dropdown">
                     <button
