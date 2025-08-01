@@ -318,7 +318,8 @@ export class LeadListComponent implements OnDestroy {
   // }
 
   onFileChange(event: any) {
-    const file = event.target.files[0];
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
 
 
     if (file) {
@@ -342,29 +343,9 @@ export class LeadListComponent implements OnDestroy {
         );
         this.selectedFile = null;
       }
+      fileInput.value = '';
     }
   }
-  // importLead(dataToSubmit: any): void {
-
-  //   this.leadService.importLead(this.identityService.getLoggedUserId(),dataToSubmit).subscribe({
-  //     next: (response) => {
-  //       if (response.success) {
-  //         if(response.data[0].Message){
-  //         this.toasterService.success(response.data[0].Message);
-  //         }else{
-  //         this.toasterService.success('Lead Created Successfully');
-  //         }
-  //       } else {
-  //         this.toasterService.error(response.error?.message || 'Import failed.');
-  //       }
-  //       this.commonService.updateLoader(false);
-  //     },
-  //     error: (error: any) => {
-  //       this.toasterService.error(error.message || 'An error occurred during import.');
-  //       this.commonService.updateLoader(false);
-  //     },
-  //   });
-  // }
   importLead(dataToSubmit: any): void {
     this.commonService.updateLoader(true);
 
@@ -373,7 +354,7 @@ export class LeadListComponent implements OnDestroy {
         this.commonService.updateLoader(false);
 
         if (response.success) {
-          const invalidLeads = response.data.filter((lead: any) => lead.IsValid===false);
+          const invalidLeads = response.data.filter((lead: any) => lead.IsValid === false);
 
           if (invalidLeads.length > 0) {
             this.toasterService.error(`Import completed with ${invalidLeads.length} invalid record(s). Downloading error file...`);
