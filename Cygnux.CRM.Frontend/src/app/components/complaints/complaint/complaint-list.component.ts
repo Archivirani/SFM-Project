@@ -13,7 +13,8 @@ import { finalize, take } from 'rxjs';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
 import { IdentityService } from '../../../shared/services/identity.service';
-import { environment } from '../../../../environments/environment';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-complaint',
   standalone: false,
@@ -21,32 +22,34 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./complaint-list.component.scss'],
 })
 export class ComplaintListComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
   public complaintId: string = '';
   public complaints: ComplaintResponse[] = [];
   public selectedComplaint: ComplaintDetailResponse | null = null;
-  public complaintsBackup:ComplaintResponse[]=[];
+  public complaintsBackup: ComplaintResponse[] = [];
   public selectedCall: string | null = null;
   public selectedComplaintId: string | null = null;
+  selectedFile: File | null = null;
+
   page = 1; // Current page number
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
-  selectedFilter:string=''
+  selectedFilter: string = ''
   private debounceTimer: any;
   filters: { [key: string]: string } = {
-    compaintStatus: "" 
+    compaintStatus: ""
   };
   userType = localStorage.getItem('UserType')
-  cardList:string = 'Complaints';
+  cardList: string = 'Complaints';
   @Output() edit = new EventEmitter<ComplaintResponse>();
   constructor(
     private complaintService: ComplaintService,
     private commonService: CommonService,
     private toasterService: ToastrService,
     private exportService: ExportService,
-    public importService:ImportService,
-    public identifyService :IdentityService
-  ) {defineElement(lottie.loadAnimation);}
+    public importService: ImportService,
+    public identifyService: IdentityService
+  ) { defineElement(lottie.loadAnimation); }
 
   ngOnInit(): void {
     this.getComplaints();
@@ -57,40 +60,40 @@ export class ComplaintListComponent implements OnInit {
     this.debounceTimer = setTimeout(() => {
       this.getComplaints(page);
     }, 500);
-}
+  }
 
-private getComplaints(page: number = 1) {
-  this.commonService.updateLoader(true);
-  this.filters = Object.fromEntries(
-    Object.entries(this.filters).filter(([key, value]) => value !== null)
-  );
-  const filters: any = {
-    ...this.filters,
-    Page: page,
-    PageSize: this.pageSize,
-    export: false,
-    UserID:this.identifyService.getLoggedUserId()
-  };
-  this.complaintService.getComplaintList(filters).pipe(take(1), finalize(() => this.commonService.updateLoader(false))).subscribe({
-    next: (response: any) => {
-      if (response) {
-        this.complaints = response.data;
-        this.complaintsBackup = response.data;
-        this.totalItems = response.totalCount;
-      }
-    },
-    error: (error: any) => {
-      this.toasterService.error(error?.message || 'Something went wrong.');
-    },
-  });
-}
+  private getComplaints(page: number = 1) {
+    this.commonService.updateLoader(true);
+    this.filters = Object.fromEntries(
+      Object.entries(this.filters).filter(([key, value]) => value !== null)
+    );
+    const filters: any = {
+      ...this.filters,
+      Page: page,
+      PageSize: this.pageSize,
+      export: false,
+      UserID: this.identifyService.getLoggedUserId()
+    };
+    this.complaintService.getComplaintList(filters).pipe(take(1), finalize(() => this.commonService.updateLoader(false))).subscribe({
+      next: (response: any) => {
+        if (response) {
+          this.complaints = response.data;
+          this.complaintsBackup = response.data;
+          this.totalItems = response.totalCount;
+        }
+      },
+      error: (error: any) => {
+        this.toasterService.error(error?.message || 'Something went wrong.');
+      },
+    });
+  }
 
   exportComplaints(event: any) {
     event.preventDefault();
     const filters: any = {
       ...this.filters,
-      export:true,
-      UserID:this.identifyService.getLoggedUserId()
+      export: true,
+      UserID: this.identifyService.getLoggedUserId()
     }
     this.commonService.updateLoader(true);
     this.complaintService.getComplaintListexport(filters).subscribe({
@@ -111,8 +114,8 @@ private getComplaints(page: number = 1) {
     event.preventDefault();
     const filters: any = {
       ...this.filters,
-      export:true,
-      UserID:this.identifyService.getLoggedUserId()
+      export: true,
+      UserID: this.identifyService.getLoggedUserId()
     }
     this.commonService.updateLoader(true);
     this.complaintService.getComplaintListexport(filters).subscribe({
@@ -146,7 +149,7 @@ private getComplaints(page: number = 1) {
     });
   }
 
-  openAddTicketModal(type:string,complaintID?:any){
+  openAddTicketModal(type: string, complaintID?: any) {
     const modalElement = document.getElementById('showTicketModal');
     if (modalElement) {
       const modal = new Modal(modalElement);
@@ -155,7 +158,7 @@ private getComplaints(page: number = 1) {
       this.edit.emit();
       modal.show();
       // this.selectedComplaint = complaintID
-      if(type !== 'Add'){
+      if (type !== 'Add') {
         this.getComplaint(complaintID);
       }
     }
@@ -182,17 +185,17 @@ private getComplaints(page: number = 1) {
   }
 
   clearDate() {
-    if(this.filters['compalaintDate']){
+    if (this.filters['compalaintDate']) {
       this.filters['compalaintDate'] = '';
-    }else{
+    } else {
       this.filters['resolutionDate'] = '';
-    } 
+    }
     this.getComplaints();
   }
 
   getComplaint(id: string) {
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintDetails(id,this.identifyService.getLoggedUserId()).subscribe({
+    this.complaintService.getComplaintDetails(id, this.identifyService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.selectedComplaint = response.data;
@@ -262,7 +265,7 @@ private getComplaints(page: number = 1) {
       this.getComplaint(complaintId);
     }
   }
-  viewModal(event: Event, complaintId: string,items:any) {
+  viewModal(event: Event, complaintId: string, items: any) {
     event.preventDefault(); // Prevent default anchor behavior
     const modalElement = document.getElementById('showModalDetail');
     if (modalElement) {
@@ -295,10 +298,113 @@ private getComplaints(page: number = 1) {
     this.getComplaints(this.page);
   }
 
-    downloadSampleImport(event: any) {
-      event.preventDefault();
-      let path =
-        environment.apiUrl.replace('/api/v1', '') + 'Uploads/Complaint_Import.xlsx';
-      window.open(path, '_blank');
+  downloadSampleImport(event: any) {
+    event.preventDefault();
+    this.complaintService.downloadSampleComplaint(this.identifyService.getLoggedUserId()).subscribe({
+      next: (response: Blob) => {
+        const blob = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        });
+        const url = window.URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = 'ComplaintImport.xlsx';
+        anchor.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+        this.commonService.updateLoader(false);
+      },
+    });
+  }
+
+  triggerFileInput(event: Event, disappointed: void) {
+    event.preventDefault();
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  onFileChange(event: any) {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+
+
+    if (file) {
+      const validExcelTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // XLSX
+        'application/vnd.ms-excel', // XLS
+        'text/csv', // CSV
+        'application/vnd.ms-excel.sheet.binary.macroEnabled.12', // XLSB
+        'application/vnd.ms-excel.sheet.macroEnabled.12', // XLSM
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.template', // XLTX
+        'application/vnd.ms-excel.template.macroEnabled.12', // XLTM
+      ];
+      if (validExcelTypes.includes(file.type)) {
+        this.selectedFile = file;
+        const formData = new FormData();
+        formData.append('file', file);
+        this.importComplaints(formData);
+      } else {
+        this.toasterService.error(
+          'Please upload a valid excel file (XLSX, XLS, or CSV).'
+        );
+        this.selectedFile = null;
+      }
+      fileInput.value = '';
     }
+  }
+  importComplaints(dataToSubmit: any): void {
+    this.commonService.updateLoader(true);
+
+    this.complaintService.importComplaint(this.identifyService.getLoggedUserId(), dataToSubmit).subscribe({
+      next: (response) => {
+        this.commonService.updateLoader(false);
+
+        if (response.success) {
+          const invalidLeads = response.data.filter((lead: any) => lead.IsValid === false);
+
+          if (invalidLeads.length > 0) {
+            this.toasterService.error(`Import completed with ${invalidLeads.length} invalid record(s). Downloading error file...`);
+            this.getComplaints();
+            this.downloadInvalidComplaintExcel(invalidLeads);
+          } else {
+            this.toasterService.success(response.data[0]?.Message || 'Complaint Created Successfully');
+            this.getComplaints();
+          }
+        } else {
+          this.toasterService.error(response.error?.message || 'Import failed.');
+        }
+      },
+      error: (error: any) => {
+        this.toasterService.error(error.message || 'An error occurred during import.');
+        this.commonService.updateLoader(false);
+      },
+    });
+  }
+
+  downloadInvalidComplaintExcel(invalidLeads: any[]): void {
+  const cleanedData = invalidLeads.map(({ IsValid, ComStatus, ...rest }) => rest);
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(cleanedData);
+  worksheet['!cols'] = Object.keys(cleanedData[0]).map(() => ({ wch: 20 }));
+  const workbook: XLSX.WorkBook = {
+    Sheets: { 'Invalid Complaints': worksheet },
+    SheetNames: ['Invalid Complaints'],
+  };
+
+  const excelBuffer: any = XLSX.write(workbook, {
+    bookType: 'xlsx',
+    type: 'array',
+    cellStyles: false, 
+  });
+
+  const blob: Blob = new Blob([excelBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+
+  FileSaver.saveAs(blob, `Invalid_Complaints_${new Date().toISOString().slice(0, 10)}.xlsx`);
+}
+
+
+  
 }

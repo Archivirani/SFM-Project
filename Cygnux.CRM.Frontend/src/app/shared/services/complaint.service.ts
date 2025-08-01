@@ -24,7 +24,7 @@ import { GeneralMasterResponse } from '../models/external.model';
 export class ComplaintService {
   constructor(
     @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService
-  ) {}
+  ) { }
 
   getComplaintList(
     filters: any
@@ -38,11 +38,11 @@ export class ComplaintService {
     return this.apiHandlerService.Get('Complaint/export', filters);
   }
 
-  importComplaint(formData: any): Observable<IApiBaseResponse<CommonResponse>> {
-    return this.apiHandlerService.Post('Complaint/ImportComplaints', formData);
-  }
+  // importComplaint(formData: any): Observable<IApiBaseResponse<CommonResponse>> {
+  //   return this.apiHandlerService.Post('Complaint/ImportComplaints', formData);
+  // }
 
-  getComplaintDetails( id: string,UserId:string): Observable<IApiBaseResponse<ComplaintDetailResponse>> {
+  getComplaintDetails(id: string, UserId: string): Observable<IApiBaseResponse<ComplaintDetailResponse>> {
     return this.apiHandlerService.Get(`complaint/GetDetail/${id}?UserId=${UserId}`);
   }
 
@@ -56,7 +56,7 @@ export class ComplaintService {
     return this.apiHandlerService.Post('Complaint/Add', addComplaintRequest);
   }
 
-  
+
   AddEscTktComplaint(
     addComplaintRequest: AddComplaintRequest
   ): Observable<IApiBaseResponse<CommonResponse>> {
@@ -84,41 +84,50 @@ export class ComplaintService {
     return this.apiHandlerService.Get(`Complaint/GetUser?userid=${userid}`);
   }
 
-    getDocDataDetail(
-      docketNo: string
-    ): Observable<IApiBaseResponse<DocDataDetail>> {
-      return this.apiHandlerService.Get(`Complaint/GetDocData?docNo=${docketNo}`);
-    }
+  getDocDataDetail(
+    docketNo: string
+  ): Observable<IApiBaseResponse<DocDataDetail>> {
+    return this.apiHandlerService.Get(`Complaint/GetDocData?docNo=${docketNo}`);
+  }
 
-     getCompalintCounteData(filters:any):Observable<IApiBaseResponse<any>>{
-        return this.apiHandlerService.Get('Complaint/GetCount', filters);
-      }
+  getCompalintCounteData(filters: any): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Get('Complaint/GetCount', filters);
+  }
 
-      getTicketSourceData(filters:any):Observable<IApiBaseResponse<any>>{
-        return this.apiHandlerService.Get('Dashboard/ComplaintBySource', filters);
-      }
+  getTicketSourceData(filters: any): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Get('Dashboard/ComplaintBySource', filters);
+  }
 
-      getTicketDaywiseData(filters:any):Observable<IApiBaseResponse<any>>{
-        return this.apiHandlerService.Get('Dashboard/ComplaintCountDayWise', filters);
-      }
+  getTicketDaywiseData(filters: any): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Get('Dashboard/ComplaintCountDayWise', filters);
+  }
 
-      getTicketStatusData(filters:any):Observable<IApiBaseResponse<any>>{
-        return this.apiHandlerService.Get('Dashboard/ComplaintByStatus', filters);
-      }
+  getTicketStatusData(filters: any): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Get('Dashboard/ComplaintByStatus', filters);
+  }
 
-      getAssignTo(locCode:string):Observable<IApiBaseResponse<any>>{
-        return this.apiHandlerService.Get(`Complaint/AssignTo?BranchCode=${locCode}`);
-      }
+  getAssignTo(locCode: string): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Get(`Complaint/AssignTo?BranchCode=${locCode}`);
+  }
 
-      getupdateHistory(Id:string):Observable<IApiBaseResponse<UpdateHistory>>{
-        return this.apiHandlerService.Get(`Complaint/UpdateHistory?Id=${Id}`);
-      }
+  getupdateHistory(Id: string): Observable<IApiBaseResponse<UpdateHistory>> {
+    return this.apiHandlerService.Get(`Complaint/UpdateHistory?Id=${Id}`);
+  }
 
-      getEscalatedHistory(Id:string):Observable<IApiBaseResponse<EscalatedHistory>>{
-        return this.apiHandlerService.Get(`Complaint/EscalatedHistory?Id=${Id}`);
-      }
+  getEscalatedHistory(Id: string): Observable<IApiBaseResponse<EscalatedHistory>> {
+    return this.apiHandlerService.Get(`Complaint/EscalatedHistory?Id=${Id}`);
+  }
 
-      getTicketSubType( codeId: string ): Observable<IApiBaseResponse<GeneralMasterResponse[]>> {
-          return this.apiHandlerService.Get(`external/CodeSubType?codeId=${codeId}`);
-      }
+  getTicketSubType(codeId: string): Observable<IApiBaseResponse<GeneralMasterResponse[]>> {
+    return this.apiHandlerService.Get(`external/CodeSubType?codeId=${codeId}`);
+  }
+
+  downloadSampleComplaint(userId: string): Observable<Blob> {
+    return this.apiHandlerService.DownloadFile(`Complaint/DownloadSampleFileComplaint?userid=${userId}`);
+  }
+
+  importComplaint(userId: string, formData: any): Observable<IApiBaseResponse<any>> {
+    return this.apiHandlerService.Post(`Complaint/ImportExcelUplaodComp?userID=${userId}`, formData);
+  }
+
 }

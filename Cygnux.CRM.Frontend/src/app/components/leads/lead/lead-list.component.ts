@@ -375,7 +375,9 @@ export class LeadListComponent implements OnDestroy {
     });
   }
   downloadInvalidLeadsExcel(invalidLeads: any[]): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(invalidLeads, {
+    const cleanedLeads = invalidLeads.map(({ IsValid, ...rest }) => rest);
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(cleanedLeads, {
       skipHeader: false,
     });
 
