@@ -355,23 +355,32 @@ export class ComplaintListComponent implements OnInit {
     }
   }
   importComplaints(dataToSubmit: any): void {
-    this.commonService.updateLoader(true);
+  this.commonService.updateLoader(true);
 
-    this.complaintService.importComplaint(this.identifyService.getLoggedUserId(), dataToSubmit).subscribe({
+  this.complaintService.importComplaint(this.identifyService.getLoggedUserId(), dataToSubmit)
+    .subscribe({
       next: (response) => {
         this.commonService.updateLoader(false);
 
         if (response.success) {
-          const invalidLeads = response.data.filter((lead: any) => lead.IsValid === false);
+          const statusObj = response.data.find((item: any) => item.type === 'Status');
+          const errorRecordObj = response.data.find((item: any) => item.type === 'ErrorRecords');
 
-          if (invalidLeads.length > 0) {
-            this.toasterService.error(`Import completed with ${invalidLeads.length} invalid record(s). Downloading error file...`);
-            this.getComplaints();
-            this.downloadInvalidComplaintExcel(invalidLeads);
-          } else {
-            this.toasterService.success(response.data[0]?.Message || 'Complaint Created Successfully');
-            this.getComplaints();
+          // Show success message from statusObj
+          if (statusObj?.data?.Message) {
+            this.toasterService.success(statusObj.data.Message);
           }
+
+          // If there are invalid records, download them
+          if (errorRecordObj?.errorRecords?.length) {
+            // this.toasterService.error(
+            //   `Import completed with ${errorRecordObj.totalErrorCount} invalid record(s). Downloading error file...`
+            // );
+
+            this.downloadInvalidComplaintExcel(errorRecordObj.errorRecords);
+          }
+
+          this.getComplaints();
         } else {
           this.toasterService.error(response.error?.message || 'Import failed.');
         }
@@ -381,9 +390,10 @@ export class ComplaintListComponent implements OnInit {
         this.commonService.updateLoader(false);
       },
     });
-  }
+}
 
-  downloadInvalidComplaintExcel(invalidLeads: any[]): void {
+
+ downloadInvalidComplaintExcel(invalidLeads: any[]): void {
   const cleanedData = invalidLeads.map(({ IsValid, ComStatus, ...rest }) => rest);
   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(cleanedData);
   worksheet['!cols'] = Object.keys(cleanedData[0]).map(() => ({ wch: 20 }));
@@ -395,7 +405,7 @@ export class ComplaintListComponent implements OnInit {
   const excelBuffer: any = XLSX.write(workbook, {
     bookType: 'xlsx',
     type: 'array',
-    cellStyles: false, 
+    cellStyles: false,
   });
 
   const blob: Blob = new Blob([excelBuffer], {
@@ -404,6 +414,7 @@ export class ComplaintListComponent implements OnInit {
 
   FileSaver.saveAs(blob, `Invalid_Complaints_${new Date().toISOString().slice(0, 10)}.xlsx`);
 }
+
 
 
   
