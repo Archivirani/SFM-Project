@@ -51,6 +51,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
   isImage: boolean = false;
   isPdf: boolean = false;
+  public parsedUser:any;
   constructor(
     private expenseService: ExpenseService,
     private externalService: ExternalService,
@@ -251,8 +252,8 @@ export class AddExpenseComponent implements OnInit, OnChanges {
 
   OntransportModeChange(data:any){
     let storedUser = localStorage.getItem('loginUser');
-    let parsedUser = JSON.parse(storedUser || '');
-    const ratePerKM = this.getGeneralmaster.find((d)=>d.designationId.toString() === parsedUser.designationId && d.transportModeId.toString() === data);
+    this.parsedUser = JSON.parse(storedUser || '');
+    const ratePerKM = this.getGeneralmaster.find((d)=>d.designationId.toString() === this.parsedUser.designationId && d.transportModeId.toString() === data);
     const expRate = ratePerKM?.ratePerKM ?? 0;
     const amount = expRate * (this.expenseForm.value.DistanceInKm || 0);
     this.expenseForm.patchValue({

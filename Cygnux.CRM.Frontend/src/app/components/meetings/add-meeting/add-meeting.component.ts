@@ -32,7 +32,7 @@ import { ExternalService } from '../../../shared/services/external.service';
 import { CustomerService } from '../../../shared/services/customer.service';
 import { CalendarService } from '../../../shared/services/calendar.service';
 import { CalendarResponse } from '../../../shared/models/calendar.model';
-import {Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IdentityService } from '../../../shared/services/identity.service';
 
@@ -42,30 +42,31 @@ import { IdentityService } from '../../../shared/services/identity.service';
   templateUrl: './add-meeting.component.html',
   styleUrls: ['./add-meeting.component.scss'],
 })
-export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
+export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   public meetingForm!: FormGroup;
   public meetingId: string = '';
-  public attendeeId :string ='';
+  public attendeeId: string = '';
   public meetingTypes: GeneralMasterResponse[] = [];
   public users: UserResponse[] = [];
   public customers: LeadCustomerResponse[] = [];
   public leadContacts: LeadContactResponse[] = [];
   public locations: LocationResponse[] = [];
-  meetingRole:boolean = false;
-  public meetingMom:MeetingMoMResponse[]=[];
-  public isChecked:boolean=false;
-  meetingSubscription:Subscription
-  calendarOptions:CalendarResponse[]=[];
-  @Input() checkOutValue:any;
+  meetingRole: boolean = false;
+  public meetingMom: MeetingMoMResponse[] = [];
+  public isChecked: boolean = false;
+  meetingSubscription: Subscription
+  calendarOptions: CalendarResponse[] = [];
+  @Input() checkOutValue: any;
   @Input() meetingResponse: MeetingResponse | null = null;
   @Input() addmeetingResponse: AddMeetingResponse | null = null;
   @Input() addMeetingResponse: string | null = null;
-  @Input() isMeetingList: string ='';
+  @Input() isMeetingList: string = '';
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
   center: google.maps.LatLngLiteral = {
     lat: 28.5578178, // Replace with your latitude
     lng: 77.0627425, // Replace with your longitude
   };
+  DistanceInKM:any;
   zoom = 12;
   @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
   @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
@@ -75,31 +76,31 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     public customerService: CustomerService,
     public commonService: CommonService,
     private toasterService: ToastrService,
-    private calendarService:CalendarService,
-    private identityService:IdentityService,
+    private calendarService: CalendarService,
+    private identityService: IdentityService,
     public router: Router
   ) {
     this.meetingForm = new FormGroup({});
-    this.meetingSubscription = this.meetingService.meetingResponseSubject.subscribe((res)=>{
-      this.meetingForm.patchValue({customerName:res.customerName || res.companyName,customerCode:res.customerCode});
+    this.meetingSubscription = this.meetingService.meetingResponseSubject.subscribe((res) => {
+      this.meetingForm.patchValue({ customerName: res.customerName || res.companyName, customerCode: res.customerCode });
     })
   }
- 
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['meetingResponse'] && this.meetingResponse) {
-      if(this.meetingResponse.attendees){
+      if (this.meetingResponse.attendees) {
         this.meetingResponse.attendeeIDs = this.meetingResponse?.attendees.split(',');
       }
-      this.meetingResponse.meetingMOM=this.meetingResponse.meetingMOM ? this.meetingResponse.meetingMOM.toString().split(','):[];
+      this.meetingResponse.meetingMOM = this.meetingResponse.meetingMOM ? this.meetingResponse.meetingMOM.toString().split(',') : [];
       this.center.lat = this.meetingResponse.latitude;
       this.center.lng = this.meetingResponse.longitude;
       this.meetingId = this.meetingResponse.meetingId;
       this.attendeeId = this.meetingResponse.attendeeCode;
       this.meetingForm.patchValue(this.meetingResponse);
       this.meetingForm.patchValue({
-        meetingTypeId:this.meetingResponse.meetingTypeId.toString()
+        meetingTypeId: this.meetingResponse.meetingTypeId.toString()
       })
-      this.meetingRole = this.meetingResponse.meetingRole === 'A' ? true:false;
+      this.meetingRole = this.meetingResponse.meetingRole === 'A' ? true : false;
       // this.checkOutValue = this.meetingResponse.checkOut;
     } else {
       this.meetingForm.reset();
@@ -123,8 +124,8 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
   buildForm(): void {
     this.meetingForm = new FormGroup({
       leadId: new FormControl(''),
-      customerCode:new FormControl(''),
-      customerName:new FormControl(''),
+      customerCode: new FormControl(''),
+      customerName: new FormControl(''),
       contactName: new FormControl(null),
       contactNo: new FormControl(null, [
         Validators.required,
@@ -147,56 +148,57 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       geoLocation: new FormControl(null),
       latitude: new FormControl(null),
       longitude: new FormControl(null),
-      checkInDateTime:new FormControl(null),
-      checkOutDateTime:new FormControl(null),
-      remarks:new FormControl(null),
-      CreateBy:new FormControl(this.identityService.getLoggedUserId()),
-      ModifiedBy:new FormControl(null)
+      checkInDateTime: new FormControl(null),
+      checkOutDateTime: new FormControl(null),
+      remarks: new FormControl(null),
+      CreateBy: new FormControl(this.identityService.getLoggedUserId()),
+      ModifiedBy: new FormControl(null),
+      DistanceInKM: new FormControl()
     },
-    // { validators: timeRangeValidator  }
-  );
-  this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
+      // { validators: timeRangeValidator  }
+    );
+    this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
   }
 
   checkDuplicateMeetingTimes(_control?: AbstractControl): ValidationErrors | null {
-    if((this.checkOutValue =='-' && !this.meetingId)|| (this.checkOutValue =='-' && this.meetingId) ){
-    const meetingDate = this.meetingForm.get('meetingDate')?.value;
-    const startTime = this.meetingForm.get('startTime')?.value;
-    const endTime = this.meetingForm.get('endTime')?.value;
-    const today = new Date();
-    const dateParts = meetingDate?.split('/');
-    const formattedDate = `${dateParts?.[2]}-${dateParts?.[1]}-${dateParts?.[0]}`;
-    const startDateTime = new Date(`${formattedDate}T${startTime}`);
-    const endDateTime = new Date(`${formattedDate}T${endTime}`);
-    if(startDateTime <= today){
-      return { startTimeAfterCurrentTime: true }; // Custom error key
-    }else if(endDateTime <= startDateTime){
-      return { timeRangeValidator: true }; // Custom error key
-    }
+    if ((this.checkOutValue == '-' && !this.meetingId) || (this.checkOutValue == '-' && this.meetingId)) {
+      const meetingDate = this.meetingForm.get('meetingDate')?.value;
+      const startTime = this.meetingForm.get('startTime')?.value;
+      const endTime = this.meetingForm.get('endTime')?.value;
+      const today = new Date();
+      const dateParts = meetingDate?.split('/');
+      const formattedDate = `${dateParts?.[2]}-${dateParts?.[1]}-${dateParts?.[0]}`;
+      const startDateTime = new Date(`${formattedDate}T${startTime}`);
+      const endDateTime = new Date(`${formattedDate}T${endTime}`);
+      if (startDateTime <= today) {
+        return { startTimeAfterCurrentTime: true }; // Custom error key
+      } else if (endDateTime <= startDateTime) {
+        return { timeRangeValidator: true }; // Custom error key
+      }
     }
     return null;
   }
 
   isDateDisabled = (date: { year: number; month: number; day: number }): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     const selectedDate = new Date(date.year, date.month - 1, date.day);
-    selectedDate.setHours(0, 0, 0, 0); 
+    selectedDate.setHours(0, 0, 0, 0);
     if (selectedDate < today) {
-        return true; 
+      return true;
     }
     if (!this.addmeetingResponse?.leadDate) return false;
     const dateParts = this.addmeetingResponse.leadDate.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
     if (!dateParts) {
-        return false; 
+      return false;
     }
     const [, day, month, year] = dateParts.map(Number);
     const leadDate = new Date(year, month - 1, day);
-    leadDate.setHours(0, 0, 0, 0); 
+    leadDate.setHours(0, 0, 0, 0);
     return selectedDate < leadDate;
-};
+  };
 
-  getMeetingMom(){
+  getMeetingMom() {
     this.commonService.updateLoader(true);
     this.meetingService.getMeetingMomDetails().subscribe({
       next: (response) => {
@@ -218,21 +220,21 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
       geoLocation: '',
       latitude: null,
       longitude: null,
-      customerCode: '', 
+      customerCode: '',
     };
     this.meetingService.resetLocationSearch.next(true);
   }
-  
+
   onAllDayEventChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
-      this.isChecked=true;
+      this.isChecked = true;
       this.meetingForm.patchValue({
         startTime: '10:00',
         endTime: '18:00'
       });
     } else {
-      this.isChecked=false;
+      this.isChecked = false;
       this.meetingForm.patchValue({
         startTime: '',
         endTime: ''
@@ -242,8 +244,8 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
 
   getCalendar() {
     this.commonService.updateLoader(true);
-    const filter={
-      userId:this.identityService.getLoggedUserId()
+    const filter = {
+      userId: this.identityService.getLoggedUserId()
     }
     this.calendarService.getCalendar(filter).subscribe({
       next: (response) => {
@@ -276,25 +278,47 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
 
   onSubmitMeeting(form: FormGroup): void {
     // const leadId = this.customers.find((d)=>d.customerName === this.meetingForm.value.leadId)?.leadId
-    if(this.customerService.customersList){
-      var customerCode = this.customerService.customersList.find((d)=>d.customerName === form.value.customerName)?.customerCode
+    if (this.customerService.customersList) {
+      var customerCode = this.customerService.customersList.find((d) => d.customerName === form.value.customerName)?.customerCode
+    }
+     if (this.meetingResponse && this.meetingResponse.checkIn && this.meetingResponse.checkOut && this.meetingResponse.checkOutReason === 'CHECK OUT DONE') {
+      const payload = {
+        originLat: this.meetingResponse?.previousLatitude,
+        originLng: this.meetingResponse?.previousLongitude,
+        destLat: this.meetingResponse.latitude,
+        destLng: this.meetingResponse.longitude
+      }
+
+      this.meetingService.getGoogleDetail(payload).subscribe({
+        next: (response: any) => {
+          if (response) {
+            this.DistanceInKM=response.distanceKm
+            this.meetingForm.patchValue({
+              DistanceInKM: response.distanceKm
+            });
+          }
+        }
+      });
     }
     if (form.valid) {
       const dataToSubmit = {
         ...form.value,
         attendeeIDs: form.value.attendeeIDs?.join(','),
-        meetingMOM:form.value.meetingMOM?.join(','),
-        meetingDate:this.formatDate(form.value.meetingDate),
-        customerCode:form.value.customerCode ? form.value.customerCode : customerCode,
+        meetingMOM: form.value.meetingMOM?.join(','),
+        meetingDate: this.formatDate(form.value.meetingDate),
+        customerCode: form.value.customerCode ? form.value.customerCode : customerCode,
         // leadId:leadId ?leadId :'',
         // isAllDayEvent:false
-        CreateBy:this.identityService.getLoggedUserId(),
-        ModifiedBy:this.isMeetingList === 'Update' ? this.identityService.getLoggedUserId():''
+        CreateBy: this.identityService.getLoggedUserId(),
+        DistanceInKM: this.DistanceInKM,
+        ModifiedBy: this.isMeetingList === 'Update' ? this.identityService.getLoggedUserId() : ''
       };
       !this.meetingId
         ? this.addMeeting(dataToSubmit)
+        // : this.googleApi(dataToSubmit);
         : this.updateMeeting(dataToSubmit);
-    }else{
+
+    } else {
       this.meetingForm.markAllAsTouched()
     }
   }
@@ -320,25 +344,49 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     });
   }
 
+  // googleApi() {
+  //   if(this.meetingResponse && this.meetingResponse.checkIn && this.meetingResponse.checkOut && this.meetingResponse.checkOutReason === 'CHECK OUT DONE'){
+  //     const payload={
+  //       originLat:this.meetingResponse?.previousLatitude,
+  //       originLng:this.meetingResponse?.previousLongitude,
+  //       destLat:this.meetingResponse.latitude,
+  //       destLng:this.meetingResponse.longitude
+  //     }
+
+  //     this.meetingService.getGoogleDetail(payload).subscribe({
+  //       next: (response:any) => {
+  //        if (response ) {
+  //         debugger
+  //         this.meetingForm.patchValue({
+  //           DistanceInKM:response.distanceKm
+  //         });
+  //       }
+  //       }
+  //     });
+  //   }
+  // }
+
   updateMeeting(dataToSubmit: any): void {
+    console.log(dataToSubmit)
     this.commonService.updateLoader(true);
-    this.meetingService.updateMeeting(this.attendeeId, dataToSubmit).subscribe({
-      next: (response) => {
-        if (response.success) {
+      this.meetingService.updateMeeting(this.attendeeId, dataToSubmit).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.dataEmitter.emit();
+            this.toasterService.success(response.data.message);
+            this.meetingForm.reset();
+          } else {
+            this.toasterService.error(response.error.message);
+          }
           this.dataEmitter.emit();
-          this.toasterService.success(response.data.message);
-          this.meetingForm.reset();
-        } else {
+          this.commonService.updateLoader(false);
+        },
+        error: (response: any) => {
           this.toasterService.error(response.error.message);
-        }
-        this.dataEmitter.emit();
-        this.commonService.updateLoader(false);
-      },
-      error: (response: any) => {
-        this.toasterService.error(response.error.message);
-        this.commonService.updateLoader(false);
-      },
-    });
+          this.commonService.updateLoader(false);
+        },
+      });
+
   }
 
   onLocationSearch(mapResponse: any): void {
@@ -412,7 +460,7 @@ export class AddMeetingComponent implements OnInit, OnChanges,OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    if(this.meetingSubscription){
+    if (this.meetingSubscription) {
       this.meetingSubscription.unsubscribe()
     }
   }

@@ -29,6 +29,9 @@ export interface MeetingResponse {
   meetingRole?:any;
   meetingTypeId?:any;
   isExpired?:boolean;
+  previousLatitude?:string;
+  previousLongitude?:string;
+  meetingAddress?:string;
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;
@@ -50,6 +53,8 @@ export interface MeetingDetailResponse extends MeetingResponse {
   checkInOutLocation:string;
   checkOutDateTime:string;
   checkInDateTime:string;
+  previousLatitude?:string;
+  previousLongitude?:string;
 }
 export interface AddMeetingResponse {
   leadId: string;
