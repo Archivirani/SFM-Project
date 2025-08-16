@@ -81,7 +81,8 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         AttendeeCode: this.expenseResponse.attendeeCode
         // supportingDocument: this.expenseResponse.supportingDocument.replace("https://localhost:44320/", "") 
       });
-     this.setFileUrl(this.expenseResponse.supportingDocument);
+      this.fileUrl = this.expenseResponse.supportingDocument
+      // this.setFileUrl(this.expenseResponse.supportingDocument);
       this.OntransportModeChange(this.expenseResponse.transportModeId);
     } else {
       this.expenseForm.reset();

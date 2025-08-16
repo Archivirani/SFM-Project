@@ -27,7 +27,14 @@
           <td><strong class="me-2">Amount:</strong> {{ expenseResponse?.amount }}</td>
         </tr>
         <tr>
-          <td class="supporting-Document"><strong class="me-2">Supporting Document:</strong>{{ expenseResponse?.supportingDocument }} </td>
+          <td class="supporting-Document"><strong class="me-2">Supporting Document:</strong>
+            <ng-container *ngIf="expenseResponse?.supportingDocument !== ''; else noDoc">
+              <i class="ri-eye-fill align-bottom text-muted cursor-pointer" (click)="openPOD(Templatepod)">
+              </i>
+            </ng-container>
+            
+            <ng-template #noDoc>--</ng-template>
+          </td>
           <td><strong class="me-2">Remarks:</strong> {{ expenseResponse?.remarks }}
         </tr>
         <tr>
@@ -66,3 +73,20 @@
     </button>
   </div>
 </div>
+
+<ng-template #Templatepod>
+  <div class="modal-content">
+    <div class="modal-header bs-blue d-flex justify-content-between">
+      <h5 class="modal-title">Supporting Document:</h5>
+      <button type="button" (click)="modalRef.hide()" class="btn-close"></button>
+    </div>
+
+    <div class="modal-body d-flex justify-content-center align-items-center p-3" style="background-color: #f9f9f9;">
+      <img *ngIf="expenseResponse?.supportingDocument" [src]="expenseResponse?.supportingDocument" class="img-fluid rounded shadow-sm" style="max-height: 80vh; object-fit: contain;">
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

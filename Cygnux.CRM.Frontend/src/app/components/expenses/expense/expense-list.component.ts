@@ -145,9 +145,9 @@ export class ExpenseListComponent implements OnInit {
       next: (response) => {
         if (response) {
           this.selectedExpense = response.data;
-          this.selectedExpense.supportingDocument =
-            environment.apiUrl.replace('/api/v1', '') +
-            this.selectedExpense.supportingDocument.replace(/\\/g, '/');
+          // this.selectedExpense.supportingDocument =
+          //   environment.apiUrl.replace('/api/v1', '') +
+          //   this.selectedExpense.supportingDocument.replace(/\\/g, '/');
           this.edit.emit(response.data);
         }
         this.commonService.updateLoader(false);

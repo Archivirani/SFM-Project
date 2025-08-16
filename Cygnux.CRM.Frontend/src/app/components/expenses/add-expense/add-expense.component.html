@@ -150,7 +150,7 @@
         height="100"
       /> -->
                   <!-- Show Image -->
-            <img *ngIf="isImage" [src]="fileUrl" alt="Preview" width="100%" height="auto" />
+            <img *ngIf="isImage || fileUrl !== ''" [src]="fileUrl" alt="Preview" width="100%" height="auto" />
 
             <!-- Show PDF -->
             <object *ngIf="isPdf" [attr.data]="fileUrl" type="application/pdf" width="100%" height="500px">
