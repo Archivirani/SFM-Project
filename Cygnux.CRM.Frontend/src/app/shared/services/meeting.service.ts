@@ -16,6 +16,7 @@ import {
 } from '../models/meeting.model';
 import { ApiHandlerService } from './api-handler.service';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class MeetingService {
   public resetLocationSearch=new Subject<boolean>();
 
   constructor(
-    @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService
+    @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService,private http:HttpClient
   ) {}
   
   getMeetingList(
@@ -74,5 +75,11 @@ export class MeetingService {
 
   getMeetingCountDayWise(filters:any):Observable<IApiBaseResponse<MeetingCountDayWise[]>>{
     return this.apiHandlerService.Get('Dashboard/MeetingCountDayWise', filters);
+  }
+
+  getGoogleDetail(payload:any){
+    return this.apiHandlerService.Get(`Meeting/GetDrivingDistance?originLat=${payload.originLat}&originLng=${payload.originLng}&destLat=${payload.destLat}&destLng=${payload.destLng}`);
+   
+
   }
 }

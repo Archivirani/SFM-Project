@@ -39,8 +39,8 @@
           </td>
         </tr>
         <tr>
-          <td><strong>Check In Location:</strong>  {{ meetingResponse?.checkInOutLocation ? meetingResponse?.checkInOutLocation :'--' }}</td>
-          <td><strong>Check Out Location:</strong>  {{ meetingResponse?.checkInOutLocation ? meetingResponse?.checkInOutLocation :'--' }}</td>
+          <td><strong>Check In Location:</strong>  {{ meetingResponse?.checkInLocation ? meetingResponse?.checkInLocation :'--' }}</td>
+          <td><strong>Check Out Location:</strong>  {{ meetingResponse?.checkOutLocation ? meetingResponse?.checkOutLocation :'--' }}</td>
         </tr>
         <tr>
           <td scope="row">
@@ -60,6 +60,15 @@
           <td scope="row">
             <strong>Meeting Longitude:</strong> 
             {{meetingResponse?.longitude ? meetingResponse?.longitude :'--' }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <strong>Meeting Address</strong> 
+            {{ meetingResponse?.meetingAddress?  meetingResponse?.meetingAddress:'--' }}
+          </td>
+          <td scope="row">
+           
           </td>
         </tr>
       </tbody>

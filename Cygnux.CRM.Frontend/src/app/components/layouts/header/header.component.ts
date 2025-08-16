@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdentityService } from '../../../shared/services/identity.service';
 declare function G(): void;
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-header',
@@ -25,8 +26,15 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof G === 'function') {G();}
+    // if (typeof G === 'function') {G();}
 
+  }
+
+    ngAfterViewInit(): void {
+    const dropdownEl = document.getElementById('page-header-user-dropdown');
+    if (dropdownEl) {
+      new bootstrap.Dropdown(dropdownEl);
+    }
   }
 
   signout(event: any): void {

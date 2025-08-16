@@ -12,6 +12,7 @@ import { ExportService } from '../../../shared/services/export.service';
 import { IdentityService } from '../../../shared/services/identity.service';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-expense',
@@ -186,16 +187,30 @@ export class ExpenseListComponent implements OnInit {
       this.getExpenses();
     }
   }
-  editModal(event: Event, expense: any,type:string) {
-    event.preventDefault(); // Prevent default anchor behavior
-    const modalElement = document.getElementById('showModal');
-    if (modalElement) {
-      const modal = new Modal(modalElement);
-      modal.show();
-      this.expense = type;
-      this.getExpense(expense);
-    }
+ editModal(event: Event, expense: any, type: string) {
+  const storedUser = localStorage.getItem('loginUser');
+  const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+
+  if (parsedUser?.designationId === '') {
+    Swal.fire({
+        icon: 'info',
+        text: 'You do not have a designation. Please contact the admin.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#405189',   // Button color
+        iconColor: '#405189' 
+    });
+    return; // 👈 Stop here if no designation
   }
+  event.preventDefault(); // ✅ Prevent anchor default
+  const modalElement = document.getElementById('showModal');
+  if (modalElement) {
+    const modal = new Modal(modalElement);
+    modal.show();
+    this.expense = type;
+    this.getExpense(expense);
+  }
+}
+
   viewModal(event: Event, expenseId: any) {
     event.preventDefault(); // Prevent default anchor behavior
     const modalElement = document.getElementById('showModalDetail');
