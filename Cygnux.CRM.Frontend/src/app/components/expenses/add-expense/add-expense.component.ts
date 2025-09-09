@@ -68,7 +68,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
     if (changes['expenseResponse'] && this.expenseResponse) {
       this.expenseId = this.expenseResponse.expenseId;
       this.expenseForm.patchValue({
-        checkedOutLocation: this.expenseResponse.checkedInLocation,
+        checkedOutLocation: this.expenseResponse.checkedOutLocation,
         expenseCode: this.expenseResponse.expenseId,
         customerName: this.expenseResponse.companyName,
         MeetingDate: this.expenseResponse.expenseDate,

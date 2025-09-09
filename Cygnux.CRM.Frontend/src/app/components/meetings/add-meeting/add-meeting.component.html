@@ -18,7 +18,7 @@
         <div class="col-lg-6">
           <div>
             <label class="control-label">Customer Name*</label>
-            <div>
+            <div *ngIf="!router.url.includes('/meeting/list')|| isMeetingList==='Update'">
               <input style="text-transform: uppercase;"
               class="form-control"
               maxlength="255"
@@ -34,6 +34,13 @@
                 [readonly]="router.url.includes('/customer') || router.url.includes('/meeting/list')">
               </ng-select> -->
             </div>
+            <div *ngIf="router.url.includes('/meeting/list') && isMeetingList!=='Update'">
+                           <ng-select [items]="meetingCustomerList" bindLabel="customerName" bindValue="item" formControlName="customerName" (change)="onChangeCustomer($event)" placeholder="Search Customer"
+                            [disabled]="checkOutValue !== '-' || meetingResponse?.customerName || addMeetingResponse?true:false" [readonly]="checkOutValue !== '-' || meetingResponse?.customerName || addMeetingResponse?true:false" 
+                            [ngClass]="{ 'border-danger': meetingForm.controls['customerName'].invalid && meetingForm.controls['customerName'].touched}" 
+                            >
+                          </ng-select>
+                          </div>
             <div *ngIf="
                 meetingForm.controls['customerName'].invalid &&
                 meetingForm.controls['customerName']?.touched
@@ -218,8 +225,11 @@
 
           &nbsp;
           <div>
-            <app-location-search [class.disabled]="checkOutValue !== '-' || meetingRole" (mapDataEmitter)="onLocationSearch($event)" 
-              [meetingResponse]="this.meetingResponse?.geoLocation"></app-location-search>
+            <!-- <app-location-search [class.disabled]="checkOutValue !== '-' || meetingRole" (mapDataEmitter)="onLocationSearch($event)" 
+              [meetingResponse]="this.meetingResponse?.geoLocation"></app-location-search> -->
+               <ng-select [items]="geoLocation" [meetingResponse]="this.meetingResponse?.geoLocation" (input)="getGeoLocation($event)" formControlName="geoLocation" (change)="getLatLongData($event)"
+            placeholder="Search Location" [searchable]="true" [clearable]="true"  [class.disabled]="checkOutValue !== '-' || meetingRole" required>
+          </ng-select>
           </div>
           
           <!-- Display selected location -->

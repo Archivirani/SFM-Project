@@ -29,6 +29,7 @@ export interface ExpenseResponse {
 export interface ExpenseDetailResponse extends ExpenseResponse {
   punchedInLocation: string;
   checkedInLocation: string;
+  checkedOutLocation:string;
   distanceInKm: number;
   meetingLat:string;
   meetingId:string;

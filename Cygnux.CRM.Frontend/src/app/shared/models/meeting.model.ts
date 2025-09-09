@@ -55,6 +55,8 @@ export interface MeetingDetailResponse extends MeetingResponse {
   checkInDateTime:string;
   previousLatitude?:string;
   previousLongitude?:string;
+  createLongitude?:string;
+  createLatitude?:string
 }
 export interface AddMeetingResponse {
   leadId: string;

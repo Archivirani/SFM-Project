@@ -17,6 +17,7 @@ import {
 import { ApiHandlerService } from './api-handler.service';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { CustomersListResponse } from '../models/customer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -79,7 +80,20 @@ export class MeetingService {
 
   getGoogleDetail(payload:any){
     return this.apiHandlerService.Get(`Meeting/GetDrivingDistance?originLat=${payload.originLat}&originLng=${payload.originLng}&destLat=${payload.destLat}&destLng=${payload.destLng}`);
-   
+  }
 
+  
+  getMeetingCustomer(): Observable<IApiBaseResponse<CustomersListResponse>> {
+    return this.apiHandlerService.Get(`Meeting/PanIndiaCustomer`);
+  }
+
+    getGeoLocationList(
+    search: string
+  ): Observable<any> {
+    return this.apiHandlerService.Get(`Meeting/GetAddressFromSerach?input=${search}`);
+  }
+
+  getLatLongAccordingAddress(address:string): Observable<any>{
+    return this.apiHandlerService.Get(`Meeting/GetCoordinates?address=${address}`);
   }
 }

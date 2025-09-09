@@ -30,6 +30,9 @@ export class ComplaintListComponent implements OnInit {
   public selectedCall: string | null = null;
   public selectedComplaintId: string | null = null;
   selectedFile: File | null = null;
+  dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+  new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
+
 
   page = 1; // Current page number
   pageSize = 5; // Number of items per page
@@ -44,7 +47,7 @@ export class ComplaintListComponent implements OnInit {
   @Output() edit = new EventEmitter<ComplaintResponse>();
   constructor(
     private complaintService: ComplaintService,
-    private commonService: CommonService,
+    public commonService: CommonService,
     private toasterService: ToastrService,
     private exportService: ExportService,
     public importService: ImportService,
@@ -62,7 +65,7 @@ export class ComplaintListComponent implements OnInit {
     }, 500);
   }
 
-  private getComplaints(page: number = 1) {
+   getComplaints(event?: any,page: number = 1) {
     this.commonService.updateLoader(true);
     this.filters = Object.fromEntries(
       Object.entries(this.filters).filter(([key, value]) => value !== null)
@@ -72,7 +75,9 @@ export class ComplaintListComponent implements OnInit {
       Page: page,
       PageSize: this.pageSize,
       export: false,
-      UserID: this.identifyService.getLoggedUserId()
+      UserID: this.identifyService.getLoggedUserId(),
+      startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
+      endDate: event?.[1] ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     };
     this.complaintService.getComplaintList(filters).pipe(take(1), finalize(() => this.commonService.updateLoader(false))).subscribe({
       next: (response: any) => {
@@ -93,7 +98,9 @@ export class ComplaintListComponent implements OnInit {
     const filters: any = {
       ...this.filters,
       export: true,
-      UserID: this.identifyService.getLoggedUserId()
+      UserID: this.identifyService.getLoggedUserId(),
+       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
+      endDate: event?.[1] ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     }
     this.commonService.updateLoader(true);
     this.complaintService.getComplaintListexport(filters).subscribe({

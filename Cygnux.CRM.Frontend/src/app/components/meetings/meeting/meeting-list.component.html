@@ -41,9 +41,9 @@
                     <i class="ri-delete-bin-2-line"></i>
                   </button>
 
-                  <!-- <button type="button" class="btn btn-success add-btn" (click)="openModal()">
+                  <button type="button" class="btn btn-success add-btn" (click)="openModal()">
                     <i class="ri-add-line align-bottom me-1"></i> Add Meeting
-                  </button> -->
+                  </button>
                   <span class="dropdown">
                     <button class="btn btn-soft-info btn-icon fs-14" type="button" id="dropdownMenuButton1"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -239,7 +239,7 @@
                       id="close-modal"></button> 
                   </div> -->
                   <app-add-meeting (dataEmitter)="closeEditModal()"
-                    [meetingResponse]="selectedMeeting" [isMeetingList]="'Update'" [checkOutValue]="checkOutValue"></app-add-meeting>
+                    [meetingResponse]="selectedMeeting" [isMeetingList]="!meetingId?'Add':'Update'" [checkOutValue]="checkOutValue"></app-add-meeting>
                 </div>
               </div>
             </div>

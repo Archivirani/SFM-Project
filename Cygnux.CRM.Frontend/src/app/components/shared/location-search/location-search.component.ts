@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, input, OnDestroy, OnInit, O
 import { MapLocationResponse } from '../../../shared/models/location.model';
 import { MeetingService } from '../../../shared/services/meeting.service';
 import { Subscription } from 'rxjs';
+import { PlacesService } from '../../../shared/services/places.service';
 
 declare var google: any;
 
@@ -10,25 +11,32 @@ declare var google: any;
   templateUrl: './location-search.component.html',
 })
 export class LocationSearchComponent implements OnInit ,OnDestroy{
-  @Output() mapDataEmitter: EventEmitter<MapLocationResponse> = new EventEmitter<MapLocationResponse>();
-  @Input() meetingResponse: any = {}; 
+   @Output() mapDataEmitter: EventEmitter<MapLocationResponse> =
+    new EventEmitter<MapLocationResponse>();
+  @Input() meetingResponse: any = {};
   @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
   @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
-  private placeSearch!: PlacesSearch;
-  private resetLocationSearchSubscription!:Subscription;
-  constructor(private meetingService: MeetingService){
-    this.resetLocationSearchSubscription = this.meetingService.resetLocationSearch.subscribe((res)=>{
-      if(res){
-        this.resetSearch();
-      }
-    })
+
+  private resetLocationSearchSubscription!: Subscription;
+
+  constructor(
+    private meetingService: MeetingService,
+    private placesService: PlacesService
+  ) {
+    this.resetLocationSearchSubscription =
+      this.meetingService.resetLocationSearch.subscribe((res) => {
+        if (res) {
+          this.resetSearch();
+        }
+      });
   }
-  
+
   ngOnInit(): void {
-   if (!this.meetingResponse) {
-      this.meetingResponse = ''; 
+    if (!this.meetingResponse) {
+      this.meetingResponse = '';
     }
   }
+
   ngAfterViewInit(): void {
     if (this.searchInput && this.suggestionsList) {
       this.initializePlaceSearch();
@@ -41,29 +49,82 @@ export class LocationSearchComponent implements OnInit ,OnDestroy{
     }
   }
 
-   private initializePlaceSearch(): void {
-    if (!this.searchInput?.nativeElement || !this.suggestionsList?.nativeElement) {
+  private initializePlaceSearch(): void {
+    const inputEl = this.searchInput?.nativeElement;
+    const listEl = this.suggestionsList?.nativeElement;
+
+    if (!inputEl || !listEl) {
       console.error('Search input or suggestions list is not available');
       return;
     }
 
-    this.placeSearch = new PlacesSearch(this.searchInput.nativeElement, this.suggestionsList.nativeElement);
-    this.placeSearch.initialize();
+    inputEl.addEventListener('input', () => {
+      const query = inputEl.value.trim();
 
-    this.placeSearch.eventCompleted.subscribe((value) => {
-      this.meetingResponse = value.address;
-      this.mapDataEmitter.emit(value);
+      if (query.length >= 2) {
+        this.placesService.getAutocompleteSuggestions(query).subscribe({
+          next: (res:any) => {
+            const predictions = res?.suggestions || [];
+            this.renderSuggestions(predictions, listEl, inputEl);
+          },
+          error: (err:any) => {
+            console.error('Autocomplete API failed:', err);
+            listEl.innerHTML = '';
+          },
+        });
+      } else {
+        listEl.innerHTML = '';
+      }
     });
   }
 
-   resetSearch(): void {
-    if (this.meetingResponse) {this.meetingResponse = ''}
-    if (this.searchInput) {this.searchInput.nativeElement.value = ''}
-    if (this.suggestionsList) { this.suggestionsList.nativeElement.innerHTML = ''}
+  private renderSuggestions(predictions: any[], listEl: HTMLElement, inputEl: HTMLInputElement) {
+    listEl.innerHTML = '';
+
+    predictions.forEach((prediction) => {
+      const listItem = document.createElement('li');
+      listItem.textContent = prediction.placePrediction.text?.text;
+      listItem.style.padding = '5px';
+      listItem.style.cursor = 'pointer';
+
+      listItem.addEventListener('click', () => {
+        inputEl.value = prediction.placePrediction.text?.text || '';
+        listEl.innerHTML = '';
+
+        const placeId = prediction.placePrediction.placeId;
+        if (placeId) {
+          this.placesService.getPlaceDetails(placeId).subscribe((details) => {
+            const mapData: MapLocationResponse = {
+              lat: details?.location?.latitude || 0,
+              lng: details?.location?.longitude || 0,
+              address: details?.formattedAddress || 'No address available',
+            };
+            this.meetingResponse = mapData.address;
+            this.mapDataEmitter.emit(mapData);
+          });
+        }
+      });
+
+      listEl.appendChild(listItem);
+    });
+  }
+
+  resetSearch(): void {
+    if (this.meetingResponse) {
+      this.meetingResponse = '';
+    }
+    if (this.searchInput) {
+      this.searchInput.nativeElement.value = '';
+    }
+    if (this.suggestionsList) {
+      this.suggestionsList.nativeElement.innerHTML = '';
+    }
   }
 
   ngOnDestroy(): void {
-    if(this.resetLocationSearchSubscription){this.resetLocationSearchSubscription.unsubscribe()}
+    if (this.resetLocationSearchSubscription) {
+      this.resetLocationSearchSubscription.unsubscribe();
+    }
   }
 }
 

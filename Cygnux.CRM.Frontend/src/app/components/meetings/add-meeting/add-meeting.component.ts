@@ -54,8 +54,10 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   meetingRole: boolean = false;
   public meetingMom: MeetingMoMResponse[] = [];
   public isChecked: boolean = false;
-  meetingSubscription: Subscription
+  meetingSubscription: Subscription;
+  public geoLocation: any;
   calendarOptions: CalendarResponse[] = [];
+  public meetingCustomerList:any;
   @Input() checkOutValue: any;
   @Input() meetingResponse: MeetingResponse | null = null;
   @Input() addmeetingResponse: AddMeetingResponse | null = null;
@@ -66,7 +68,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     lat: 28.5578178, // Replace with your latitude
     lng: 77.0627425, // Replace with your longitude
   };
-  DistanceInKM:any;
+  DistanceInKM: any;
   zoom = 12;
   @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
   @ViewChild('suggestionsList', { static: false }) suggestionsList!: ElementRef;
@@ -118,7 +120,8 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     this.getMeetingTypes();
     this.getUsers();
     this.getCalendar();
-    this.getMeetingMom()
+    this.getMeetingMom();
+    this.getCustomerList()
   }
 
   buildForm(): void {
@@ -153,7 +156,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       remarks: new FormControl(null),
       CreateBy: new FormControl(this.identityService.getLoggedUserId()),
       ModifiedBy: new FormControl(null),
-      DistanceInKM: new FormControl()
+      DistanceInKM: new FormControl(),
     },
       // { validators: timeRangeValidator  }
     );
@@ -281,7 +284,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     if (this.customerService.customersList) {
       var customerCode = this.customerService.customersList.find((d) => d.customerName === form.value.customerName)?.customerCode
     }
-     if (this.meetingResponse && this.meetingResponse.checkIn && this.meetingResponse.checkOut && this.meetingResponse.checkOutReason === 'CHECK OUT DONE') {
+    if (this.meetingResponse && this.meetingResponse.checkIn && this.meetingResponse.checkOut && this.meetingResponse.checkOutReason === 'CHECK OUT DONE') {
       const payload = {
         originLat: this.meetingResponse?.previousLatitude,
         originLng: this.meetingResponse?.previousLongitude,
@@ -292,7 +295,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       this.meetingService.getGoogleDetail(payload).subscribe({
         next: (response: any) => {
           if (response) {
-            this.DistanceInKM=response.distanceKm
+            this.DistanceInKM = response.distanceKm
             this.meetingForm.patchValue({
               DistanceInKM: response.distanceKm
             });
@@ -307,7 +310,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
         meetingMOM: form.value.meetingMOM?.join(','),
         meetingDate: this.formatDate(form.value.meetingDate),
         customerCode: form.value.customerCode ? form.value.customerCode : customerCode,
-        // leadId:leadId ?leadId :'',
+        leadId:form.value.leadId ?form.value.leadId :'',
         // isAllDayEvent:false
         CreateBy: this.identityService.getLoggedUserId(),
         DistanceInKM: this.DistanceInKM,
@@ -321,6 +324,13 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.meetingForm.markAllAsTouched()
     }
+  }
+
+  onChangeCustomer(event:any){
+this.meetingForm.patchValue({
+  customerCode:event.customerCode,
+  // customerName:event.customerName
+})
   }
 
   addMeeting(dataToSubmit: any): void {
@@ -369,23 +379,23 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   updateMeeting(dataToSubmit: any): void {
     console.log(dataToSubmit)
     this.commonService.updateLoader(true);
-      this.meetingService.updateMeeting(this.attendeeId, dataToSubmit).subscribe({
-        next: (response) => {
-          if (response.success) {
-            this.dataEmitter.emit();
-            this.toasterService.success(response.data.message);
-            this.meetingForm.reset();
-          } else {
-            this.toasterService.error(response.error.message);
-          }
+    this.meetingService.updateMeeting(this.attendeeId, dataToSubmit).subscribe({
+      next: (response) => {
+        if (response.success) {
           this.dataEmitter.emit();
-          this.commonService.updateLoader(false);
-        },
-        error: (response: any) => {
+          this.toasterService.success(response.data.message);
+          this.meetingForm.reset();
+        } else {
           this.toasterService.error(response.error.message);
-          this.commonService.updateLoader(false);
-        },
-      });
+        }
+        this.dataEmitter.emit();
+        this.commonService.updateLoader(false);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response.error.message);
+        this.commonService.updateLoader(false);
+      },
+    });
 
   }
 
@@ -459,6 +469,57 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       },
     });
   }
+
+  getGeoLocation(event: any) {
+    const search = event.target.value?event.target.value:null;
+    this.meetingService.getGeoLocationList(search).subscribe({
+      next: (response) => {
+        if (response) {
+          this.geoLocation = response.suggestions;
+        }
+        this.commonService.updateLoader(false);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+        this.commonService.updateLoader(false);
+      },
+    });
+  }
+
+getCustomerList(){
+  this.meetingService.getMeetingCustomer().subscribe({
+      next: (response) => {
+        if (response) {
+          this.meetingCustomerList = response.data;
+        }
+        this.commonService.updateLoader(false);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+        this.commonService.updateLoader(false);
+      },
+    });
+}
+
+getLatLongData(event:any){
+    this.meetingService.getLatLongAccordingAddress(event).subscribe({
+      next: (response) => {
+        if (response) {
+         console.log( response.data);
+         this.meetingForm.patchValue({
+            longitude:response.longitude,
+            latitude:response.latitude
+         })
+        }
+        this.commonService.updateLoader(false);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+        this.commonService.updateLoader(false);
+      },
+    });
+}
+
   ngOnDestroy(): void {
     if (this.meetingSubscription) {
       this.meetingSubscription.unsubscribe()
