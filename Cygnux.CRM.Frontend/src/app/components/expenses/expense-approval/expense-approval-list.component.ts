@@ -13,6 +13,7 @@ import { ConfirmationService } from '../../../shared/services/confirmation.servi
 import { IdentityService } from '../../../shared/services/identity.service';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
+import { CustomerService } from '../../../shared/services/customer.service';
 
 @Component({
   selector: 'app-expense-approval',
@@ -29,8 +30,8 @@ export class ExpenseApprovalListComponent implements OnInit {
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
   filters: { [key: string]: string } = {}; // Dynamic filter object
-   cardList:string = 'Expenses'
-   
+   cardList:string = 'Expenses';
+   public selectedUser:any;
   @Output() edit = new EventEmitter<ExpenseResponse>();
 
   constructor(
@@ -40,10 +41,12 @@ export class ExpenseApprovalListComponent implements OnInit {
     private exportService: ExportService,
     private confirmationService: ConfirmationService,
     public identifyService :IdentityService,
+    public customerService:CustomerService
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getExpenses();
+    this.customerService.getUsers();
   }
 
   async onStatusChange(expenseID: string, status: number) {
@@ -89,7 +92,7 @@ export class ExpenseApprovalListComponent implements OnInit {
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
-      userId:this.identifyService.getLoggedUserId()
+      userId:this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId()
     };
     this.expenseService.getExpenseApprovalList(filters).subscribe({
       next: (response) => {
@@ -119,7 +122,7 @@ export class ExpenseApprovalListComponent implements OnInit {
     event.preventDefault();
     this.commonService.updateLoader(true);
     const filters: any = {
-      UserId:this.identifyService.getLoggedUserId(),
+      UserId:this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId(),
       export:false
     }
     this.expenseService.exportExpense(filters).subscribe({

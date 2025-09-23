@@ -13,6 +13,7 @@ import { IdentityService } from '../../../shared/services/identity.service';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
 import Swal from 'sweetalert2';
+import { CustomerService } from '../../../shared/services/customer.service';
 
 @Component({
   selector: 'app-expense',
@@ -30,7 +31,8 @@ export class ExpenseListComponent implements OnInit {
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
   filters: { [key: string]: string } = {}; // Dynamic filter object
-  public cardList:string = 'Expenses'
+  public cardList:string = 'Expenses';
+  public selectedUser:any;
   @Output() edit = new EventEmitter<ExpenseResponse>();
 
   constructor(
@@ -39,11 +41,13 @@ export class ExpenseListComponent implements OnInit {
     private toasterService: ToastrService,
     private exportService: ExportService,
     public identifyService :IdentityService,
+     public customerService:CustomerService
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
     this.getExpenses();
-    this.userType=localStorage.getItem('UserType')
+    this.userType=localStorage.getItem('UserType');
+    this.customerService.getUsers();
   }
 
   getExpenses(page: number = 1) {
@@ -53,7 +57,7 @@ export class ExpenseListComponent implements OnInit {
     );
     const filters: any = {
       ...this.filters,
-      UserID:this.identifyService.getLoggedUserId(),
+      UserID:this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId(),
       Page: page,
       PageSize: this.pageSize,
     };
@@ -79,7 +83,7 @@ export class ExpenseListComponent implements OnInit {
       UserId:this.identifyService.getLoggedUserId(),
       export:true
     }
-    this.expenseService.exportexport(filters).subscribe({
+    this.expenseService.exportexport(this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId(),'','').subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);

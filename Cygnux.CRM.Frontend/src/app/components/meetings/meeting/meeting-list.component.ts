@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import {
   MeetingDetailResponse,
   MeetingResponse,
+  UserResponse,
 } from '../../../shared/models/meeting.model';
 import { CommonService } from '../../../shared/services/common.service';
 import { ExportService } from '../../../shared/services/export.service';
@@ -12,6 +13,7 @@ import { ConfirmationService } from '../../../shared/services/confirmation.servi
 import { IdentityService } from '../../../shared/services/identity.service';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
+import { CustomerService } from '../../../shared/services/customer.service';
 @Component({
   selector: 'app-meeting',
   standalone: false,
@@ -29,6 +31,9 @@ export class MeetingListComponent implements OnInit {
   page = 1; // Current page number
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
+  public endDate:any;
+  public startDate:any;
+  public selectedUser:any;
   filters: { [key: string]: string } = {}; // Dynamic filter object
 
   @Output() edit = new EventEmitter<MeetingResponse>();
@@ -40,21 +45,23 @@ export class MeetingListComponent implements OnInit {
     private toasterService: ToastrService,
     public exportService: ExportService,
     public confirmationService: ConfirmationService,
-    public identityService:IdentityService
+    public identityService:IdentityService,
+    public customerService:CustomerService
   ) {defineElement(lottie.loadAnimation);}
 
-  ngOnInit(): void {
-    this.getMeetings();
+  ngOnInit() {
+    this.customerService.getUsers();
+    this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB") || '';
+     this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
+    this.getMeetings(this.dateRange);
   }
 
   exportMeetings(event: any) {
-    const filters: any = {
-      ...this.filters,
-      userid:this.identityService.getLoggedUserId(),
-    };
+      this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB") || '';
+     this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.meetingService.exportMeeting(filters).subscribe({
+    this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -177,7 +184,7 @@ onCheckOut(meeting: any, i: number): void {
   exportCSVMeetings(event: any) {
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.meetingService.exportMeeting(this.filters).subscribe({
+    this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);
@@ -200,7 +207,7 @@ onCheckOut(meeting: any, i: number): void {
     );
     const filters: any = {
       ...this.filters,
-      userid:this.identityService.getLoggedUserId(),
+      UserID:this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),
       Page: page,
       PageSize: this.pageSize,
       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : '',
@@ -301,7 +308,7 @@ onCheckOut(meeting: any, i: number): void {
       document.querySelectorAll('.modal-backdrop').forEach((backdrop) => {
         backdrop.remove();
       });
-      this.getMeetings();
+      this.getMeetings(this.dateRange);
     }
   }
   closeCallModal() {

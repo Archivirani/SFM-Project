@@ -17,6 +17,7 @@ import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import { CustomerService } from '../../../shared/services/customer.service';
 
 @Component({
   selector: 'app-lead',
@@ -38,6 +39,9 @@ export class LeadListComponent implements OnDestroy {
   isReadonly = false;
   typeSubjectSubscription!: Subscription;
   selectedCustomerName: LeadDetailResponse | null = null;
+  public endDate: any;
+  public startDate: any;
+  public selectedUser: string = '';
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
   checkOutValue: string = '';
@@ -49,15 +53,17 @@ export class LeadListComponent implements OnDestroy {
     private toasterService: ToastrService,
     private exportService: ExportService,
     public importService: ImportService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    public customerService: CustomerService
   ) {
     defineElement(lottie.loadAnimation);
     if (this.typeSubjectSubscription) { this.typeSubjectSubscription.unsubscribe(); }
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res) => {
       if (res) {
-        this.getLeads();
+        this.getLeads(this.dateRange);
       }
     });
+    this.customerService.getUsers();
   }
 
 
@@ -70,7 +76,7 @@ export class LeadListComponent implements OnDestroy {
       ...this.filters,
       Page: page,
       PageSize: this.pageSize,
-      UserID: this.identityService.getLoggedUserId(),
+      UserID: this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),
       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
       endDate: event?.[1] ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
     };
@@ -141,13 +147,11 @@ export class LeadListComponent implements OnDestroy {
   }
 
   exportLeads(event: any) {
-    const filters: any = {
-      ...this.filters,
-      UserID: this.identityService.getLoggedUserId(),
-    };
+    this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB") || '';
+     this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.leadService.exportLead(filters).subscribe({
+    this.leadService.exportLead(this.startDate, this.endDate,this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -162,13 +166,11 @@ export class LeadListComponent implements OnDestroy {
   }
 
   exportCSVLeads(event: any) {
-    const filters: any = {
-      ...this.filters,
-      UserID: this.identityService.getLoggedUserId(),
-    };
+    this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB") || '';
+     this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.leadService.exportLead(this.filters).subscribe({
+    this.leadService.exportLead(this.startDate, this.endDate, this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);
@@ -276,7 +278,7 @@ export class LeadListComponent implements OnDestroy {
       document.querySelectorAll('.modal-backdrop').forEach((backdrop) => {
         backdrop.remove();
       });
-      this.getLeads();
+      this.getLeads(this.dateRange);
     }
   }
   closeMeetingModal() {

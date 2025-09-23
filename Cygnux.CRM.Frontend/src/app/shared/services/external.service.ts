@@ -41,4 +41,8 @@ export class ExternalService {
   ): Observable<IApiBaseResponse<DocketResponse>> {
     return this.apiHandlerService.Get(`external/docket/${docketNo}`);
   }
+
+  getUserData(id:string){
+    return this.apiHandlerService.Get(`User/GetMasterUser?userId=${id}`);
+  }
 }

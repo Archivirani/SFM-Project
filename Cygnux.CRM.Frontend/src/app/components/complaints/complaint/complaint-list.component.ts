@@ -29,6 +29,8 @@ export class ComplaintListComponent implements OnInit {
   public complaintsBackup: ComplaintResponse[] = [];
   public selectedCall: string | null = null;
   public selectedComplaintId: string | null = null;
+  public startDate:any;
+  public endDate:any;
   selectedFile: File | null = null;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
@@ -95,15 +97,11 @@ export class ComplaintListComponent implements OnInit {
 
   exportComplaints(event: any) {
     event.preventDefault();
-    const filters: any = {
-      ...this.filters,
-      export: true,
-      UserID: this.identifyService.getLoggedUserId(),
-       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,
-      endDate: event?.[1] ? event[1].toLocaleDateString("en-GB") : this.dateRange?.[1]?.toLocaleDateString("en-GB") || null
-    }
+      this.startDate=this.dateRange?.[0] ? this.dateRange[0].toLocaleDateString("en-GB") : '';
+    this.endDate=this.dateRange?.[1]  ? this.dateRange[1].toLocaleDateString("en-GB") : ''
+
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintListexport(filters).subscribe({
+    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -119,13 +117,10 @@ export class ComplaintListComponent implements OnInit {
 
   exportCSVComplaints(event: any) {
     event.preventDefault();
-    const filters: any = {
-      ...this.filters,
-      export: true,
-      UserID: this.identifyService.getLoggedUserId()
-    }
+    this.startDate=this.dateRange?.[0] ? this.dateRange[0].toLocaleDateString("en-GB") : '';
+    this.endDate=this.dateRange?.[1]  ? this.dateRange[1].toLocaleDateString("en-GB") : ''
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintListexport(filters).subscribe({
+    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);
@@ -302,7 +297,7 @@ export class ComplaintListComponent implements OnInit {
   }
   onPageChange(page: number) {
     this.page = page;
-    this.getComplaints(this.page);
+    this.getComplaints(this.dateRange,this.page);
   }
 
   downloadSampleImport(event: any) {

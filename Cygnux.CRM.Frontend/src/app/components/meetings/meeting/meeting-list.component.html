@@ -12,22 +12,27 @@
       </button>
     </div> -->
     <!-- <app-card-list [cardList]="cardList"></app-card-list> -->
+<div class="row mb-3 d-flex align-items-center">
+  <div class="col-6 d-flex align-items-center">
+    <label class="me-2 mb-0">Date Range</label>
+     <input type="text" placeholder="Daterangepicker" class="form-control" bsDaterangepicker
+              [(ngModel)]="dateRange" (bsValueChange)="getMeetings($event)" [bsConfig]="{rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
+                     'DD.MM.YYYY',ranges: commonService.ranges }"  style="flex:1;">
+  </div>
 
-    <div class="row mb-3 d-flex">
-      <div class="col-1">
-          <label class="col-form-label">Date Range</label>   
-      </div>
-      <div class="col-5">
-          <div class="form-group mb-3">
-               <input type="text"
-                     placeholder="Daterangepicker"
-                     class="form-control"
-                     bsDaterangepicker  [(ngModel)]="dateRange" (bsValueChange)="getMeetings($event)"
-                     [bsConfig]="{rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
-                     'DD.MM.YYYY',ranges: commonService.ranges }">
-            </div>   
-      </div>
-    </div>
+  <div class="col-3 d-flex align-items-center">
+    <label class="me-2 mb-0">User</label>
+    <ng-select [items]="customerService.users"
+               bindLabel="name"
+               bindValue="userId"
+               [placeholder]="'Search User'"
+               [clearable]="true"
+               [searchable]="true"
+               (change)="getMeetings(this.dateRange)" [(ngModel)]="selectedUser"
+               style="flex:1;">
+    </ng-select>
+  </div>
+</div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -88,10 +93,11 @@
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
                             [(ngModel)]="filters['MeetingDate']" ngbDatepicker (ngModelChange)="getMeetings()"
-                            #d2="ngbDatepicker" readonly/>
-                            <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['MeetingDate']">
-                              <span aria-hidden="true" class="ng-clear clear">×</span>
-                            </span>
+                            #d2="ngbDatepicker" readonly />
+                          <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper"
+                            title="Clear date" *ngIf="filters['MeetingDate']">
+                            <span aria-hidden="true" class="ng-clear clear">×</span>
+                          </span>
                           <button class="btn btn-sm btn-outline-secondary ri-calendar-line" (click)="d2.toggle()"
                             type="button"></button>
                         </div>
@@ -105,20 +111,15 @@
                           class="form-control" />
                       </th>
                       <th>
-                        <input
-                          type="text"  [(ngModel)]="filters['CheckIn']" (input)="getMeetings()"
-                          (input)="getMeetings()"
-                          class="form-control"
-                        />
+                        <input type="text" [(ngModel)]="filters['CheckIn']" (input)="getMeetings()"
+                          (input)="getMeetings()" class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="getMeetings()" class="form-control"/>
+                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="getMeetings()"
+                          class="form-control" />
                       </th>
-                      <th> <input
-                        type="text" [(ngModel)]="filters['meetingTimeInMins']"
-                        (input)="getMeetings()"
-                        class="form-control"
-                      /> </th>
+                      <th> <input type="text" [(ngModel)]="filters['meetingTimeInMins']" (input)="getMeetings()"
+                          class="form-control" /> </th>
                       <!-- <th></th> -->
                       <th>
                         <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings()"
@@ -158,8 +159,8 @@
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="Edit">
                             <a class="edit-item-btn" [ngClass]="{'disabled-image': meeting.isExpired}"
-                            (click)="meeting.isExpired ? null : editModal($event, meeting.attendeeCode, meeting.checkOut)"><i
-                                class="ri-pencil-fill align-bottom text-muted" ></i></a>
+                              (click)="meeting.isExpired ? null : editModal($event, meeting.attendeeCode, meeting.checkOut)"><i
+                                class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li>
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="View">
@@ -179,10 +180,12 @@
                             </a>
                           </li> -->
                           <li class="list-inline-item edit">
-                            <div [popover]="hourPopover" [popoverContext]="{index: meeting}" triggers="hover" placement="left" [popoverTitle]="'CheckIn/Out Time'"  [outsideClick]="true" container="body">
+                            <div [popover]="hourPopover" [popoverContext]="{index: meeting}" triggers="hover"
+                              placement="left" [popoverTitle]="'CheckIn/Out Time'" [outsideClick]="true"
+                              container="body">
                               <a class="text-muted d-inline-block">
-                              <i class="ri-map-pin-user-fill fs-16"></i>
-                            </a>
+                                <i class="ri-map-pin-user-fill fs-16"></i>
+                              </a>
                             </div>
                           </li>
                           <!-- <li
@@ -202,10 +205,11 @@
                           </li> -->
 
                           <li class="list-inline-item">
-                            <div [popover]="meeting.geoLocation" placement="left" [popoverTitle]="'Location Details'" triggers="hover" [outsideClick]="true" container="body">
-                            <a class="edit-item-btn" href="#" (click)="preventClick($event)"><i
-                                class="ri-map-pin-2-fill align-bottom text-muted"></i></a>
-                          </div>
+                            <div [popover]="meeting.geoLocation" placement="left" [popoverTitle]="'Location Details'"
+                              triggers="hover" [outsideClick]="true" container="body">
+                              <a class="edit-item-btn" href="#" (click)="preventClick($event)"><i
+                                  class="ri-map-pin-2-fill align-bottom text-muted"></i></a>
+                            </div>
                           </li>
                         </ul>
                       </td>
@@ -227,8 +231,8 @@
               </div>
             </div>
 
-            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
-            data-bs-keyboard="false">
+            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+              data-bs-backdrop="static" data-bs-keyboard="false">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                   <!-- <div class="modal-header bg-light p-3">
@@ -238,8 +242,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button> 
                   </div> -->
-                  <app-add-meeting (dataEmitter)="closeEditModal()"
-                    [meetingResponse]="selectedMeeting" [isMeetingList]="!meetingId?'Add':'Update'" [checkOutValue]="checkOutValue"></app-add-meeting>
+                  <app-add-meeting (dataEmitter)="closeEditModal()" [meetingResponse]="selectedMeeting"
+                    [isMeetingList]="!meetingId?'Add':'Update'" [checkOutValue]="checkOutValue"></app-add-meeting>
                 </div>
               </div>
             </div>
@@ -253,7 +257,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button>
                   </div> -->
-                  <app-add-call (dataEmitter)="closeCallModal()" [addCallResponse]="selectedCall" [isCallList]="'Add'"></app-add-call>
+                  <app-add-call (dataEmitter)="closeCallModal()" [addCallResponse]="selectedCall"
+                    [isCallList]="'Add'"></app-add-call>
                 </div>
               </div>
             </div>
@@ -291,13 +296,14 @@
               </div>
             </div>
 
-            
-            <div class="modal fade" id="showChartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div class="modal fade" id="showChartModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                   <div class="modal-header bg-light p-3">
                     <h5 class="modal-title" id="exampleModalLabel">
-                      Meeting By Status 
+                      Meeting By Status
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button>

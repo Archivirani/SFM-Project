@@ -11,15 +11,25 @@ import {
 } from '../models/customer.model';
 import { ApiHandlerService } from './api-handler.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { CommonService } from './common.service';
+import { IdentityService } from './identity.service';
+import { ToastrService } from 'ngx-toastr';
+import { ExternalService } from './external.service';
+import { UserResponse } from '../models/meeting.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
   public customersList: CustomersListResponse[] = [];
+  public users: UserResponse[] = [];
 
   constructor(
-    @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService
+    @Inject(ApiHandlerService) private apiHandlerService: ApiHandlerService,
+    private commonService:CommonService,
+    private identityService:IdentityService,
+    private toasterService:ToastrService,
+    private externalService:ExternalService
   ) {}
   
   getCustomerList(
@@ -73,4 +83,23 @@ export class CustomerService {
         });
       }
     }
+
+      getUsers() {
+        this.commonService.updateLoader(true);
+        this.externalService.getUserData(this.identityService.getLoggedUserId()).subscribe({
+          next: (response) => {
+            if (response) {
+              this.users= response.data.map((user: any) => ({
+                userId: user.userId,
+                name: `${user.userId } : ${user.name}`,
+              }));
+            }
+            this.commonService.updateLoader(false);
+          },
+          error: (response: any) => {
+            this.toasterService.error(response);
+            this.commonService.updateLoader(false);
+          },
+        });
+      }
 }

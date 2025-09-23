@@ -33,9 +33,11 @@ export class ComplaintService {
   }
 
   getComplaintListexport(
-    filters: any
+    filters: any,
+    startDate:any,
+    endDate:any
   ): Observable<IApiBaseResponse<ComplaintResponse[]>> {
-    return this.apiHandlerService.Get('Complaint/export', filters);
+    return this.apiHandlerService.Get(`Complaint/export?UserId=${filters}&startdate=${startDate}&enddate=${endDate}`);
   }
 
   // importComplaint(formData: any): Observable<IApiBaseResponse<CommonResponse>> {
