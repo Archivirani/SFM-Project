@@ -83,7 +83,7 @@ export class ExpenseListComponent implements OnInit {
       UserId:this.identifyService.getLoggedUserId(),
       export:true
     }
-    this.expenseService.exportexport(this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId(),'','').subscribe({
+    this.expenseService.exportexport(this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId(),'','',filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);

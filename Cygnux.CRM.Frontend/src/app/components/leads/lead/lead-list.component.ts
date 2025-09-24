@@ -41,7 +41,7 @@ export class LeadListComponent implements OnDestroy {
   selectedCustomerName: LeadDetailResponse | null = null;
   public endDate: any;
   public startDate: any;
-  public selectedUser: string = '';
+  public selectedUser: any;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
   checkOutValue: string = '';
@@ -151,7 +151,10 @@ export class LeadListComponent implements OnDestroy {
      this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.leadService.exportLead(this.startDate, this.endDate,this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId()).subscribe({
+     const filters: any = {
+      ...this.filters,
+    };
+    this.leadService.exportLead(this.startDate, this.endDate,this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -170,7 +173,10 @@ export class LeadListComponent implements OnDestroy {
      this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.leadService.exportLead(this.startDate, this.endDate, this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId()).subscribe({
+     const filters: any = {
+      ...this.filters,
+    };
+    this.leadService.exportLead(this.startDate, this.endDate, this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);

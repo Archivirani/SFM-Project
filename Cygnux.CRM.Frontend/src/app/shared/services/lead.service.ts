@@ -38,8 +38,8 @@ export class LeadService {
   getLeadList(filters: any): Observable<IApiBaseResponse<LeadResponse[]>> {
     return this.apiHandlerService.Get('lead/leadlist', filters);
   }
-  exportLead(startDate: any,endDate:any,userId:any): Observable<IApiBaseResponse<any[]>> {
-    return this.apiHandlerService.Get(`lead/export?startdate=${startDate}&enddate=${endDate}&UserId=${userId}`);
+  exportLead(startDate: any,endDate:any,userId:any,filters:any): Observable<IApiBaseResponse<any[]>> {
+    return this.apiHandlerService.Get(`lead/export?startdate=${startDate}&enddate=${endDate}&UserId=${userId}`,filters);
   }
 
   exportLeadCategory(filters: any): Observable<IApiBaseResponse<any[]>> {

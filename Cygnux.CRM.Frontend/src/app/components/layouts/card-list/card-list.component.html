@@ -1,6 +1,6 @@
 <div class="row" *ngIf="getfilter">
     <div class="col" *ngFor="let item of getfilter">
-        <div class="card" (click)="exportLeadCategory(item.id)">
+        <div class="card" (click)="exportLeadCategory(item)">
             <a class="card-body" [ngClass]="item.color" data-bs-toggle="collapse" href="#leadDiscovered" role="button" aria-expanded="false" aria-controls="leadDiscovered">
                 <h5 class="card-title text-uppercase fw-semibold mb-1 fs-15" title="{{item.name}}" [innerHTML]="item.name"></h5>
                 <p class="text-muted mb-0"><span class="fw-medium" [appCountUp]="item.count" ></span></p>

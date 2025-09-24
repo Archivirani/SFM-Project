@@ -61,7 +61,11 @@ export class MeetingListComponent implements OnInit {
      this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
+       const filters: any = {
+      ...this.filters,
+      UserID:this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),
+    };
+    this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),filters,this.startDate,this.endDate).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -177,14 +181,17 @@ onCheckOut(meeting: any, i: number): void {
   
   clearDate() {
     this.filters['MeetingDate'] = '';
-    this.getMeetings();
+    this.getMeetings(this.dateRange);
   }
   
 
   exportCSVMeetings(event: any) {
     event.preventDefault();
     this.commonService.updateLoader(true);
-    this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
+     const filters: any = {
+      ...this.filters,
+    };
+    this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),this.startDate,this.endDate,filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);
@@ -200,6 +207,15 @@ onCheckOut(meeting: any, i: number): void {
   preventClick(event: Event): void {
     event.preventDefault();
   }
+
+timeoutRef: any;
+  onStartTimeChange() {
+    clearTimeout(this.timeoutRef); // 🔑 cancel previous timeout
+    this.timeoutRef = setTimeout(() => {
+      this.getMeetings(this.dateRange);
+    }, 500);
+  }
+
   getMeetings(event?:any,page: number = 1) {
     this.commonService.updateLoader(true);
     this.filters = Object.fromEntries(

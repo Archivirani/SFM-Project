@@ -86,13 +86,13 @@
                     </tr>
                     <tr>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="getMeetings()"
+                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="getMeetings(this.dateRange)"
                           class="form-control" />
                       </th>
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
-                            [(ngModel)]="filters['MeetingDate']" ngbDatepicker (ngModelChange)="getMeetings()"
+                            [(ngModel)]="filters['MeetingDate']" ngbDatepicker (ngModelChange)="getMeetings(this.dateRange)"
                             #d2="ngbDatepicker" readonly />
                           <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper"
                             title="Clear date" *ngIf="filters['MeetingDate']">
@@ -103,26 +103,26 @@
                         </div>
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['StartTime']" (input)="getMeetings()"
+                        <input type="text" [(ngModel)]="filters['StartTime']" (input)="getMeetings(this.dateRange)"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['EndTime']" (input)="getMeetings()"
+                        <input type="text" [(ngModel)]="filters['EndTime']" (input)="getMeetings(this.dateRange)"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CheckIn']" (input)="getMeetings()"
+                        <input type="text" [(ngModel)]="filters['CheckIn']" (input)="getMeetings(this.dateRange)"
                           (input)="getMeetings()" class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="getMeetings()"
+                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="getMeetings(this.dateRange)"
                           class="form-control" />
                       </th>
-                      <th> <input type="text" [(ngModel)]="filters['meetingTimeInMins']" (input)="getMeetings()"
+                      <th> <input type="text" [(ngModel)]="filters['meetingTimeInMins']" (input)="getMeetings(this.dateRange)"
                           class="form-control" /> </th>
                       <!-- <th></th> -->
                       <th>
-                        <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings()"
+                        <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings(this.dateRange)"
                           class="form-control" />
                       </th>
                       <th></th>

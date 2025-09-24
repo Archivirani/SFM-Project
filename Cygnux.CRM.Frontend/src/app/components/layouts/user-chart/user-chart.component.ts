@@ -440,7 +440,7 @@ export class UserChartComponent {
     if (this.chartList === 'leads') {
       this.commonService.updateLoader(true);
       const filters = {
-        id: data,
+        id: data.id,
         startdate: this.startDate,
         enddate: this.endDate
       }
@@ -457,7 +457,34 @@ export class UserChartComponent {
         },
       });
     }
+    if (this.chartList === 'complaint') {
+      this.startDate=this.dateRange?.[0] ? this.dateRange[0].toLocaleDateString("en-GB") : '';
+    this.endDate=this.dateRange?.[1]  ? this.dateRange[1].toLocaleDateString("en-GB") : ''
+
+       let status = '';
+    if (data?.name.includes('Total')) status = '';          // blank for total
+    else if (data?.name.includes('Open')) status = 'New';
+    else if (data?.name.includes('Closed')) status = 'Closed';
+    else if (data?.name.includes('Updated')) status = 'Updated';
+    else if (data?.name.includes('Escalated')) status = 'Escalated';
+
+    const filters: any = {
+      compaintStatus: status
+    };
+    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate,filters).subscribe({
+      next: (response) => {
+        if (response) {
+          this.exportService.exportToExcel(response.data);
+        }
+        this.commonService.updateLoader(false);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+        this.commonService.updateLoader(false);
+      },
+    });
   }
+}
 
   getLeadSourceChart() {
     const filters: any = {

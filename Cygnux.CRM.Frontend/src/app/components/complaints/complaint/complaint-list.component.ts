@@ -101,7 +101,10 @@ export class ComplaintListComponent implements OnInit {
     this.endDate=this.dateRange?.[1]  ? this.dateRange[1].toLocaleDateString("en-GB") : ''
 
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
+     const filters: any = {
+      ...this.filters,
+    };
+    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate,filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
@@ -120,7 +123,10 @@ export class ComplaintListComponent implements OnInit {
     this.startDate=this.dateRange?.[0] ? this.dateRange[0].toLocaleDateString("en-GB") : '';
     this.endDate=this.dateRange?.[1]  ? this.dateRange[1].toLocaleDateString("en-GB") : ''
     this.commonService.updateLoader(true);
-    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate).subscribe({
+      const filters: any = {
+      ...this.filters,
+    };
+    this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate,filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToCSV(response.data);
