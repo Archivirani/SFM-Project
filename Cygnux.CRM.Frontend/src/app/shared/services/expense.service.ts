@@ -35,7 +35,7 @@ export class ExpenseService {
   }
   
   exportExpense(filters: any): Observable<IApiBaseResponse<any[]>> {
-    return this.apiHandlerService.Get(`expense/ExportExcel`,filters);
+    return this.apiHandlerService.Get(`expense/ExportExpenseApproval`,filters);
   }
 
   getExpenseDetails(id: any,userId:any): Observable<IApiBaseResponse<ExpenseDetailResponse>> {
@@ -65,7 +65,7 @@ export class ExpenseService {
   }
 
   exportexport(userId:any,startDate:any,endDate:any,filters:any): Observable<IApiBaseResponse<any[]>> {
-    return this.apiHandlerService.Get(`Expense/export?userid=${userId}&startdate=${startDate}&enddate=${endDate}`,filters);
+    return this.apiHandlerService.Get(`Expense/ExportExpense?userid=${userId}&startdate=${startDate}&enddate=${endDate}`,filters);
   }
 
   deleteExpense(id: string): Observable<IApiBaseResponse<CommonResponse>> {

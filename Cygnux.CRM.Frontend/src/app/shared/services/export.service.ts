@@ -14,8 +14,8 @@ export class ExportService {
    * @param fileName Name of the exported Excel file
    */
   exportToExcel(data: any[], fileName: string = 'exported-data') {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils?.json_to_sheet(data);
+    const workbook = XLSX.utils?.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
     const excelBuffer: any = XLSX.write(workbook, {
