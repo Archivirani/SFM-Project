@@ -46,6 +46,10 @@ export class LeadListComponent implements OnDestroy {
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
   checkOutValue: string = '';
   selectedFile: File | null = null;
+  public isaddLeadOpen:boolean=false;
+  public isaddMeetingOpen:boolean=false;
+  public isaddcallOpen:boolean=false;
+  public isLeadDashboard:boolean=false;
 
   constructor(
     private leadService: LeadService,
@@ -102,6 +106,7 @@ export class LeadListComponent implements OnDestroy {
       const modal = new Modal(modalElement);
       this.selectedCustomerName = leadData;
       modal.show();
+      this.isaddcallOpen=true;
     }
   }
 
@@ -122,6 +127,7 @@ export class LeadListComponent implements OnDestroy {
       const modal = new Modal(modalElement);
       modal.show();
       this.commonService.userChart.next(true)
+      this.isLeadDashboard=true
     }
   }
 
@@ -220,6 +226,7 @@ export class LeadListComponent implements OnDestroy {
       this.leadId = '';
       this.selectedLead = null;
       modal.show();
+      this.isaddLeadOpen=true
     }
   }
   getLead(leadCode: string) {
@@ -246,6 +253,7 @@ export class LeadListComponent implements OnDestroy {
       modal.show();
       this.leadId = leadId;
       this.getLead(leadId);
+      this.isaddLeadOpen=true
     }
   }
 
@@ -274,6 +282,7 @@ export class LeadListComponent implements OnDestroy {
       };
       this.checkOutValue = '-';
       modal.show();
+      this.isaddMeetingOpen=true
     }
   }
   closeEditModal() {

@@ -197,7 +197,9 @@
                       id="close-modal"
                     ></button>
                   </div> -->
+                  <div *ngIf="isaddLeadOpen">
                   <app-add-lead (dataEmitter)="closeEditModal()" [leadResponse]="selectedLead"></app-add-lead>
+                  </div>
                 </div>
               </div>
             </div>
@@ -218,8 +220,10 @@
                       id="close-modal"
                     ></button>
                   </div> -->
+                  <div *ngIf="isaddMeetingOpen">
                   <app-add-meeting [checkOutValue]="checkOutValue" (dataEmitter)="closeMeetingModal()"
                     [addmeetingResponse]="selectedMeeting" [isMeetingList]="'Add'"></app-add-meeting>
+                    </div>
                 </div>
               </div>
             </div>
@@ -251,7 +255,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button>
                   </div>
+                  <div *ngIf="isLeadDashboard">
                   <app-user-chart [chartList]="'leads'"></app-user-chart>
+                  </div>
                 </div>
               </div>
             </div>
@@ -262,8 +268,10 @@
                   <!-- <div class="modal-header bg-light p-3">
                     <h5 class="modal-title" id="exampleModalLabel">Add Call</h5>
                   </div> -->
+                  <div *ngIf="isaddcallOpen">
                   <app-add-call (dataEmitter)="closeCallModal()" [callResponse]="selectedCustomerName"
                     [isCallList]="'Add'"></app-add-call>
+                    </div>
                 </div>
               </div>
             </div>

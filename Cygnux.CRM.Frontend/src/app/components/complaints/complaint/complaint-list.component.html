@@ -246,7 +246,7 @@
               </div>
             </div>
 
-            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                   <div class="modal-header bg-light p-3">
@@ -260,7 +260,7 @@
                     [complaintResponse]="selectedComplaint"></app-add-complaint>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="modal fade" id="showModalDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
@@ -289,7 +289,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button>
                   </div>
+                  <div *ngIf="isComplaintdashboard">
                   <app-user-chart [chartList]="'complaint'"></app-user-chart>
+                  </div>
                 </div>
               </div>
             </div>
@@ -305,8 +307,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button>
                   </div> -->
+                  <div *ngIf="isAddComplaint">
                   <app-add-ticket [complaint]="complaintId" [complaintResponse]="selectedComplaint"
                     (dataEmitter)="closeTicketModal()"></app-add-ticket>
+                    </div>
                 </div>
               </div>
             </div>

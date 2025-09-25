@@ -34,6 +34,8 @@ export class ComplaintListComponent implements OnInit {
   selectedFile: File | null = null;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
+  public isAddComplaint:boolean=false;
+  public isComplaintdashboard:boolean=false;
 
 
   page = 1; // Current page number
@@ -169,6 +171,7 @@ export class ComplaintListComponent implements OnInit {
       if (type !== 'Add') {
         this.getComplaint(complaintID);
       }
+      this.isAddComplaint=true
     }
   }
 
@@ -189,6 +192,7 @@ export class ComplaintListComponent implements OnInit {
     if (modalElement) {
       const modal = new Modal(modalElement);
       modal.show();
+      this.isComplaintdashboard=true;
     }
   }
 

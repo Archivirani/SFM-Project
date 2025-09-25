@@ -35,6 +35,8 @@ export class MeetingListComponent implements OnInit {
   public startDate:any;
   public selectedUser:any;
   filters: { [key: string]: string } = {}; // Dynamic filter object
+  public isAddMeeting:boolean=false;
+  public isMeetingdashboard:boolean=false;
 
   @Output() edit = new EventEmitter<MeetingResponse>();
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -287,6 +289,7 @@ timeoutRef: any;
       this.checkOutValue='-';
       this.edit.emit();
       modal.show();
+      this.isAddMeeting=true;
     }
   }
 
@@ -296,6 +299,7 @@ timeoutRef: any;
     if (modalElement) {
       const modal = new Modal(modalElement);
       modal.show();
+      this.isMeetingdashboard=true;
     }
   }
 
@@ -351,6 +355,7 @@ timeoutRef: any;
       modal.show();
       this.meetingId = meetingId;
       this.getMeeting(meetingId,checkOut);
+      this.isAddMeeting=true;
     }
   }
   viewModal(event: Event, meetingId: string) {

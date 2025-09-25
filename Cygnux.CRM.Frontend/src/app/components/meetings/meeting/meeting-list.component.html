@@ -242,26 +242,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button> 
                   </div> -->
+                  <div *ngIf="isAddMeeting">
                   <app-add-meeting (dataEmitter)="closeEditModal()" [meetingResponse]="selectedMeeting"
                     [isMeetingList]="!meetingId?'Add':'Update'" [checkOutValue]="checkOutValue"></app-add-meeting>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="modal fade" id="showModalCall" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <!-- <div class="modal fade" id="showModalCall" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <!-- <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Call</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                      id="close-modal"></button>
-                  </div> -->
                   <app-add-call (dataEmitter)="closeCallModal()" [addCallResponse]="selectedCall"
                     [isCallList]="'Add'"></app-add-call>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="modal fade" id="showModalDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
@@ -279,22 +276,15 @@
               </div>
             </div>
 
-            <div class="modal fade" id="showModalExpense" tabindex="-1" aria-labelledby="expenseModalLabel"
+            <!-- <div class="modal fade" id="showModalExpense" tabindex="-1" aria-labelledby="expenseModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <!-- <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="expenseModalLabel">
-                      Add Expense
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                      id="close-modal"></button>
-                  </div> -->
                   <app-add-expense (dataEmitter)="closeExpenseModal()"
                     [addMeetingResponse]="selectedMeetingId"></app-add-expense>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
             <div class="modal fade" id="showChartModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -308,7 +298,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button>
                   </div>
+                  <div *ngIf="isMeetingdashboard">
                   <app-user-chart [chartList]="'meeting'"></app-user-chart>
+                  </div>
                 </div>
               </div>
             </div>
