@@ -117,8 +117,8 @@
                       <td class="text-center">{{ expense.amount ? expense.amount:'--' }}</td>
                       <td class="text-center">{{ expense.status ? expense.status:'--' }}</td>
                       <td class="text-center">{{ expense.reqId && expense.requestDate ? expense.reqId + '/' + expense.requestDate : (expense.reqId || expense.requestDate || '--') }}</td>                      
-                      <td class="text-center">{{ expense.expenseRate}}</td>
-                      <td class="text-center"></td>
+                      <td class="text-center">{{ expense.expenseRate ? expense.expenseRate:'--'}}</td>
+                      <td class="text-center">{{ '--'}}</td>
                       <td>
                         <ul class="list-inline justify-content-center hstack gap-2 mb-0">
                           <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"

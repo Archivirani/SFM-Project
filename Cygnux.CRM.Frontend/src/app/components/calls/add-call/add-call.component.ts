@@ -38,7 +38,7 @@ export class AddCallComponent implements OnInit, OnChanges {
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor( private callService: CallService,private externalService: ExternalService, public customerService: CustomerService, public commonService: CommonService,public router: Router, private toasterService: ToastrService,
-    public identifyService :IdentityService ) { this.callForm = new FormGroup({});}
+    public identifyService :IdentityService ) { this.callForm = new FormGroup({}); this.buildForm();}
 
   ngOnChanges(changes: SimpleChanges) {
     const callStatusId = this.callStatuses.find((d)=>d.codeId.toString() === '2')?.codeId
@@ -48,11 +48,13 @@ export class AddCallComponent implements OnInit, OnChanges {
     //   });
     // } 
     if (changes['callResponse'] && this.callResponse) {
-      this.callForm.patchValue(this.callResponse);
+      // this.callForm.patchValue(this.callResponse);
       this.callForm.patchValue({
+        ...this.callResponse,
         companyName:this.callResponse.customerName || this.callResponse.companyName,
         callCategoryId:this.callResponse.callCategoryId?.toString(),
-        callStatusId:this.callResponse.callStatusId?.toString() ? this.callResponse.callStatusId?.toString():callStatusId
+        callStatusId:this.callResponse.callStatusId?.toString() ? this.callResponse.callStatusId?.toString():callStatusId,
+        leadId:this.callResponse.leadId ? this.callResponse.leadId :'',
       });
     } else {
       this.callForm.reset();
@@ -60,7 +62,6 @@ export class AddCallComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.buildForm();
     this.getCallCategories();
     this.getCallPurposes();
     this.getCallStatuses();

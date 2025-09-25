@@ -83,6 +83,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     public router: Router
   ) {
     this.meetingForm = new FormGroup({});
+    this.buildForm();
     this.meetingSubscription = this.meetingService.meetingResponseSubject.subscribe((res) => {
       this.meetingForm.patchValue({ customerName: res.customerName || res.companyName, customerCode: res.customerCode });
     })
@@ -98,8 +99,9 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       this.center.lng = this.meetingResponse.longitude;
       this.meetingId = this.meetingResponse.meetingId;
       this.attendeeId = this.meetingResponse.attendeeCode;
-      this.meetingForm.patchValue(this.meetingResponse);
+      // this.meetingForm.patchValue(this.meetingResponse);
       this.meetingForm.patchValue({
+        ...this.meetingResponse,
         meetingTypeId: this.meetingResponse.meetingTypeId?.toString()
       })
       this.meetingRole = this.meetingResponse.meetingRole === 'A' ? true : false;
@@ -114,7 +116,6 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.buildForm();
     this.getCustomers();
     this.getLocations();
     this.getMeetingTypes();
