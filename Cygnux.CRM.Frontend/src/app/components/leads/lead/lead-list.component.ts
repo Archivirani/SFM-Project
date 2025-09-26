@@ -50,6 +50,8 @@ export class LeadListComponent implements OnDestroy {
   public isaddMeetingOpen:boolean=false;
   public isaddcallOpen:boolean=false;
   public isLeadDashboard:boolean=false;
+  public loading: boolean = false;
+
 
   constructor(
     private leadService: LeadService,
@@ -61,6 +63,9 @@ export class LeadListComponent implements OnDestroy {
     public customerService: CustomerService
   ) {
     defineElement(lottie.loadAnimation);
+       this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     if (this.typeSubjectSubscription) { this.typeSubjectSubscription.unsubscribe(); }
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res) => {
       if (res) {
@@ -252,8 +257,8 @@ export class LeadListComponent implements OnDestroy {
       const modal = new Modal(modalElement);
       modal.show();
       this.leadId = leadId;
-      this.getLead(leadId);
       this.isaddLeadOpen=true
+      this.getLead(leadId);
     }
   }
 

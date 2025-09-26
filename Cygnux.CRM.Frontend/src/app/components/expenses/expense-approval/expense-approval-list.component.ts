@@ -32,6 +32,7 @@ export class ExpenseApprovalListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
    cardList:string = 'Expenses';
    public selectedUser:any;
+   public loading:boolean=false;
   @Output() edit = new EventEmitter<ExpenseResponse>();
 
   constructor(
@@ -45,6 +46,9 @@ export class ExpenseApprovalListComponent implements OnInit {
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
+    this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.getExpenses();
     this.customerService.getUsers();
   }

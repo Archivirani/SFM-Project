@@ -37,6 +37,7 @@ export class MeetingListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
   public isAddMeeting:boolean=false;
   public isMeetingdashboard:boolean=false;
+  public loading:boolean=false;
 
   @Output() edit = new EventEmitter<MeetingResponse>();
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -52,6 +53,9 @@ export class MeetingListComponent implements OnInit {
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit() {
+       this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.customerService.getUsers();
     this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB") || '';
      this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
@@ -354,8 +358,8 @@ timeoutRef: any;
       const modal = new Modal(modalElement);
       modal.show();
       this.meetingId = meetingId;
+      this.isAddMeeting=true;         
       this.getMeeting(meetingId,checkOut);
-      this.isAddMeeting=true;
     }
   }
   viewModal(event: Event, meetingId: string) {

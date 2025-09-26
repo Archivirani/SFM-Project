@@ -30,7 +30,9 @@ export class CallListComponent implements OnInit {
   @Output() edit = new EventEmitter<CallResponse>();
   getfilter:GetFilter[]=[];
   typeSubjectSubscription:Subscription | null = null;;
-  cardList: string = 'Call'
+  cardList: string = 'Call';
+  public isCallLoad:boolean=false;
+  public loading:boolean=false;
   constructor(
     private callService: CallService,
     private commonService: CommonService,
@@ -40,6 +42,9 @@ export class CallListComponent implements OnInit {
     private identityService:IdentityService
   ) {
     defineElement(lottie.loadAnimation);
+     this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     if(this.typeSubjectSubscription){this.typeSubjectSubscription.unsubscribe(); this.typeSubjectSubscription = null;}
     this.typeSubjectSubscription = this.importService.typeSubject.subscribe((res)=>{
       if(res){
@@ -204,6 +209,7 @@ export class CallListComponent implements OnInit {
       modal.show();
       this.callId = callId;
       this.getCall(callId);
+      this.isCallLoad=true;
     }
   }
 
@@ -228,6 +234,7 @@ export class CallListComponent implements OnInit {
       this.selectedCall = null;
       this.edit.emit();
       modal.show();
+      this.isCallLoad=true;
     }
   }
   downloadSampleImport(event: any) {

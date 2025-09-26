@@ -119,7 +119,12 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="noresult" *ngIf="calls.length === 0">
+              <div *ngIf="loading && calls.length === 0" class="text-center border-found">
+                <lord-icon src="/assets/json/system-solid-716-spinner-three-dots-loop-scale.json" trigger="loop"
+                  colors="primary:#121331,secondary:#08a88a" style="width: 100px; height: 100px">
+                </lord-icon>
+            </div>
+                <div class="noresult" *ngIf="!loading && calls.length === 0">
                   <div class="text-center">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
                       colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px"></lord-icon>
@@ -150,7 +155,9 @@
                     <h5 class="modal-title" id="exampleModalLabel"> Update Call </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                   </div> -->
+                  <div *ngIf="isCallLoad">
                   <app-add-call (dataEmitter)="closeEditModal()" [callResponse]="selectedCall" [isCallList]="'Update'"></app-add-call>
+                  </div>
                 </div>
               </div>
             </div>
