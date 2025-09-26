@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="row mb-3 d-flex">
+    <!-- <div class="row mb-3 d-flex">
       <div class="col-1">
           <label class="col-form-label">Date Range</label>
       </div>
@@ -22,7 +22,22 @@
                      'DD.MM.YYYY'}">
             </div>
       </div>
-    </div>
+    </div> -->
+    
+        <div class="bg-white py-3 px-3 mb-3" style="border-radius: 3px;">
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group mb-0">
+                <div class="input-group shadow-sm rounded"><span class="input-group-text bg-white border-end-0 p-2"><i
+                      class="ri-calendar-fill text-dark text-secondary"></i></span>
+                  <input type="text" placeholder="Daterangepicker" class="form-control border-start-1 line-height"
+                    bsDaterangepicker [(ngModel)]="dateRange" (bsValueChange)="getCustomerfilters($event)" [bsConfig]="{ ranges: ranges ,rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
+                             'DD.MM.YYYY'}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
     <app-card-list [getfilter]="getfilter"></app-card-list>
     

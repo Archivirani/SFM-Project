@@ -78,6 +78,10 @@ a {
   cursor: pointer;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .meeting-event {
   background-color: #3498db;
   border-color: #2980b9;
@@ -109,4 +113,27 @@ a {
 .border-danger{
   border: 1px solid #f06548;
   border-radius: 5px;
+}
+
+.bg-blue {
+    background: #405189;
+}
+
+.disabled-icon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    a{
+      color: white;
+      i {
+        color: white !important;
+        font-size: 12px !important;
+      }
+    }
+}
+
+.border-remover{
+  .ng-select-container{
+    border: none !important;
+  }
 }

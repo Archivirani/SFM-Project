@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="row mb-3 d-flex">
+        <!-- <div class="row mb-3 d-flex">
             <div class="col-1">
                 <label class="col-form-label">Date Range</label>
             </div>
@@ -20,9 +20,39 @@
                      'DD.MM.YYYY'}">
                 </div>
             </div>
+        </div> -->
+
+        <div class="bg-white py-3 px-3 mb-3" style="border-radius: 3px;">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group mb-0">
+                        <div class="input-group shadow-sm rounded"><span class="input-group-text bg-white border-end-0 p-2"><i
+                                    class="ri-calendar-fill text-dark text-secondary"></i></span>
+                            <input type="text" placeholder="Daterangepicker" class="form-control border-start-1 line-height"
+                                bsDaterangepicker [(ngModel)]="dateRange"
+                                (bsValueChange)="getCustomerfilters($event,userIdData)" [bsConfig]="{ ranges: ranges ,containerClass: 'theme-dark-blue' ,rangeInputFormat: 'DD.MM.YYYY', dateInputFormat:
+                             'DD.MM.YYYY'}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group mb-0">
+                        <div class="input-group shadow-sm rounded">
+                            <span class="input-group-text bg-white border-end-03px-2 border-start-1">
+                                <i class="ri-group-fill text-dark text-secondary"></i>
+                            </span>
+                            <ng-select [items]="users" bindLabel="name" bindValue="userId" [(ngModel)]="userIdData"
+                                (change)="getCustomerfilters(dateRange,userIdData) "
+                                class="form-control border-start-1 line-height p-0 border-remover"
+                                placeholder="Search Attendees" [clearable]="true" [searchable]="true">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
             <div class="col-1">
                 <label class="col-form-label">Search By User</label>
             </div>
@@ -31,7 +61,7 @@
                 (change)="getCustomerfilters(dateRange,userIdData) "  placeholder="Search Attendees" [clearable]="true" [searchable]="true">
                 </ng-select>
             </div>
-        </div>
+        </div> -->
         <app-card-list [getfilter]="getfilter"></app-card-list>
         <div class="col-12 text-end">
             <button class="button" class="btn btn-success me-4" (click)="onAttendance('punchIn')"

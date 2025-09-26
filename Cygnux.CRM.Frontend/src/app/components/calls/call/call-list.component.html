@@ -104,15 +104,15 @@
                       <td class="text-center">{{ call.callStatus ? call.callStatus:'--' }}</td>
                       <td class="text-center">
                         <ul class="list-inline hstack gap-2 mb-0">
-                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="Edit" [style.pointer-events]="call.callStatus === 'closed' ? 'none' : 'auto'">
                             <a class="edit-item-btn" href="#" (click)="editModal($event, call.callId)"><i
-                                class="ri-pencil-fill align-bottom text-muted"></i></a>
+                                class="ri-pencil-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>
-                          <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="View">
                             <a href="#" (click)="viewModal($event, call.callId)"><i
-                                class="ri-eye-fill align-bottom text-muted"></i></a>
+                                class="ri-eye-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>
                         </ul>
                       </td>
