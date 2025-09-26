@@ -8,6 +8,7 @@ export interface CustomerResponse {
   salesYear: number;
   oSonDate: number;
   leadId: string;
+  totalCount:number
 }
 export interface LeadCustomerResponse {
   leadId: string;

@@ -263,7 +263,8 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-end mt-3" *ngIf="complaints.length != 0">
+              <div class="d-flex justify-content-end align-items-center mt-3" *ngIf="complaints.length != 0">
+                 <div class="m-3 mt-0"> Showing Total Records : <strong>{{totalItems}}</strong> </div>
                 <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" [maxSize]="3"
                   (pageChange)="onPageChange($event)">
                 </ngb-pagination>

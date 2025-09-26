@@ -25,7 +25,7 @@ export class AttendanceDetailComponent{
   public users: UserResponse[] = [];
   public getAttendancefilter!:AttendanceCardResponse;
   public getfilter:GetFilter[]=[];
-  public userIdData:string='';
+  public userIdData:any;
   ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate() - 7)), new Date()],
