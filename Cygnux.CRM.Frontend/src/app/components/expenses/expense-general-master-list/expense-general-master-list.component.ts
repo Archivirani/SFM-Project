@@ -21,7 +21,9 @@ export class ExpenseGeneralMasterListComponent {
   totalItems = 0; // Total number of items
   filters: { [key: string]: string } = {}; // Dynamic filter object
   selectedExpense: GeneralMasterResponseList | null = null;
-  cardList:string = 'Expenses General master'
+  cardList:string = 'Expenses General master';
+  public isAddGenralMasterLoad:boolean=false;
+  public loading:boolean =false;
   @Output() edit = new EventEmitter<any>();
   
   constructor(
@@ -33,6 +35,9 @@ export class ExpenseGeneralMasterListComponent {
 
 
   ngOnInit() {
+      this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.getExpensesGeneralMaster();
     this.getGeneralmasterList();
   }
@@ -102,6 +107,7 @@ export class ExpenseGeneralMasterListComponent {
       this.selectedExpense = null;
       this.expenseId = type;
       modal.show();
+      this.isAddGenralMasterLoad=true;
     }
   }
 
@@ -113,6 +119,7 @@ export class ExpenseGeneralMasterListComponent {
       this.selectedExpense = generalList;
       this.expenseId = type;
       modal.show();
+      this.isAddGenralMasterLoad=true;
     }
   }
 

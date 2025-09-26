@@ -182,7 +182,12 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="noresult" *ngIf="expenses.length === 0">
+                  <div *ngIf="loading && expenses.length === 0" class="text-center border-found">
+                <lord-icon src="/assets/json/system-solid-716-spinner-three-dots-loop-scale.json" trigger="loop"
+                  colors="primary:#121331,secondary:#08a88a" style="width: 100px; height: 100px">
+                </lord-icon>
+            </div>
+                <div class="noresult" *ngIf="!loading && expenses.length === 0">
                   <div class="text-center">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
                       colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px"></lord-icon>
@@ -208,8 +213,10 @@
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                       id="close-modal"></button> -->
                   </div>
+                  <div *ngIf="isAddGenralMasterLoad">
                   <app-add-expense-general-master (dataEmitter)="closeEditModal()"
                     [expenseResponse]="selectedExpense" [type]="expenseId"></app-add-expense-general-master>
+                </div>
                 </div>
               </div>
             </div>

@@ -30,6 +30,8 @@ export class CustomerListComponent implements OnInit {
   pageSize = 5; // Number of items per page
   totalItems = 0; // Total number of items
   filters: { [key: string]: string } = {}; // Dynamic filter object
+  public isCallLoad:boolean=false;
+  public isMeetingLoad:boolean=false;
   @Output() edit = new EventEmitter<CustomerResponse>();
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
@@ -218,6 +220,7 @@ export class CustomerListComponent implements OnInit {
       const modal = new Modal(modalElement);
       this.selectedCustomerName = customerName;
       modal.show();
+      this.isCallLoad = true;
     }
   }
   closeCallModal() {
@@ -249,6 +252,7 @@ export class CustomerListComponent implements OnInit {
       this.checkOutValue='-';
       this.meetingService.meetingResponseSubject.next(customer)
       this.selectedCustomerName = customer;
+      this.isMeetingLoad=true
     }
   }
   deleteCustomer(customerCode: string) {

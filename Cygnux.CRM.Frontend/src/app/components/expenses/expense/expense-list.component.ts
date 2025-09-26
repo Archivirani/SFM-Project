@@ -33,6 +33,8 @@ export class ExpenseListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
   public cardList:string = 'Expenses';
   public selectedUser:any;
+  public isAddExpenseLoad:boolean=false;
+  public loading :boolean =false;
   @Output() edit = new EventEmitter<ExpenseResponse>();
 
   constructor(
@@ -45,6 +47,9 @@ export class ExpenseListComponent implements OnInit {
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
+      this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.getExpenses();
     this.userType=localStorage.getItem('UserType');
     this.customerService.getUsers();
@@ -211,6 +216,7 @@ export class ExpenseListComponent implements OnInit {
     const modal = new Modal(modalElement);
     modal.show();
     this.expense = type;
+    this.isAddExpenseLoad=true;
     this.getExpense(expense);
   }
 }

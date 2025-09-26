@@ -206,7 +206,9 @@
                       Add Meeting
                     </h5>
                   </div> -->
+                  <div *ngIf="isMeetingLoad">
                   <app-add-meeting (dataEmitter)="closeMeetingModal()" [checkOutValue]="checkOutValue" [isMeetingList]="'Add'" [meetingResponse]="selectedCustomerName"></app-add-meeting>
+                </div>
                 </div>
               </div>
             </div>
@@ -219,7 +221,9 @@
                   <!-- <div class="modal-header bg-light p-3">
                     <h5 class="modal-title" id="exampleModalLabel">Add Call</h5>
                   </div> -->
+                  <div *ngIf="isCallLoad">
                   <app-add-call (dataEmitter)="closeCallModal()" [callResponse]="selectedCustomerName" [isCallList]="'Add'"></app-add-call>
+                  </div>
                 </div>
               </div>
             </div>

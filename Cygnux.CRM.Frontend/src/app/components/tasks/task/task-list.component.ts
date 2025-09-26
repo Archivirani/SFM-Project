@@ -29,6 +29,7 @@ export class TaskListComponent implements OnInit {
   cardList:string = 'Tasks'
   @Output() edit = new EventEmitter<TaskResponse>();
   dateRange = [new Date(), new Date()];
+  public loading:boolean=false;
   ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate() - 7)), new Date()],
@@ -73,6 +74,9 @@ export class TaskListComponent implements OnInit {
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
+      this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.getTasks();
   }
 

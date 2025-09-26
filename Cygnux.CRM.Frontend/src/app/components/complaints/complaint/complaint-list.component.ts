@@ -36,6 +36,7 @@ export class ComplaintListComponent implements OnInit {
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
   public isAddComplaint:boolean=false;
   public isComplaintdashboard:boolean=false;
+  public loading:boolean=false;
 
 
   page = 1; // Current page number
@@ -59,6 +60,9 @@ export class ComplaintListComponent implements OnInit {
   ) { defineElement(lottie.loadAnimation); }
 
   ngOnInit(): void {
+      this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.getComplaints();
   }
 
