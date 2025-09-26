@@ -154,16 +154,17 @@
 
                       <td>
                         <ul class="list-inline hstack gap-2 mb-0">
-                          <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="Call">
-                            <a href="#" (click)="callModal($event,customer)" class="text-muted d-inline-block">
-                              <i class="ri-phone-line fs-16"></i>
+                            <a href="#" (click)="callModal($event,customer)" >
+                              <i class="ri-phone-line fs-16 edit-item-btn"></i>
                             </a>
                           </li>
-                          <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="Meeeting">
-                            <a href="#" (click)="meetingModal($event,customer)" class="text-muted d-inline-block">
-                              <img src="./assets/images/meeting.png" height="20" width="20">
+                            <a href="#" (click)="meetingModal($event,customer)" >
+                              <!-- <img src="./assets/images/meeting.png" height="20" width="20"> -->
+                                 <i class="ri-team-fill align-bottom text-muted edit-item-btn"></i>
                             </a>
                           </li>
                           <!-- <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
@@ -181,7 +182,12 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="noresult" *ngIf="customers.length == 0">
+                 <div *ngIf="loading && customers.length === 0" class="text-center border-found">
+                <lord-icon src="/assets/json/system-solid-716-spinner-three-dots-loop-scale.json" trigger="loop"
+                  colors="primary:#121331,secondary:#08a88a" style="width: 100px; height: 100px">
+                </lord-icon>
+            </div>
+                <div class="noresult" *ngIf="!loading && customers.length == 0">
                   <div class="text-center">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
                       colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px"></lord-icon>

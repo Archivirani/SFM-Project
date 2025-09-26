@@ -32,6 +32,7 @@ export class CustomerListComponent implements OnInit {
   filters: { [key: string]: string } = {}; // Dynamic filter object
   public isCallLoad:boolean=false;
   public isMeetingLoad:boolean=false;
+  public loading:boolean=false;
   @Output() edit = new EventEmitter<CustomerResponse>();
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
@@ -91,6 +92,9 @@ export class CustomerListComponent implements OnInit {
   ) {defineElement(lottie.loadAnimation);}
 
   ngOnInit(): void {
+      this.commonService.loading.subscribe((state: boolean) => {
+      this.loading = state;
+    });
     this.dateRange = [
       new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)
