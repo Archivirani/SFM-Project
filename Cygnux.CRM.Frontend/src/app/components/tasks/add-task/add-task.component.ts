@@ -33,6 +33,8 @@ export class AddTaskComponent implements OnInit, OnChanges {
   public users: UserResponse[] = [];
   public priorities: GeneralMasterResponse[] = [];
   public customers: LeadCustomerResponse[] = [];
+  public isSubmitting: boolean = false;
+
   @Input() taskResponse: TaskResponse | null = null;
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
   leadCategory$ = new Subject<string>();
@@ -81,6 +83,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
   }
   onSubmitTask(form: FormGroup): void {
     if (form.valid) {
+      this.isSubmitting = true;
       const dataToSubmit = {
         ...form.value,
         assignedToIDs: form.value.assignedToIDs.join(','),
@@ -103,10 +106,12 @@ export class AddTaskComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -123,10 +128,12 @@ export class AddTaskComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         // this.toasterService.error(response);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });

@@ -46,6 +46,8 @@ export class AddLeadComponent implements OnInit, OnChanges {
   public branches: LocationResponse[] = [];
   public cities: CityResponse[] = [];
   public regions: LocationResponse[] = [];
+  public isSubmitting: boolean = false;
+
 
   @Input() leadResponse: LeadResponse | null = null;
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
@@ -155,6 +157,7 @@ export class AddLeadComponent implements OnInit, OnChanges {
 
   onSubmitLead(form: FormGroup): void {
     if (form.valid) {
+          this.isSubmitting = true;
       let assignedTo = this.identityService.getLoggedUserId();
       const dataToSubmit = {
         ...form.value,
@@ -324,10 +327,12 @@ export class AddLeadComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+          this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response);
+            this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -344,10 +349,12 @@ export class AddLeadComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         // this.toasterService.error(response);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });

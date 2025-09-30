@@ -182,7 +182,7 @@
       <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
         Close
       </button>
-      <button type="submit" class="btn btn-success"  id="add-btn"  [disabled]="expenseForm.invalid">
+      <button type="submit" class="btn btn-success"  id="add-btn"  [disabled]="expenseForm.invalid || isSubmitting">
         {{typeData}}
       </button>
     </div>

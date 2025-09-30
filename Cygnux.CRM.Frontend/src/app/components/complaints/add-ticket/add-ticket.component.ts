@@ -37,6 +37,9 @@ export class AddTicketComponent {
   public selectedFile: File | null = null;
   public assignToList:AssignToList[]=[]
   private docketNoSubject = new Subject<string>();
+  public loading: boolean = true;
+
+
   minDate!: Date;
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Input() complaint:string='';
@@ -46,6 +49,7 @@ export class AddTicketComponent {
     if (ComplaintResponse) {
      const assignedTo = this.users.filter(d=>d.name === ComplaintResponse.assignedTo)
      if(ComplaintResponse.documentNo){
+      this.loading=true;
       this.onDocketNo(ComplaintResponse.documentNo);
     }
     let customerEmail = ComplaintResponse.customerEmail ? ComplaintResponse.customerEmail.split(';').map((email: string) => email.trim()) : [];
@@ -83,7 +87,8 @@ export class AddTicketComponent {
     private datePipe: DatePipe,
     public toasterService: ToastrService, 
     private complaintService: ComplaintService,) {
-    this.docketNoSubject.pipe(debounceTime(500),distinctUntilChanged(),filter(value => value.length >= 2)).subscribe(docketNo => {
+    this.docketNoSubject.pipe(debounceTime(100),distinctUntilChanged(),filter(value => value.length >= 2)).subscribe(docketNo => {
+      this.loading = true;
       this.onDocketNo(docketNo); 
     });
    }
@@ -293,6 +298,7 @@ export class AddTicketComponent {
   }
 
   onDocketNo(docketNo: string) {
+    this.loading=true;
     this.commonService.updateLoader(true);
     this.complaintService.getDocDataDetail(docketNo).subscribe({
       next: (response) => {
@@ -306,10 +312,12 @@ export class AddTicketComponent {
             currentStatus:response.data.currentStatus,
             currentLocation:response.data.currentLocation
           });
+          this.loading = false;
         } 
         this.commonService.updateLoader(false);
       },
       error: (error: any) => {
+        this.loading = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -381,16 +389,6 @@ export class AddTicketComponent {
   }
  
   onSubmitTicket() {
-  if (this.emails.length === 0) {
-    this.ticketForm.get('customerEmail')?.setErrors({ required: true });
-    this.ticketForm.markAllAsTouched();
-    return;
-  }
-
-  if (!this.ticketForm.valid || this.emailError) {
-    this.ticketForm.markAllAsTouched();
-    return;
-  }
     if(this.ticketForm.valid){
     if (this.complaint === 'Update') {
       const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,customerEmail,document,documentNo,priority,assignedToId,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;
@@ -491,6 +489,7 @@ export class AddTicketComponent {
         },
         error: (response: any) => {
           this.toasterService.error(response.error.message);
+          
           this.commonService.updateLoader(false);
         },
       });

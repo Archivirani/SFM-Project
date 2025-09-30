@@ -369,6 +369,7 @@
         type="submit"
         class="btn btn-success"
         id="add-btn"
+         [disabled]="isSubmitting"
       >
         {{ leadId === '' ? "Add Lead" : "Update Lead" }}
       </button>

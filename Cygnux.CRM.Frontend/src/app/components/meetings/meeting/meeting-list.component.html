@@ -190,7 +190,7 @@
                       <td class="text-center">{{ meeting.checkIn? meeting.checkIn:'--'}}</td>
                       <td class="text-center">{{ meeting.checkOut ? meeting.checkOut:'--'}}</td>
                       <td class="text-center">{{meeting.meetingTimeInMins ? meeting.meetingTimeInMins:'--'}} </td>
-                      <td class="text-center">{{meeting.createdBy}} </td>
+                      <td class="text-center">{{meeting.createdBy}}:{{meeting.createdName}} </td>
                       <td class="text-center">{{ meeting.meetingStatus ? meeting.meetingStatus:'--'}}</td>
                       <td class="text-center">
                       <ng-container *ngFor="let name of meeting.attendeeNames?.split(',')">

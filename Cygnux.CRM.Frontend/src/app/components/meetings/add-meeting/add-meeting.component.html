@@ -278,7 +278,7 @@
       <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
         Close
       </button>
-      <button type="submit" class="btn btn-success" id="add-btn">
+      <button type="submit" class="btn btn-success" id="add-btn"  [disabled]="isSubmitting">
         {{isMeetingList}} Meeting
       </button>
     </div>

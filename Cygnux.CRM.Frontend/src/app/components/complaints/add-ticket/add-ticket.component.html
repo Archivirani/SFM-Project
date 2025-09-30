@@ -1,3 +1,6 @@
+<div class="loader-overlay" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
 <div>
   <div class="modal-header bg-light p-3">
     <h5 class="modal-title" id="exampleModalLabel">
@@ -226,9 +229,6 @@
                 (keyup)="onKeyUp($event)" 
                 placeholder="Enter emails separated by semicolon"
               />
-            </div>
-             <div *ngIf="emails.length===0 && ticketForm.get('customerEmail')?.touched" class="text-danger">
-              <small>Email is required.</small>
             </div>
             <div *ngIf="emailError" class="text-danger">
               <small>Email is invalid.</small>

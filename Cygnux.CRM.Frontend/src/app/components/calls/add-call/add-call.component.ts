@@ -33,6 +33,8 @@ export class AddCallComponent implements OnInit, OnChanges {
   public callStatuses: GeneralMasterResponse[] = [];
   public users: UserResponse[] = [];
   public callPurposes: GeneralMasterResponse[] = [];
+  public isSubmitting = false;
+
   @Input() callResponse: CallResponse | null = null;
   @Input() isCallList: string | null = null;
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
@@ -115,6 +117,7 @@ export class AddCallComponent implements OnInit, OnChanges {
       var customerCode = this.customerService.customersList.find((d)=>d.customerName === form.value.companyName)?.customerCode
     }
     if (form.valid) {
+      this.isSubmitting=true;
       let { companyName,callId, ...dataToSubmit } = form.value;
       dataToSubmit.userid = this.identifyService.getLoggedUserId();
       dataToSubmit.customerCode = dataToSubmit.customerCode ? dataToSubmit.customerCode : '';
@@ -136,10 +139,12 @@ export class AddCallComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting=false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response);
+        this.isSubmitting=false;
         this.commonService.updateLoader(false);
       },
     });
@@ -156,6 +161,7 @@ export class AddCallComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting=false;
         this.commonService.updateLoader(false);
       }
     });

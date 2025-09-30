@@ -52,6 +52,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   isImage: boolean = false;
   isPdf: boolean = false;
   public parsedUser:any;
+  public isSubmitting:boolean = false;
   constructor(
     private expenseService: ExpenseService,
     private externalService: ExternalService,
@@ -151,6 +152,7 @@ export class AddExpenseComponent implements OnInit, OnChanges {
   
   onSubmitExpense(form: FormGroup): void {
     if (form.valid) {
+      this.isSubmitting = true;
       var formData = new FormData();
       formData.append("ModifiedBy", "");
       formData.append("CheckedInLocation", form.value.checkedInLocation);
@@ -186,10 +188,12 @@ export class AddExpenseComponent implements OnInit, OnChanges {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response.error.message);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -207,10 +211,12 @@ export class AddExpenseComponent implements OnInit, OnChanges {
           this.toasterService.error(response.error.message);
         }
         this.dataEmitter.emit();
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response.error.message);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });

@@ -34,6 +34,7 @@ export interface MeetingResponse {
   meetingAddress?:string;
   attendeeNames?:any;
   AttendeeIds?:any;
+  createdName?:any
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;

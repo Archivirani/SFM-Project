@@ -218,6 +218,7 @@
         class="btn btn-success"
         [disabled]="taskForm.invalid"
         id="add-btn"
+        [disabled]="isSubmitting"
       >
         {{ taskId == "" ? "Add Task" : "Update Task" }}
       </button>

@@ -58,6 +58,8 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   public geoLocation: any;
   calendarOptions: CalendarResponse[] = [];
   public meetingCustomerList:any;
+  public isSubmitting: boolean = false;
+
   @Input() checkOutValue: any;
   @Input() meetingResponse: MeetingResponse | null = null;
   @Input() addmeetingResponse: AddMeetingResponse | null = null;
@@ -305,6 +307,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
     if (form.valid) {
+      this.isSubmitting = true;
       const dataToSubmit = {
         ...form.value,
         attendeeIDs: form.value.attendeeIDs?.join(','),
@@ -345,11 +348,12 @@ this.meetingForm.patchValue({
         } else {
           this.toasterService.error(response.error.message);
         }
-
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response.error.message);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -390,10 +394,12 @@ this.meetingForm.patchValue({
           this.toasterService.error(response.error.message);
         }
         this.dataEmitter.emit();
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response.error.message);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -506,7 +512,6 @@ getLatLongData(event:any){
     this.meetingService.getLatLongAccordingAddress(event).subscribe({
       next: (response) => {
         if (response) {
-         console.log( response.data);
          this.meetingForm.patchValue({
             longitude:response.longitude,
             latitude:response.latitude

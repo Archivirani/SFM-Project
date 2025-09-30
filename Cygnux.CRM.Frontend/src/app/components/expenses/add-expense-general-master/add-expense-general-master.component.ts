@@ -23,6 +23,8 @@ export class AddExpenseGeneralMasterComponent {
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Input() expenseResponse: any | null = null;
   @Input() type: string = '';
+  public isSubmitting: boolean = false;
+
   constructor(
     private commonService: CommonService,
     private expenseService: ExpenseService,
@@ -103,6 +105,7 @@ export class AddExpenseGeneralMasterComponent {
 
   onSubmitExpense(form: FormGroup): void {
     if (form.valid) {
+      this.isSubmitting = true;
       const data = {
         ...this.expenseMasterForm.value,
         transportModeId:parseInt(this.expenseMasterForm.value.transportModeId),
@@ -127,10 +130,12 @@ export class AddExpenseGeneralMasterComponent {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response.error.message);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
@@ -147,10 +152,12 @@ export class AddExpenseGeneralMasterComponent {
         } else {
           this.toasterService.error(response.error.message);
         }
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response.error.message);
+        this.isSubmitting = false;
         this.commonService.updateLoader(false);
       },
     });
