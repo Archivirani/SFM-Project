@@ -203,8 +203,12 @@ export class ComplaintListComponent implements OnInit {
   clearDate() {
     if (this.filters['compalaintDate']) {
       this.filters['compalaintDate'] = '';
-    } else {
+    } else if(this.filters['resolutionDate']) {
       this.filters['resolutionDate'] = '';
+    }else if(this.filters['edd']){
+      this.filters['edd'] = '';
+    }else{
+      this.filters['addDate'] = '';
     }
     this.getComplaints();
   }

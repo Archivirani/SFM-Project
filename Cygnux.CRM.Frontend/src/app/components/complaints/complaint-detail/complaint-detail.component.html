@@ -149,6 +149,24 @@
             {{ complaintResponse?.description }}
           </td>
         </tr>
+         <tr>
+          <td scope="row">
+            <strong> EDD: </strong>
+            {{ (complaintResponse?.edd | date:'dd/MM/yyyy') }}
+          </td>
+          <td><strong>ADD: </strong>
+            {{ (complaintResponse?.addDate | date:'dd/MM/yyyy') }}
+          </td>
+        </tr>
+         <tr>
+          <td scope="row">
+            <strong> Auto Closure: </strong>
+            {{ complaintResponse?.autoClosure }}
+          </td>
+          <td><strong>Delivery Status: </strong>
+            {{ complaintResponse?.deliveryStatus }}
+          </td>
+        </tr>
         <!-- <tr>
           <td scope="row">
           <strong>  Escalation ID:</strong>

@@ -125,7 +125,7 @@
                       <td class="text-center">{{ expense.expenseCode ? expense.expenseCode:'--' }}</td>
                       <td class="text-center">{{ expense.expenseDate ?expense.expenseDate :'--'}}</td>
                       <td class="text-center">{{expense.contactName ? expense.contactName:'--' }}</td>
-                      <td class="text-center">{{ expense.expenseDate ? expense.expenseDate :'--'}}</td>
+                      <td class="text-center">{{ expense.meetingDate ? expense.meetingDate :'--'}}</td>
                       <td class="text-center">{{ expense.amount ? expense.amount:'--' }}</td>
                       <td class="text-center">{{ expense.status ? expense.status:'--' }}</td>
                       <td class="text-center">{{ expense.reqId && expense.requestDate ? expense.reqId + '/' + expense.requestDate : (expense.reqId || expense.requestDate || '--') }}</td>                      
@@ -137,7 +137,7 @@
                             data-bs-placement="top" title="View" (click)="viewModal($event, expense)">
                             <a><i class="ri-eye-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>
-                          <li [ngClass]="{'disabled-image': expense.isManager_AuditApproved}"  class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                          <li [ngClass]="{'disabled-image': expense.isManager_AuditApproved || expense.createdBy === identifyService.getLoggedUserId()}"  class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
                             data-bs-placement="top" title="Approved" (click)="expense.isManager_AuditApproved ? null : approveModal($event, expense)">
                             <a><i class="bi bi-check2-circle edit-item-btn"></i></a>
                           </li>

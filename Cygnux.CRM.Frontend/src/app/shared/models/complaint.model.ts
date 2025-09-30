@@ -39,6 +39,10 @@ closeDate: any;
   isUpdated:boolean;
   assignToId:string;
   escEmailId:any;
+  edd:any;
+  addDate:any;
+  autoClosure:any;
+  deliveryStatus:any;
 }
 
 export interface ComplaintDetailResponse extends ComplaintResponse {

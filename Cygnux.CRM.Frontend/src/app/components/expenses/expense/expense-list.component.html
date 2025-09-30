@@ -18,7 +18,7 @@
                     [clearable]="true" [searchable]="true" (change)="getExpenses()" [(ngModel)]="selectedUser" style="flex:1;">
                   </ng-select>
                 </div>         -->
-            <div class="col-3">
+            <!-- <div class="col-3">
               <div class="form-group mb-0">
                 <div class="input-group shadow-sm rounded">
                   <span class="input-group-text bg-white border-end-03px-2 border-start-1">
@@ -29,7 +29,7 @@
                   </ng-select>
                 </div>
               </div>
-            </div>
+            </div> -->
               <div class="col-sm-auto ms-auto">
                 <div class="hstack gap-2">
                   <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()">
@@ -126,7 +126,7 @@
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['DistanceTravelled']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['DistanceInKm']" (input)="getExpenses()"
                           class="form-control" />
                       </th>
 

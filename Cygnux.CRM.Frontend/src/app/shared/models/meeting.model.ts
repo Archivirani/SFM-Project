@@ -32,6 +32,8 @@ export interface MeetingResponse {
   previousLatitude?:string;
   previousLongitude?:string;
   meetingAddress?:string;
+  attendeeNames?:any;
+  AttendeeIds?:any;
 }
 export interface MeetingDetailResponse extends MeetingResponse {
   leadDate: Date;

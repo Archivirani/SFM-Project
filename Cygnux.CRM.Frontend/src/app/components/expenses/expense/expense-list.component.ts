@@ -85,6 +85,7 @@ export class ExpenseListComponent implements OnInit {
     event.preventDefault();
     this.commonService.updateLoader(true);
     const filters: any = {
+      ...this.filters,
       UserId:this.identifyService.getLoggedUserId(),
       export:true
     }

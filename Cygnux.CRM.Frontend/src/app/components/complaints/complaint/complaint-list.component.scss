@@ -82,3 +82,33 @@ input[type="radio"]:after{
   text-overflow: ellipsis; 
   color: rgb(48, 48, 48) !important;
 }
+/* enable horizontal scroll */
+#customerTable {
+  overflow-x: auto;
+  display: block;   /* important for scroll to appear */
+}
+
+/* Custom scrollbar only for this table */
+#customerTable::-webkit-scrollbar {
+  height: 3px; /* horizontal scrollbar height */
+}
+
+#customerTable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+#customerTable::-webkit-scrollbar-thumb {
+  background: #405189;   /* grey color */
+  border-radius: 5px;
+}
+
+#customerTable::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Firefox support */
+#customerTable {
+  scrollbar-width: thin;
+  scrollbar-color: #405189 #f1f1f1;
+}

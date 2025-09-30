@@ -126,6 +126,7 @@ export class ExpenseApprovalListComponent implements OnInit {
     event.preventDefault();
     this.commonService.updateLoader(true);
     const filters: any = {
+      ...this.filters,
       UserId:this.selectedUser?this.selectedUser:this.identifyService.getLoggedUserId(),
       export:false
     }

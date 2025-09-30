@@ -381,6 +381,16 @@ export class AddTicketComponent {
   }
  
   onSubmitTicket() {
+  if (this.emails.length === 0) {
+    this.ticketForm.get('customerEmail')?.setErrors({ required: true });
+    this.ticketForm.markAllAsTouched();
+    return;
+  }
+
+  if (!this.ticketForm.valid || this.emailError) {
+    this.ticketForm.markAllAsTouched();
+    return;
+  }
     if(this.ticketForm.valid){
     if (this.complaint === 'Update') {
       const {customerID, closeDate, closeRemark,closureDate,docketNo, complaintDate,currentLocation,customerEmail,document,documentNo,priority,assignedToId,source,subType,type,closeBy, billingParty, browse, currentStatus, destination, docDate, EDD, managerId, managerName, origin, userName, ...update } = this.ticketForm.value;

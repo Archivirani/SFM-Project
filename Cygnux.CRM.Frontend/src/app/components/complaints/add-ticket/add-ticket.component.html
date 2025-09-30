@@ -227,6 +227,9 @@
                 placeholder="Enter emails separated by semicolon"
               />
             </div>
+             <div *ngIf="emails.length===0 && ticketForm.get('customerEmail')?.touched" class="text-danger">
+              <small>Email is required.</small>
+            </div>
             <div *ngIf="emailError" class="text-danger">
               <small>Email is invalid.</small>
             </div>

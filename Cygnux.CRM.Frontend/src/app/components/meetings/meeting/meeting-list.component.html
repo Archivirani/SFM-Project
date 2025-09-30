@@ -114,8 +114,10 @@
                       <th class="text-center">Check In <br>Time in Hrs</th>
                       <th class="text-center">Check Out <br> Time in Hrs</th>
                       <th class="text-center">Meeting TAT<br> in Minutes</th>
-                      <!-- <th class="text-center">Check In-Check Out</th> -->
+                      <th class="text-center">CreatedBy</th>
                       <th class="text-center">Meeting Status</th>
+                      <th class="text-center">Attendees</th>
+                      <!-- <th class="text-center">Check In-Check Out</th> -->
                       <th class="text-center">Action</th>
                     </tr>
                     <tr>
@@ -154,11 +156,19 @@
                       </th>
                       <th> <input type="text" [(ngModel)]="filters['meetingTimeInMins']" (input)="getMeetings(this.dateRange)"
                           class="form-control" /> </th>
-                      <!-- <th></th> -->
-                      <th>
-                        <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings(this.dateRange)"
-                          class="form-control" />
+                          <th> 
+                             <input type="text" [(ngModel)]="filters['CreatedBy']" (input)="getMeetings(this.dateRange)"
+                             class="form-control" /> 
+                         </th>
+                         <th>
+                           <input type="text" [(ngModel)]="filters['Status']" (input)="getMeetings(this.dateRange)"
+                             class="form-control" />
+                         </th>
+                      <th> 
+                          <!-- <input type="text" [(ngModel)]="filters['AttendeeName']" (input)="getMeetings(this.dateRange)"
+                          class="form-control" />  -->
                       </th>
+                      <!-- <th></th> -->
                       <th></th>
                     </tr>
                   </thead>
@@ -180,6 +190,13 @@
                       <td class="text-center">{{ meeting.checkIn? meeting.checkIn:'--'}}</td>
                       <td class="text-center">{{ meeting.checkOut ? meeting.checkOut:'--'}}</td>
                       <td class="text-center">{{meeting.meetingTimeInMins ? meeting.meetingTimeInMins:'--'}} </td>
+                      <td class="text-center">{{meeting.createdBy}} </td>
+                      <td class="text-center">{{ meeting.meetingStatus ? meeting.meetingStatus:'--'}}</td>
+                      <td class="text-center">
+                      <ng-container *ngFor="let name of meeting.attendeeNames?.split(',')">
+                          {{ name }}<br />
+                        </ng-container>  
+                      </td>
                       <!-- <td class="text-center">
                       <div class="d-flex">
                         <span [title]="meeting.checkInReason"><button class="btn btn-danger me-1 fontsize" (click)="onCheckIn(meeting,i)"  [disabled]="!meeting.isCheckInEnabled || meeting.checkIn !== '-'">Check In</button></span>
@@ -187,7 +204,6 @@
                       </div>
                       </td>  -->
                       <!-- <td>{{ meeting.taTinHrs }}</td> -->
-                      <td class="text-center">{{ meeting.meetingStatus ? meeting.meetingStatus:'--'}}</td>
                       <td class="text-center">
                         <ul class="list-inline hstack gap-2 mb-0">
                           <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
