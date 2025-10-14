@@ -104,13 +104,13 @@
                       <td class="text-center">{{ call.callStatus ? call.callStatus:'--' }}</td>
                       <td class="text-center">
                         <ul class="list-inline hstack gap-2 mb-0">
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Edit" [style.pointer-events]="call.callStatus === 'closed' ? 'none' : 'auto'">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                             [style.pointer-events]="call.callStatus === 'closed' ? 'none' : 'auto'" [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a class="edit-item-btn" href="#" (click)="editModal($event, call.callId)"><i
                                 class="ri-pencil-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="View">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                            [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a href="#" (click)="viewModal($event, call.callId)"><i
                                 class="ri-eye-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>

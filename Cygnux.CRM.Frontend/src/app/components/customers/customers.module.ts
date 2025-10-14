@@ -13,6 +13,7 @@ import { MeetingModule } from '../meetings/meetings.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LayoutModule } from '../layouts/layout.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [CustomerListComponent],
@@ -27,6 +28,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     MeetingModule,
     NgSelectModule,
     LayoutModule,
+    PopoverModule,
     BsDatepickerModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

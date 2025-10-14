@@ -10,6 +10,7 @@ import { TaskListComponent } from './task/task-list.component';
 import { TaskRoutes } from './tasks.routes';
 import { LayoutModule } from '../layouts/layout.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [TaskListComponent, AddTaskComponent, TaskDetailComponent],
@@ -23,6 +24,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NgbPaginationModule,
     LayoutModule,
     BsDatepickerModule.forRoot(),
+    PopoverModule
   ],
   providers: [DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

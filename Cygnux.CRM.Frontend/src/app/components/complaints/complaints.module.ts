@@ -12,6 +12,7 @@ import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.co
 import { LayoutModule } from '../layouts/layout.module';
 import { AddTicketComponent } from './add-ticket/add-ticket.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NgbPaginationModule,
     LayoutModule,
     BsDatepickerModule.forRoot(),
+    PopoverModule
   ],
   providers: [DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

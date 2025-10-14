@@ -36,7 +36,7 @@ export class MeetingService {
     return this.apiHandlerService.Get('meeting', filters);
   }
   exportMeeting(userId:any,filters:any,startDate:any,endDate:any): Observable<IApiBaseResponse<any[]>> {
-    return this.apiHandlerService.Get(`meeting/export?userid=${userId}&startdate=${startDate}&enddate=${endDate}`,filters);
+    return this.apiHandlerService.Get(`Meeting/NewExport?userid=${userId}&startdate=${startDate}&enddate=${endDate}`,filters);
   }
 
   getMeetingDetails(id: string,UserId:string): Observable<IApiBaseResponse<MeetingDetailResponse>> {

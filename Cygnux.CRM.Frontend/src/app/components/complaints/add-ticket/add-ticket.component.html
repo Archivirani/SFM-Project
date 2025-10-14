@@ -1,4 +1,4 @@
-<div class="loader-overlay" *ngIf="loading">
+<div class="loader-overlay" *ngIf="loading && (complaint ==='Update' || complaint ==='Close')">
   <div class="spinner"></div>
 </div>
 <div>
@@ -306,8 +306,11 @@
         <div class="col-3 mt-2" *ngIf="complaint === 'Update'">
           <div>
             <label>Update Remarks:</label>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" formControlName="updateRemarks">
+            <div class="input-group mb-1">
+              <input type="text" class="form-control" formControlName="updateRemarks" >
+            </div>
+            <div *ngIf="ticketForm.controls['updateRemarks'].invalid && ticketForm.controls['updateRemarks']?.touched" class="text-danger">
+              <small *ngIf="ticketForm.controls['updateRemarks'].errors?.['required']">Update Remarks is required.</small>
             </div>
           </div>
         </div>

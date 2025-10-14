@@ -102,7 +102,7 @@ export class CustomerListComponent implements OnInit {
 
     this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB")
     this.endDate =  this.dateRange?.[1]?.toLocaleDateString("en-GB")
-    this.getCustomerfilters(this.dateRange);
+    // this.getCustomerfilters(this.dateRange);
   }
   
 

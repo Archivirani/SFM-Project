@@ -206,14 +206,14 @@
                       <!-- <td>{{ meeting.taTinHrs }}</td> -->
                       <td class="text-center">
                         <ul class="list-inline hstack gap-2 mb-0">
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Edit">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                            [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a class="edit-item-btn" [ngClass]="{'disabled-image': meeting.isExpired}"
                               (click)="meeting.isExpired ? null : editModal($event, meeting.attendeeCode, meeting.checkOut)"><i
                                 class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li>
                           <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="View">
+                            data-bs-placement="top" [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a href="#" (click)="viewModal($event, meeting.attendeeCode)"><i
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
@@ -307,16 +307,6 @@
               </div>
             </div>
 
-            <!-- <div class="modal fade" id="showModalCall" tabindex="-1" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <app-add-call (dataEmitter)="closeCallModal()" [addCallResponse]="selectedCall"
-                    [isCallList]="'Add'"></app-add-call>
-                </div>
-              </div>
-            </div> -->
-
             <div class="modal fade" id="showModalDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
@@ -332,18 +322,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- <div class="modal fade" id="showModalExpense" tabindex="-1" aria-labelledby="expenseModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <app-add-expense (dataEmitter)="closeExpenseModal()"
-                    [addMeetingResponse]="selectedMeetingId"></app-add-expense>
-                </div>
-              </div>
-            </div> -->
-
-
             <div class="modal fade" id="showChartModal" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">

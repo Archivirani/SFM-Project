@@ -35,10 +35,10 @@
               </ng-select> -->
             </div>
             <div *ngIf="router.url.includes('/meeting/list') && isMeetingList!=='Update'">
-                           <ng-select [items]="meetingCustomerList" bindLabel="customerName" bindValue="item" formControlName="customerName" (change)="onChangeCustomer($event)" placeholder="Search Customer"
+                           <ng-select [items]="meetingCustomerList" bindLabel="customerName" bindValue="item" formControlName="customerName"  placeholder="Search Customer"
                             [disabled]="checkOutValue !== '-' || meetingResponse?.customerName || addMeetingResponse?true:false" [readonly]="checkOutValue !== '-' || meetingResponse?.customerName || addMeetingResponse?true:false" 
-                            [ngClass]="{ 'border-danger': meetingForm.controls['customerName'].invalid && meetingForm.controls['customerName'].touched}" 
-                            >
+                            [ngClass]="{ 'border-danger': meetingForm.controls['customerName'].invalid && meetingForm.controls['customerName'].touched}" (change)="getCustomerDetail($event)"
+                             [loading]="isCustomerLoading">
                           </ng-select>
                           </div>
             <div *ngIf="
@@ -278,7 +278,7 @@
       <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">
         Close
       </button>
-      <button type="submit" class="btn btn-success" id="add-btn"  [disabled]="isSubmitting">
+      <button type="submit" class="btn btn-success" id="add-btn"  [disabled]="isSubmitting || isCustomerLoading">
         {{isMeetingList}} Meeting
       </button>
     </div>

@@ -67,3 +67,11 @@ export interface GetFilter {
   color:string;  
   id?:number;       
 }
+
+export interface CustomerDetailResponse{
+      CustomerCode:string,
+      ContactName:string,
+      Address:string,
+      ContactNo:string,
+      Email: string
+}

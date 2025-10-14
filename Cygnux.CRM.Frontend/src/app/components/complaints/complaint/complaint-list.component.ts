@@ -63,7 +63,7 @@ export class ComplaintListComponent implements OnInit {
       this.commonService.loading.subscribe((state: boolean) => {
       this.loading = state;
     });
-    this.getComplaints();
+    // this.getComplaints();
   }
 
   fetchComplaints(page: number = 1) {
@@ -94,9 +94,11 @@ export class ComplaintListComponent implements OnInit {
           this.complaintsBackup = response.data;
           this.totalItems = response.totalCount;
         }
+        this.commonService.updateLoader(false);
       },
       error: (error: any) => {
         this.toasterService.error(error?.message || 'Something went wrong.');
+        this.commonService.updateLoader(false);
       },
     });
   }
@@ -171,11 +173,11 @@ export class ComplaintListComponent implements OnInit {
       this.selectedComplaint = null;
       this.edit.emit();
       modal.show();
+      this.isAddComplaint=true
       // this.selectedComplaint = complaintID
       if (type !== 'Add') {
         this.getComplaint(complaintID);
       }
-      this.isAddComplaint=true
     }
   }
 

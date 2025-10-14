@@ -168,41 +168,38 @@
                       <td class="text-center">
                         <ul class="list-inline hstack gap-2 mb-0">
                           <li *ngIf="expense.expenseCreated"
-                            class="list-inline-item disabled-icon bg-color d-flex justify-content-center align-items-center"
+                            class="list-inline-item disabled-icon bg-color d-flex justify-content-center align-items-center cursor-not-allowed"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
                             title="Add Expense">
-                            <a class="edit-item-btn white">+</a>
+                            <a class="edit-item-btn white cursor-not-allowed">+</a>
                           </li>
                           <li *ngIf="!expense.expenseCreated"
                             class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
-                            title="Add Expense">
+                           [popover]="'Add'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a class="edit-item-btn" (click)="editModal($event, expense,'AddExpense')">+</a>
                           </li>
                           <li *ngIf="!expense.expenseCreated || expense.isEdit === 'N'"
-                            class="list-inline-item disabled-icon bg-color d-flex justify-content-center align-items-center"
+                            class="list-inline-item disabled-icon bg-color d-flex justify-content-center align-items-center cursor-not-allowed"
                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
                             title="Edit Expense">
-                            <a class="edit-item-btn "><i class="ri-pencil-fill align-bottom text-muted"></i></a>
+                            <a class="edit-item-btn cursor-not-allowed"><i class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li>
                           <li *ngIf="expense.isEdit === 'Y'"
                             class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
-                            title="Edit Expense">
+                            [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a class="edit-item-btn" (click)="editModal($event, expense,'EditExpense')"><i
                                 class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li>
                           <li
                             class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
-                            title="View Expense">
+                           [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a (click)="viewModal($event, expense)"><i
                                 class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
                           <div *ngIf="userType === 'manager'||userType === 'MANAGER'">
                             <li
                               class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center"
-                              data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved"
+                              [popover]="'Approved'" placement="auto" triggers="hover" [outsideClick]="true" container="body"
                               (click)="approveModal($event, expense)">
                               <a href="#"><i class="bi bi-check2-circle"></i></a>
                             </li>

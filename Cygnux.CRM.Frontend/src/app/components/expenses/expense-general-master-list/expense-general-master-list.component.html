@@ -180,13 +180,13 @@
                       /></td>
                       <td class="text-center d-flex justify-content-center">
                         <ul class="list-inline hstack gap-2 mb-0">
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Edit" (click)="editModal($event, expense,'Update Expense')">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" 
+                           [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body" (click)="editModal($event, expense,'Update Expense')">
                             <a class="edit-item-btn"><i class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li>
 
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="View" (click)="viewModal($event, expense)">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                            [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body" (click)="viewModal($event, expense)">
                             <a class="edit-item-btn"><i class="ri-eye-fill align-bottom text-muted"></i></a>
                           </li>
                         </ul>

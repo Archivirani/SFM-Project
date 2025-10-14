@@ -15,6 +15,7 @@ import { LayoutModule } from '../layouts/layout.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AddCallComponent } from '../calls/add-call/add-call.component';
 import { CallModule } from '../calls/calls.module';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
     declarations: [LeadListComponent, AddLeadComponent, LeadDetailComponent],
@@ -29,6 +30,7 @@ import { CallModule } from '../calls/calls.module';
     NgSelectModule,
     NgbPaginationModule,
     LayoutModule,
+    PopoverModule,
      BsDatepickerModule.forRoot(),
   ],
   exports: [

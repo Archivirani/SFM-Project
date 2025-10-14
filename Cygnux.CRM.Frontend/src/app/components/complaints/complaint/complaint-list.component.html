@@ -264,24 +264,24 @@
                           <a class="edit-item-btn"  (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Edit',complaint.complaintID)"><i
                               class="ri-pencil-fill align-bottom text-muted"></i></a>
                           </li> -->
-                          <li [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes'}" class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer">
-                            <a class="edit-item-btn" title="Update"
-                              (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Update',complaint.complaintID)"><i
+                          <li [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes'}" class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center">
+                            <a class="edit-item-btn" [popover]="'Update'" placement="auto" triggers="hover" [outsideClick]="true" container="body" [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes'}"
+                              (click)="complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes'? null : openAddTicketModal('Update',complaint.complaintID)"><i
                                 class="ri-pencil-fill align-bottom text-muted edit-item-btn"></i></a>
                             <!-- <a><img src="assets/images/update-icon.svg" title="Update" (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Update',complaint.complaintID)" height="17" /></a> -->
                           </li>
                           <!-- <li *ngIf="complaint.complaintStatus === 'Closed' || complaint.autoClosure === 'Yes'" class="pe-3"> </li> -->
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="View">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                            [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a href="#" (click)="viewModal($event, complaint.complaintID,complaint)"><i
                                 class="ri-eye-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>
                           <li class="buttoncss" [ngClass]="{'disabled-image': complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes'}">
-                            <img src="assets/images/closed-icon.png" title="Closed" class="me-2"
-                              (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Close', complaint.complaintID)"
+                            <img src="assets/images/closed-icon.png"  class="me-2" [popover]="'Closed'" placement="auto" triggers="hover" [outsideClick]="true" container="body"
+                              (click)="complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes' ? null : openAddTicketModal('Close', complaint.complaintID)"
                               height="23" />
-                            <img src="assets/images/escalation-icon.jpg" title="Escalation"
-                              (click)="complaint.compaintStatus === 'Closed' ? null : openAddTicketModal('Escalation',complaint.complaintID)"
+                            <img src="assets/images/escalation-icon.jpg" [popover]="'Escalation'" placement="auto" triggers="hover" [outsideClick]="true" container="body"
+                              (click)="complaint.compaintStatus === 'Closed' || complaint.autoClosure === 'Yes' ? null : openAddTicketModal('Escalation',complaint.complaintID)"
                               height="24" />
                           </li>
                         </ul>

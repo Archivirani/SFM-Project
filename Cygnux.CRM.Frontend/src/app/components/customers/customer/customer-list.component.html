@@ -154,14 +154,14 @@
 
                       <td>
                         <ul class="list-inline hstack gap-2 mb-0">
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Call">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                            [popover]="'Call'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a href="#" (click)="callModal($event,customer)" >
                               <i class="ri-phone-line fs-16 edit-item-btn"></i>
                             </a>
                           </li>
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Meeeting">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                          [popover]="'Meeting'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a href="#" (click)="meetingModal($event,customer)" >
                               <!-- <img src="./assets/images/meeting.png" height="20" width="20"> -->
                                  <i class="ri-team-fill align-bottom text-muted edit-item-btn"></i>

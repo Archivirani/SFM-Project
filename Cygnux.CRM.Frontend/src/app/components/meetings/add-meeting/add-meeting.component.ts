@@ -25,7 +25,7 @@ import {
   UserResponse,
 } from '../../../shared/models/meeting.model';
 import { MeetingService } from '../../../shared/services/meeting.service';
-import { LeadCustomerResponse } from '../../../shared/models/customer.model';
+import { CustomerDetailResponse, LeadCustomerResponse } from '../../../shared/models/customer.model';
 import { LeadContactResponse } from '../../../shared/models/lead.model';
 import { GeneralMasterResponse } from '../../../shared/models/external.model';
 import { ExternalService } from '../../../shared/services/external.service';
@@ -59,6 +59,9 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   calendarOptions: CalendarResponse[] = [];
   public meetingCustomerList:any;
   public isSubmitting: boolean = false;
+  public customerData !: CustomerDetailResponse;
+  isCustomerLoading = false; // loader flag
+
 
   @Input() checkOutValue: any;
   @Input() meetingResponse: MeetingResponse | null = null;
@@ -88,6 +91,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     this.buildForm();
     this.meetingSubscription = this.meetingService.meetingResponseSubject.subscribe((res) => {
       this.meetingForm.patchValue({ customerName: res.customerName || res.companyName, customerCode: res.customerCode });
+      this.getCustomerDetail('',res.customerCode);
     })
   }
 
@@ -116,7 +120,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       this.meetingForm.patchValue(this.addmeetingResponse);
     }
   }
-
+  
   ngOnInit(): void {
     this.getCustomers();
     this.getLocations();
@@ -124,9 +128,10 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     this.getUsers();
     this.getCalendar();
     this.getMeetingMom();
-    this.getCustomerList()
+    this.getCustomerList();
+    this.getCustomerDetail('',this.meetingResponse?.customerCode)
   }
-
+  
   buildForm(): void {
     this.meetingForm = new FormGroup({
       leadId: new FormControl(''),
@@ -164,6 +169,43 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
       // { validators: timeRangeValidator  }
     );
     this.meetingForm.setValidators(this.checkDuplicateMeetingTimes.bind(this));
+  }
+
+  getCustomerDetail(event?:any,customerCode?:string){
+    if(event){
+      this.isCustomerLoading = true;
+      this.meetingForm.patchValue({
+        customerCode:event.customerCode,
+      })
+    }
+    const customer= event?event.customerCode:customerCode
+    this.customerService.getCustomerDetail(customer).subscribe({
+      next: (response) => {
+        if (response.data[0]) {
+          this.customerData = response?.data[0];
+          this.meetingForm.patchValue({
+            contactName:this.customerData.ContactName,
+            address:this.customerData.Address,
+            contactNo:this.customerData.ContactNo,
+            email:this.customerData.Email
+          })
+        }else{
+            this.meetingForm.patchValue({
+                contactName:'',
+                address:'',
+                contactNo:'',
+                email:''
+              })
+        }
+          this.isCustomerLoading = false;
+        this.commonService.updateLoader(false);
+      },
+      error: (response: any) => {
+        this.toasterService.error(response);
+         this.isCustomerLoading = false;
+        this.commonService.updateLoader(false);
+      },
+    });
   }
 
   checkDuplicateMeetingTimes(_control?: AbstractControl): ValidationErrors | null {
@@ -220,7 +262,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
   onClose() {
-    this.meetingForm.reset();
+    // this.meetingForm.reset();
     this.buildForm();
     this.meetingResponse = {
       geoLocation: '',
@@ -330,12 +372,11 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  onChangeCustomer(event:any){
-this.meetingForm.patchValue({
-  customerCode:event.customerCode,
-  // customerName:event.customerName
-})
-  }
+//   onChangeCustomer(event:any){
+// this.meetingForm.patchValue({
+//   customerCode:event.customerCode,
+// })
+//   }
 
   addMeeting(dataToSubmit: any): void {
     this.commonService.updateLoader(true);

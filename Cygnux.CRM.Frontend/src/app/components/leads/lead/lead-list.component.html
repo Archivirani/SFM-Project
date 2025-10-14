@@ -158,21 +158,21 @@
                       </td>
                       <td>
                         <ul class="list-inline justify-content-center hstack gap-2 mb-0">
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Edit" (click)="editModal($event, lead.leadId)">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                           (click)="editModal($event, lead.leadId)" [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                            <a><i class="ri-pencil-fill align-bottom text-muted edit-item-btn" ></i></a>
                           </li>
 
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="View" (click)="viewModal($event, lead.leadId)">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
+                           (click)="viewModal($event, lead.leadId)" [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a><i class="ri-eye-fill align-bottom text-muted edit-item-btn" ></i></a>  
                           </li>
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Call" (click)="callModal($event,lead)">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" 
+                           (click)="callModal($event,lead)" [popover]="'Call'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                             <a><i class="ri-phone-line align-bottom text-muted edit-item-btn" ></i></a>
                           </li>
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                            data-bs-placement="top" title="Meeeting" (click)="meetingModal($event, lead)">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" 
+                           (click)="meetingModal($event, lead)" [popover]="'Meeeting'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                               <!-- <img src="./assets/images/meeting.png" height="15" width="15" class="edit-item-btn"   (click)="meetingModal($event, lead)" > -->
                            <a> <i class="ri-team-fill align-bottom text-muted edit-item-btn"></i></a>
                           </li>

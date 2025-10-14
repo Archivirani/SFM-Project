@@ -4,6 +4,7 @@ import { IApiBaseResponse } from '../interfaces/api-base-action-response';
 import { CommonResponse } from '../models/common.model';
 import {
   AddCustomerRequest,
+  CustomerDetailResponse,
   CustomerFilter,
   CustomerResponse,
   CustomersListResponse,
@@ -85,7 +86,6 @@ export class CustomerService {
     }
 
       getUsers() {
-        this.commonService.updateLoader(true);
         this.externalService.getUserData(this.identityService.getLoggedUserId()).subscribe({
           next: (response) => {
             if (response) {
@@ -94,12 +94,14 @@ export class CustomerService {
                 name: `${user.userId } : ${user.name}`,
               }));
             }
-            this.commonService.updateLoader(false);
           },
           error: (response: any) => {
             this.toasterService.error(response);
-            this.commonService.updateLoader(false);
           },
         });
       }
+
+  getCustomerDetail(customerCode:string | undefined): Observable<IApiBaseResponse<CustomerDetailResponse[]>>{
+        return this.apiHandlerService.Get(`Customer/CustomerDetail?customerCode=${customerCode}`);
+  }
 }

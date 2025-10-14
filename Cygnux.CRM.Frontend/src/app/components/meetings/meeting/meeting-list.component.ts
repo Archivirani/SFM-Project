@@ -50,16 +50,19 @@ export class MeetingListComponent implements OnInit {
     public confirmationService: ConfirmationService,
     public identityService:IdentityService,
     public customerService:CustomerService
-  ) {defineElement(lottie.loadAnimation);}
+  ) {defineElement(lottie.loadAnimation);
+    
+  }
 
   ngOnInit() {
        this.commonService.loading.subscribe((state: boolean) => {
+        debugger
       this.loading = state;
     });
     this.customerService.getUsers();
     this.startDate = this.dateRange?.[0]?.toLocaleDateString("en-GB") || '';
      this.endDate = this.dateRange?.[1]?.toLocaleDateString("en-GB") || '';
-    this.getMeetings(this.dateRange);
+    // this.getMeetings(this.dateRange);
   }
 
   exportMeetings(event: any) {
@@ -69,7 +72,7 @@ export class MeetingListComponent implements OnInit {
     this.commonService.updateLoader(true);
        const filters: any = {
       ...this.filters,
-      UserID:this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),
+      // UserID:this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),
     };
     this.meetingService.exportMeeting(this.selectedUser?this.selectedUser:this.identityService.getLoggedUserId(),filters,this.startDate,this.endDate).subscribe({
       next: (response) => {
@@ -233,7 +236,8 @@ timeoutRef: any;
       Page: page,
       PageSize: this.pageSize,
       startDate: event?.[0] ? event[0].toLocaleDateString("en-GB") : '',
-      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : ''
+      endDate: event?.[1]  ? event[1].toLocaleDateString("en-GB") : '',
+      isWeb:true
     };
     this.meetingService.getMeetingList(filters).subscribe({
       next: (response) => {
@@ -343,14 +347,14 @@ timeoutRef: any;
       this.getMeetings();
     }
   }
-  closeExpenseModal() {
-    const modalElement: any = document.getElementById('showModalExpense');
-    const modalInstance = Modal.getInstance(modalElement); // Get the modal instance
-    if (modalInstance) {
-      modalInstance.hide(); // Hide the modal
-      this.getMeetings();
-    }
-  }
+  // closeExpenseModal() {
+  //   const modalElement: any = document.getElementById('showModalExpense');
+  //   const modalInstance = Modal.getInstance(modalElement); // Get the modal instance
+  //   if (modalInstance) {
+  //     modalInstance.hide(); // Hide the modal
+  //     this.getMeetings();
+  //   }
+  // }
   editModal(event: Event, meetingId: string,checkOut:string) {
     event.preventDefault(); // Prevent default anchor behavior
     const modalElement = document.getElementById('showModal');

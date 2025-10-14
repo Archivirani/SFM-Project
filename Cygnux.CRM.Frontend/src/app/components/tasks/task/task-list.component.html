@@ -165,10 +165,7 @@
                         <ul class="list-inline hstack gap-2 mb-0">
                           <li
                             class="list-inline-item"
-                            data-bs-toggle="tooltip"
-                            data-bs-trigger="hover"
-                            data-bs-placement="top"
-                            title="Edit"
+                            [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body"
                           >
                             <a
                               class="edit-item-btn"
@@ -181,10 +178,7 @@
                           </li>
                           <li
                             class="list-inline-item"
-                            data-bs-toggle="tooltip"
-                            data-bs-trigger="hover"
-                            data-bs-placement="top"
-                            title="View"
+                           [popover]="'View'" placement="auto" triggers="hover" [outsideClick]="true" container="body"
                           >
                             <a href="#" (click)="viewModal($event, task.taskId)"
                               ><i

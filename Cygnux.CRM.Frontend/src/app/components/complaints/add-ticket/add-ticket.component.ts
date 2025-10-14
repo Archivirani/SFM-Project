@@ -11,6 +11,7 @@ import { UserResponse } from '../../../shared/models/meeting.model';
 import { MultipleEmailRegex } from '../../../shared/constants/common';
 import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-ticket',
@@ -74,6 +75,14 @@ export class AddTicketComponent {
         ticketAddressTo:ComplaintResponse.ticketAddressToId,
         customerID: ComplaintResponse.customerID
       })
+      if (this.complaint === 'Update') {
+        this.ticketForm.get('updateRemarks')?.setValidators([Validators.required]);
+      } else {
+        this.ticketForm.get('updateRemarks')?.clearValidators();
+      }
+
+    // Refresh validation status
+    this.ticketForm.get('updateRemarks')?.updateValueAndValidity();
       this.emails = [...customerEmail];
       this.createEscalationForm(ComplaintResponse);
     } else {
@@ -169,6 +178,7 @@ export class AddTicketComponent {
       closureDate:new FormControl(new Date()),
       currentLocation:new FormControl('')
     });
+ 
   }
 
   createEscalationForm(data?: any) {
@@ -387,6 +397,15 @@ export class AddTicketComponent {
       },
     });
   }
+
+success(message: string,id:string): Promise<any> {
+  return Swal.fire({
+    title: `Complaint ID : ${id}`,
+    html: `<div>${message}</div>`,
+    icon: 'success',
+    iconColor: '#7066e0' 
+  });
+}
  
   onSubmitTicket() {
     if(this.ticketForm.valid){
@@ -437,7 +456,8 @@ export class AddTicketComponent {
     this.complaintService.addComplaint(dataToSubmit).subscribe({
       next: (response) => {
         if (response.success) {
-          this.toasterService.success(response.data.message);
+          // this.toasterService.success(response.data.message);
+          this.success(response.data.message,response.data.id)
           this.dataEmitter.emit();
           this.onClose();
         } else {
@@ -479,7 +499,8 @@ export class AddTicketComponent {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            this.toasterService.success(response.data.message);
+            // this.toasterService.success(response.data.message);
+            this.success(response.data.message,response.data.id)
             this.dataEmitter.emit();
             this.onClose();
           } else {
@@ -504,7 +525,8 @@ export class AddTicketComponent {
     this.complaintService.AddEscTktComplaint(data).subscribe({
       next: (response) => {
         if (response.success) {
-          this.toasterService.success(response.data.message);
+          // this.toasterService.success(response.data.message);
+           this.success(response.data.message,response.data.id)
           this.dataEmitter.emit();
           this.onEscalationClose()
         } else {
