@@ -1,8 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdentityService } from '../../../shared/services/identity.service';
 declare function G(): void;
 import * as bootstrap from 'bootstrap';
+import { ScriptLoaderService } from '../../../shared/services/script-loader.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +19,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private identityService: IdentityService,
-    private router: Router
+    private router: Router,
+    private scriptLoader: ScriptLoaderService
+ 
   ) {
     this.email = identityService.getLoggedEmail();
     this.userId = identityService.getLoggedUserId();
@@ -41,5 +45,8 @@ export class HeaderComponent implements OnInit {
     event.preventDefault();
     this.identityService.clearToken();
     this.router.navigateByUrl('/login');
+  }
+   toggleSidebar() {
+      this.scriptLoader.loadScript('assets/js/app.js').then(() => console.log('Script loaded')).catch(error => console.error(error));
   }
 }

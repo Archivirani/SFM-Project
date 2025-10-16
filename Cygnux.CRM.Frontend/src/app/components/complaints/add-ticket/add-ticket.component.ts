@@ -143,8 +143,6 @@ export class AddTicketComponent {
   }
   buildForm(): void {
     this.minDate = new Date();
-    let storedUser = localStorage.getItem('loginUser');
-    let parsedUser = JSON.parse(storedUser || '');
     let assignedTo = this.identityService.getLoggedUserId();
     this.ticketForm = new FormGroup({
       userID: new FormControl(assignedTo),

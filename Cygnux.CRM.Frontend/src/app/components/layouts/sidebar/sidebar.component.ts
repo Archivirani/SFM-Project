@@ -24,11 +24,7 @@ export class SidebarComponent implements OnInit {
       this.isSFMMasters = res;
       this.cd.detectChanges();
     });
-    this.scriptLoader
-      .loadScript('assets/js/app.js')
-      .then(() => { })
-      .catch((error) => console.error(error));
-    
+  
     this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(() => {
       this.commonService.getMenuList();  // Optional — if you want reload on every nav
     });

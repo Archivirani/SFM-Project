@@ -33,6 +33,9 @@ export class CustomerListComponent implements OnInit {
   public isCallLoad:boolean=false;
   public isMeetingLoad:boolean=false;
   public loading:boolean=false;
+  placeholderArray = Array(7);
+  public isCardLoading:boolean=false;
+
   @Output() edit = new EventEmitter<CustomerResponse>();
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
@@ -115,7 +118,7 @@ export class CustomerListComponent implements OnInit {
         // startdate:this.startDate,
         // enddate:this.endDate
       }
-      this.commonService.updateLoader(true);
+      this.isCardLoading=true;
      this.customerService.getLeadCustomerfilters(filters).subscribe({
       next:(response) =>{
         this.getCustomerfilter = response.data;
@@ -128,10 +131,13 @@ export class CustomerListComponent implements OnInit {
           { name: "Lost Customer", count: response.data.lostCustomerCount || 0 ,color:'purple ' },
           { name: "Yield", count: response.data.yield || 0 ,color:'bluecolor' },
         ];
+      this.isCardLoading=false;
+
       },
       error: (response: any) => {
         this.toasterService.error(response);
-        this.commonService.updateLoader(false);
+      this.isCardLoading=false;
+
       },
      });
     }

@@ -535,7 +535,7 @@ export class AddMeetingComponent implements OnInit, OnChanges, OnDestroy {
   }
 
 getCustomerList(){
-  this.meetingService.getMeetingCustomer().subscribe({
+  this.meetingService.getMeetingCustomer(this.identityService.getLoggedUserId()).subscribe({
       next: (response) => {
         if (response) {
           this.meetingCustomerList = response.data;

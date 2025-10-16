@@ -1,6 +1,6 @@
-<div class="loader-overlay" *ngIf="loading && (complaint ==='Update' || complaint ==='Close')">
+<!-- <div class="loader-overlay" *ngIf="loading && (complaint ==='Update' || complaint ==='Close')">
   <div class="spinner"></div>
-</div>
+</div> -->
 <div>
   <div class="modal-header bg-light p-3">
     <h5 class="modal-title" id="exampleModalLabel">
@@ -26,7 +26,12 @@
           </div>
           <div>
             <label>Docket No</label>
+             <div class="position-relative">
             <input type="text" class="form-control mb-3" formControlName="docketNo" (input)="onDocketNoChange($event)" [readonly]="complaint !== 'Add'">
+               <div *ngIf="loading && (complaint ==='Update' || complaint ==='Close')" class="position-absolute top-50 end-0 translate-middle-y me-3">
+                  <span class="spinner-border spinner-border-sm text-primary"></span>
+                </div>
+            </div>
             <div *ngIf="
             ticketForm.controls['docketNo'].invalid &&
             ticketForm.controls['docketNo']?.touched
@@ -346,7 +351,7 @@
       <div class="modal-footer mt-4">
         <div class="hstack gap-2 justify-content-end">
           <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="onClose()">Close</button>
-          <button type="submit" class="btn btn-success" id="add-btn">{{complaint}} Ticket</button>
+          <button type="submit" class="btn btn-success" id="add-btn" [disabled]="complaint === 'Update' && loading">{{complaint}} Ticket</button>
         </div>
       </div>
   

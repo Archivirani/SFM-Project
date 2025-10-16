@@ -33,6 +33,10 @@ export class CallListComponent implements OnInit {
   cardList: string = 'Call';
   public isCallLoad:boolean=false;
   public loading:boolean=false;
+  public isCardLoading:boolean=false;
+  placeholderArray = Array(7);
+
+
   constructor(
     private callService: CallService,
     private commonService: CommonService,
@@ -104,6 +108,7 @@ export class CallListComponent implements OnInit {
   }
 
   getcallfilters(){
+    this.isCardLoading=true;
      this.callService.getCallfilters().subscribe({
       next:(response) =>{
         this.getfilter = [
@@ -112,10 +117,11 @@ export class CallListComponent implements OnInit {
           { name: "Complaints", count: response.data[0]?.totalCount || 0 ,color:'pink' },
           { name: "Lead Creation", count: response.data[1]?.totalCount || 0 ,color:'lightgreen' },
         ];
+       this.isCardLoading=false;
       },
       error: (response: any) => {
         this.toasterService.error(response);
-        this.commonService.updateLoader(false);
+        this.isCardLoading=false;
       },
      });
   }

@@ -20,6 +20,7 @@ export interface LeadResponse {
   branchId?:string;
   regionId?:string;
   assignedToId?:string;
+  leadCreated:boolean;
 }
 
 export interface LeadByStatusResponse{

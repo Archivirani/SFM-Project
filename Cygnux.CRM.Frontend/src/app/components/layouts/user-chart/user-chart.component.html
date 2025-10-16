@@ -17,10 +17,28 @@
         [searchable]="true" [ngModelOptions]="{standalone: true}">
       </ng-select>
     </div>
-  </div>
+  </div>                              
   <div class="p-4 pb-0">
     <app-card-list [getfilter]="getLeadStatusfilter" (selectCardList)="exportLeadCategory($event)"></app-card-list>
   </div>
+  <ng-container *ngIf="isCardLoading">
+      <div class="d-flex flex-row flex-nowrap w-100 p-2 pe-0" style="overflow-x: auto;">
+        <div class="fade-in" *ngFor="let item of placeholderArray" style="margin: 4px 8px;">
+          <div class="card box-shadow border placeholder-card">
+            <div class="card-body p-4 pt-3">
+              <!-- Make lines full width inside card -->
+              <div class="mb-2">
+                <div class="placeholder-line w-100 mb-1"></div>
+                <div class="placeholder-line w-100 mb-1"></div>
+              </div>
+              <div class="placeholder-line w-100 mb-1"></div>
+              <div class="placeholder-line w-100 mb-1"></div>
+              <div class="placeholder-line w-100 mb-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   <div class="p-5 pt-0" *ngIf="chartList === 'meeting'">
     <div class="row">
       <div class="col-lg-8">

@@ -158,8 +158,8 @@
                       </td>
                       <td>
                         <ul class="list-inline justify-content-center hstack gap-2 mb-0">
-                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer"
-                           (click)="editModal($event, lead.leadId)" [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
+                          <li class="list-inline-item disabled-icon bg-blue d-flex justify-content-center align-items-center cursor-pointer" [ngClass]="{'disabled-image': !lead.leadCreated}"
+                           (click)="lead.leadCreated?editModal($event, lead.leadId):null" [popover]="'Edit'" placement="auto" triggers="hover" [outsideClick]="true" container="body">
                            <a><i class="ri-pencil-fill align-bottom text-muted edit-item-btn" ></i></a>
                           </li>
 

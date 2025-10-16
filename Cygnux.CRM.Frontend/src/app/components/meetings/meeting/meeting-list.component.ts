@@ -56,7 +56,6 @@ export class MeetingListComponent implements OnInit {
 
   ngOnInit() {
        this.commonService.loading.subscribe((state: boolean) => {
-        debugger
       this.loading = state;
     });
     this.customerService.getUsers();

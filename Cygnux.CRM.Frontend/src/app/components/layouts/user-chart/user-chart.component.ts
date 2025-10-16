@@ -121,6 +121,7 @@ export class UserChartComponent {
   public leadStatus:LeadByStatusResponse[]=[];
   public leadSource !:LeadBySourceResponse;
   public leadCatagory:LeadCategoryResponse[]=[];
+  public isCardLoading:boolean=false;
   dateRange: [Date, Date] = [new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999)];
   startDate!: string ;
@@ -129,6 +130,8 @@ export class UserChartComponent {
   pieChartData!:PieChartData;
   public users: UserResponse[] = [];
   public userIdData:string='';
+  placeholderArray = Array(7);
+
   ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate() - 7)), new Date()],
@@ -376,6 +379,7 @@ export class UserChartComponent {
         enddate: this.endDate
       }
       if (this.chartList === 'leads') {
+        this.isCardLoading=true
         this.leadService.getLeadCatagoryData(filters).subscribe({
           next: (response) => {
             this.getLeadStatusfilter = response.data
@@ -386,9 +390,11 @@ export class UserChartComponent {
                 id: this.getIdForCategory(item.categoryName)
               }))
               .sort((a, b) => b.count - a.count);
+              this.isCardLoading=false; 
           }
         });
       } else if (this.chartList === 'meeting') {
+        this.isCardLoading=true;
         this.meetingService.getMeetingStatusData(filters).subscribe({
           next: (response) => {
             this.initPieChart(response.data);
@@ -397,6 +403,8 @@ export class UserChartComponent {
               { name: "Pending", count: response.data.pending || 0, color: 'wheat' },
               { name: "Completed", count: response.data.completed || 0, color: 'pink' }
             ];
+          this.isCardLoading=false;
+
           }
         });
       }
@@ -471,16 +479,17 @@ export class UserChartComponent {
     const filters: any = {
       compaintStatus: status
     };
+    this.isCardLoading=true;
     this.complaintService.getComplaintListexport(this.identifyService.getLoggedUserId(),this.startDate,this.endDate,filters).subscribe({
       next: (response) => {
         if (response) {
           this.exportService.exportToExcel(response.data);
         }
-        this.commonService.updateLoader(false);
+        this.isCardLoading=false;
       },
       error: (response: any) => {
         this.toasterService.error(response);
-        this.commonService.updateLoader(false);
+           this.isCardLoading=false;
       },
     });
   }
@@ -580,6 +589,7 @@ export class UserChartComponent {
       startDate: new Date(this.startDate).toUTCString(),
       endDate: new Date(this.endDate).toUTCString()
     };
+    this.isCardLoading=true;
     this.complaintService.getCompalintCounteData(filters).subscribe({
       next: (response) => {
         if (response) {
@@ -591,12 +601,12 @@ export class UserChartComponent {
             { name: "Updated <br> Complaints", count: response.data[0].updated || 0, color: 'lightgreen' },
             { name: "Escalated <br> Complaints", count: response.data[0].escalated || 0, color: 'blue' }
           ];
+          this.isCardLoading=false;
         }
-        this.commonService.updateLoader(false);
       },
       error: (response: any) => {
         this.toasterService.error(response);
-        this.commonService.updateLoader(false);
+          this.isCardLoading=false;
       },
     });
   }
