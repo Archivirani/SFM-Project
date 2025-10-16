@@ -53,6 +53,14 @@ export class ExpenseGeneralMasterListComponent {
     });
   }
 
+    timeoutRef: any;
+  onStartTimeChange() {
+    clearTimeout(this.timeoutRef); // 🔑 cancel previous timeout
+    this.timeoutRef = setTimeout(() => {
+      this.getExpensesGeneralMaster();
+    }, 500);
+  }
+
   exportExpense(event: any) {
     event.preventDefault();
     const filters: any = {

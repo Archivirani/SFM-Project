@@ -57,6 +57,14 @@ export class CallListComponent implements OnInit {
     });
   }
 
+  timeoutRef: any;
+  onStartTimeChange() {
+    clearTimeout(this.timeoutRef); // 🔑 cancel previous timeout
+    this.timeoutRef = setTimeout(() => {
+      this.getCalls();
+    }, 500);
+  }
+
   ngOnInit(): void {
     this.getCalls();
     this.getcallfilters();

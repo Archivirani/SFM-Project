@@ -68,6 +68,14 @@ export class ExpenseApprovalListComponent implements OnInit {
     }
   }
 
+     timeoutRef: any;
+  onStartTimeChange() {
+    clearTimeout(this.timeoutRef); // 🔑 cancel previous timeout
+    this.timeoutRef = setTimeout(() => {
+      this.getExpenses();
+    }, 500);
+  }
+
   addExpenseApproval(dataToSubmit: any): void {
     this.commonService.updateLoader(true);
     this.expenseService.addExpenseApproval(dataToSubmit).subscribe({

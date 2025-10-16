@@ -108,6 +108,13 @@ export class CustomerListComponent implements OnInit {
     // this.getCustomerfilters(this.dateRange);
   }
   
+  timeoutRef: any;
+  onStartTimeChange() {
+    clearTimeout(this.timeoutRef); // 🔑 cancel previous timeout
+    this.timeoutRef = setTimeout(() => {
+      this.getCustomers();
+    }, 500);
+  }
 
   getCustomerfilters(event:any){
     this.startDate= event?.[0] ? event[0].toLocaleDateString("en-GB") : this.dateRange?.[0]?.toLocaleDateString("en-GB") || null,

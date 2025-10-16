@@ -55,6 +55,14 @@ export class ExpenseListComponent implements OnInit {
     this.customerService.getUsers();
   }
 
+    timeoutRef: any;
+  onStartTimeChange() {
+    clearTimeout(this.timeoutRef); // 🔑 cancel previous timeout
+    this.timeoutRef = setTimeout(() => {
+      this.getExpenses();
+    }, 500);
+  }
+
   getExpenses(page: number = 1) {
     this.commonService.updateLoader(true);
     this.filters = Object.fromEntries(

@@ -81,13 +81,13 @@
                     </tr>
                     <tr>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CallCategory']" (input)="getCalls()"
+                        <input type="text" [(ngModel)]="filters['CallCategory']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
-                            [(ngModel)]="filters['CallDate']" ngbDatepicker (ngModelChange)="getCalls()"
+                            [(ngModel)]="filters['CallDate']" ngbDatepicker (ngModelChange)="onStartTimeChange()"
                             #d3="ngbDatepicker" readonly />
                           <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['CallDate']"> <span aria-hidden="true" class="ng-clear clear">×</span>
                           </span>
@@ -95,18 +95,18 @@
                         </div>
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="getCalls()"
+                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['startTime']" (input)="getCalls()"
+                        <input type="text" [(ngModel)]="filters['startTime']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['endTime']" (input)="getCalls()" class="form-control" />
+                        <input type="text" [(ngModel)]="filters['endTime']" (input)="onStartTimeChange()" class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CallStatus']" (input)="getCalls()"
+                        <input type="text" [(ngModel)]="filters['CallStatus']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th></th>

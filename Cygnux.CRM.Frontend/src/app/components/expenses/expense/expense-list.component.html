@@ -80,17 +80,17 @@
                     </tr>
                     <tr>
                       <th>
-                        <input type="text" [(ngModel)]="filters['expenseId']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['expenseId']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['meetingId']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['meetingId']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
-                            [(ngModel)]="filters['ExpenseDate']" ngbDatepicker (ngModelChange)="getExpenses()"
+                            [(ngModel)]="filters['ExpenseDate']" ngbDatepicker (ngModelChange)="onStartTimeChange()"
                             #d2="ngbDatepicker" readonly />
                           <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper"
                             title="Clear date" *ngIf="filters['ExpenseDate']">
@@ -101,13 +101,13 @@
                         </div>
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CompanyName']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['CompanyName']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d4" #c2="ngModel"
-                            [(ngModel)]="filters['ExpenseDate']" ngbDatepicker (ngModelChange)="getExpenses()"
+                            [(ngModel)]="filters['ExpenseDate']" ngbDatepicker (ngModelChange)="onStartTimeChange()"
                             #d4="ngbDatepicker" readonly />
                           <span role="button" (click)="clearmeetingDate()" tabindex="0"
                             class="ng-clear-wrapper clear-wrapper" title="Clear date" *ngIf="filters['ExpenseDate']">
@@ -118,30 +118,30 @@
                         </div>
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CheckIn']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['CheckIn']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['CheckOut']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['DistanceInKm']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['DistanceInKm']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
 
                     
                       <th>
-                        <!-- <input type="text" [(ngModel)]="filters['requestDate']" (input)="getExpenses()"
+                        <!-- <input type="text" [(ngModel)]="filters['requestDate']" (input)="onStartTimeChange()"
                           class="form-control" /> -->
                       </th>
                       <th></th>
                       <th>
-                        <input type="number" [(ngModel)]="filters['Amount']" (input)="getExpenses()"
+                        <input type="number" [(ngModel)]="filters['Amount']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['Status']" (input)="getExpenses()"
+                        <input type="text" [(ngModel)]="filters['Status']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th></th>

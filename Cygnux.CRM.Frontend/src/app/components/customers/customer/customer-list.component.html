@@ -111,18 +111,18 @@
                     </tr>
                     <tr>
                       <th>
-                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="getCustomers()"
+                        <input type="text" [(ngModel)]="filters['CustomerName']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <!-- <th>
-                        <input type="text" [(ngModel)]="filters['ContractId']" (input)="getCustomers()"
+                        <input type="text" [(ngModel)]="filters['ContractId']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
                             [(ngModel)]="filters['StartDate']" ngbDatepicker #d2="ngbDatepicker"
-                            (ngModelChange)="getCustomers()" readonly />
+                            (ngModelChange)="onStartTimeChange()" readonly />
                           <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper"
                             title="Clear date" *ngIf="filters['StartDate']">
                             <span aria-hidden="true" class="ng-clear clear">×</span>
@@ -134,7 +134,7 @@
                       <th>
                         <div class="input-group">
                           <input width="100%" class="form-control" placeholder="dd/mm/yyyy" name="d2" #c2="ngModel"
-                            [(ngModel)]="filters['EndDate']" ngbDatepicker (ngModelChange)="getCustomers()"
+                            [(ngModel)]="filters['EndDate']" ngbDatepicker (ngModelChange)="onStartTimeChange()"
                             #d3="ngbDatepicker" readonly />
                           <span role="button" (click)="clearDate()" tabindex="0" class="ng-clear-wrapper clear-wrapper"
                             title="Clear date" *ngIf="filters['EndDate']">
@@ -145,15 +145,15 @@
                         </div>
                       </th> -->
                       <th>
-                        <input type="text" [(ngModel)]="filters['SalesMonth']" (input)="getCustomers()"
+                        <input type="text" [(ngModel)]="filters['SalesMonth']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['SalesYear']" (input)="getCustomers()"
+                        <input type="text" [(ngModel)]="filters['SalesYear']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th>
-                        <input type="text" [(ngModel)]="filters['OsOnDate']" (input)="getCustomers()"
+                        <input type="text" [(ngModel)]="filters['OsOnDate']" (input)="onStartTimeChange()"
                           class="form-control" />
                       </th>
                       <th></th>
